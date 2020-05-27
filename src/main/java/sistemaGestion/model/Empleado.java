@@ -1,4 +1,4 @@
-package sistemaGestion;
+package sistemaGestion.model;
 
 public class Empleado {
 

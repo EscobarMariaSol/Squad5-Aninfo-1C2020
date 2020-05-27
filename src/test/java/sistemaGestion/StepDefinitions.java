@@ -5,6 +5,7 @@ package sistemaGestion;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Entonces;
+import sistemaGestion.model.Empleado;
 
 public class StepDefinitions {
     @Dado("^que soy un lider de proyecto$")
