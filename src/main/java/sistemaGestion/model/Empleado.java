@@ -4,7 +4,7 @@ public class Empleado {
 
     private String id;
 
-    Empleado() {
+    public Empleado() {
 
     }
 
