@@ -1,0 +1,22 @@
+spring:
+  profiles: local, test
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+    initialization-mode: always
+    initialize: true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+name: test-YAML
+environment: test
+
+---
+spring:
+  profiles: prod
+name: prod-YAML
+environment: production
