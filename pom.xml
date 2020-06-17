@@ -78,6 +78,13 @@
             <version>2.2.6.RELEASE</version>
         </dependency>
 
+        <!---Postgres dependency-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
