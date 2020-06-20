@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: password
+    password: postgres
     initialization-mode: always
     initialize: true
   jpa:
@@ -12,11 +12,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-name: test-YAML
-environment: test
 
 ---
 spring:
   profiles: prod
-name: prod-YAML
-environment: production
+
