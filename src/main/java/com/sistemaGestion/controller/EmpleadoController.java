@@ -1,21 +1,22 @@
-package sistemaGestion.controller;
+package com.sistemaGestion.controller;
 
+import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import sistemaGestion.model.Empleado;
-import sistemaGestion.service.EmpleadoService;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/empleados")
+@RestController
+@RequestMapping(value = "/empleados")
 public class EmpleadoController {
 
-    @Autowired
     private EmpleadoService empleadoService;
+
+    @Autowired
+    public EmpleadoController(EmpleadoService empleadoService) {
+        this.empleadoService = empleadoService;
+    }
 
     @PostMapping(value = "/")
     public ResponseEntity consultarEmpleados() {
