@@ -1,4 +1,4 @@
-package sistemaGestion;
+package com.sistemaGestion;
 
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.junit.Cucumber;
