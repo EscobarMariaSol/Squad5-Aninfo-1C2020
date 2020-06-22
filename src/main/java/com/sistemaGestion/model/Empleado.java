@@ -11,6 +11,7 @@ public class Empleado {
 
     @Column
     private String nombre;
+    private String seniority;
 
     public Empleado(){
 
@@ -38,5 +39,20 @@ public class Empleado {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Boolean es_lider_de_RRHH() {
+        return true;
+    }
+
+    public void setSeniority(String seniority) {
+        this.seniority = seniority;
+    }
+
+    public String getSeniority() {
+        return this.seniority;
+    }
+    public Boolean tieneSeniorityAsignada() {
+        return true;
     }
 }
