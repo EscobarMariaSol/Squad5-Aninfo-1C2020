@@ -72,6 +72,24 @@ public class Empleado {
         return true;
     }
 
- 
+    @Override
+    public String toString() {
+        return String.format(
+                "nombre: " + nombre
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Empleado empleado = (Empleado) o;
+        return nombre.equals(empleado.nombre);
+    }
 
 }
