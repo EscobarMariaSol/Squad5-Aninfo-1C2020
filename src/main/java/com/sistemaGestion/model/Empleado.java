@@ -1,6 +1,7 @@
 package com.sistemaGestion.model;
 
 import javax.persistence.*;
+import java.util.function.Consumer;
 
 @Entity
 public class Empleado {
@@ -20,10 +21,6 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public Boolean es_lider_de_proyecto() {
-        return true;
-    }
-
     public String getId() {
         return id;
     }
@@ -39,4 +36,42 @@ public class Empleado {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public Empleado(Builder builder) {
+        this.id = builder.id;
+        this.nombre = builder.nombre;
+    }
+
+    public static class Builder {
+
+        private String id;
+        private String nombre;
+
+        public Builder conId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder conNombre(String nombre) {
+            this.nombre = nombre;
+            return this;
+        }
+
+        public Builder con(Consumer<Builder> function) {
+            function.accept(this);
+            return this;
+        }
+
+        public Empleado build() {
+            return new Empleado(this);
+        }
+
+    }
+
+    public Boolean esLiderDeRecursosHumanos() {
+        return true;
+    }
+
+ 
+
 }
