@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import io.cucumber.java.After;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,11 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
         }
     }
 
+    @Y("no hay empleados")
+    public void noHayEmpleados() {
+        coleccionEmpleados = new ArrayList<>();
+    }
+
     //Cuando
     @Cuando("consulto los empleados")
     public void consultoLosEmpleados() {
@@ -58,4 +64,14 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
         Assert.assertEquals(coleccionEmpleados, response.getBody());
     }
 
+    @Entonces("obtengo un listado vacio")
+    public void obtengoUnListadoVacio() {
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals(coleccionEmpleados, response.getBody());
+    }
+
+    @After
+    public void tearDown() {
+        empleadoRepository.deleteAll();
+    }
 }
