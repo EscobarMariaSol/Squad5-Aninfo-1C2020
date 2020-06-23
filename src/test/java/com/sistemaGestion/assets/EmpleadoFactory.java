@@ -38,4 +38,16 @@ public class EmpleadoFactory {
         }
     }
 
+    public static Empleado crearLiderDeRecursosHumanos() {
+        return new Empleado.Builder().con(empleadoData -> {
+            empleadoData.conId(Constants.LIDER_RRHH_ID);
+            empleadoData.conNombre(Constants.LIDER_RRHH_NOMBRE);
+            empleadoData.conApellido(Constants.LIDER_RRHH_APELLIDO);
+            empleadoData.conDni(Constants.LIDER_RRHH_DNI);
+            empleadoData.conFechaNacimiento(Constants.LIDER_RRHH_FECHA_NACIMIENTO);
+            empleadoData.conRol(Constants.LIDER_RRHH_ROL);
+            empleadoData.conContrato(Constants.LIDER_RRHH_CONTRATO);
+        }).build();
+    }
+
 }
