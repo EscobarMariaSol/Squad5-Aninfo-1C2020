@@ -4,7 +4,7 @@ import com.sistemaGestion.model.Empleado;
 
 public class EmpleadoFactory {
 
-    public static Empleado crearEmpleado(String id) {
+    public static Empleado crearEmpleado(Long id) {
         if (id.equals(Constants.EMPLEADO_ID_1)) {
             return new Empleado.Builder().con(empleadoData -> {
                 empleadoData.conId(id);
