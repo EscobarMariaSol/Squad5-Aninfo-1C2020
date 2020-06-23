@@ -27,7 +27,7 @@ public class Empleado {
     private String legajo;
 
     @Column
-    private String rol;
+    private EmpleadoRol rol;
 
     @Column
     private String contrato;
@@ -88,11 +88,11 @@ public class Empleado {
         this.legajo = legajo;
     }
 
-    public String getRol() {
+    public EmpleadoRol getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(EmpleadoRol rol) {
         this.rol = rol;
     }
 
@@ -117,7 +117,7 @@ public class Empleado {
         private String apellido;
         private String dni;
         private LocalDate fechaNacimiento;
-        private String rol;
+        private EmpleadoRol rol;
         private String contrato;
 
         public Builder conId(String id) {
@@ -145,7 +145,7 @@ public class Empleado {
             return this;
         }
 
-        public Builder conRol(String rol) {
+        public Builder conRol(EmpleadoRol rol) {
             this.rol = rol;
             return this;
         }
@@ -165,7 +165,7 @@ public class Empleado {
         }
 
     }
-//TODO Implementar
+
     public Boolean esLiderDeRecursosHumanos() {
         return true;
     }
