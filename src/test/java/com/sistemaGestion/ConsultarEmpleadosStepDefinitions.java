@@ -1,5 +1,6 @@
 package com.sistemaGestion;
 
+import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.EmpleadoRepository;
@@ -11,7 +12,6 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,19 +31,15 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
     //Dado
     @Dado("^que soy un lider de recursos humanos$")
     public void soy_lider_de_recursos_humanos() throws Throwable {
-        liderRecursosHumanos = new Empleado.Builder().con(empleadoData -> {
-            empleadoData.conNombre("lider");
-        }).build();
+        liderRecursosHumanos = EmpleadoFactory.crearLiderDeRecursosHumanos();
     }
 
     //Y
     @Y("hay {int} empleados")
     public void hayEmpleados(int arg0) {
-        for (int i=0; i<3; i++) {
-            int idx = i;
-            Empleado empleado = new Empleado.Builder().con(empleadoData -> {
-                empleadoData.conNombre("empleado" + idx);
-            }).build();
+        for (int i=1; i<=arg0; i++) {
+            Long idx = Long.valueOf(i);
+            Empleado empleado = EmpleadoFactory.crearEmpleado(idx);
             coleccionEmpleados.add(empleado);
             empleadoRepository.save(empleado);
         }
@@ -58,7 +54,6 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
     //Entonces
     @Entonces("obtengo un listado de los {int} empleados")
     public void obtengoUnListadoDeLosEmpleados(int arg0) {
-        System.out.println(coleccionEmpleados);
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
         Assert.assertEquals(coleccionEmpleados, response.getBody());
     }
