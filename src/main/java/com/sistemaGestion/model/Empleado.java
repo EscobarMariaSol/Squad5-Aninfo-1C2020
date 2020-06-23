@@ -9,7 +9,7 @@ public class Empleado {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Column
     private String nombre;
@@ -40,11 +40,11 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -108,11 +108,15 @@ public class Empleado {
         this.id = builder.id;
         this.nombre = builder.nombre;
         this.apellido = builder.apellido;
+        this.dni = builder.dni;
+        this.fechaNacimiento = builder.fechaNacimiento;
+        this.rol = builder.rol;
+        this.contrato = builder.contrato;
     }
 
     public static class Builder {
 
-        private String id;
+        private Long id;
         private String nombre;
         private String apellido;
         private String dni;
@@ -120,7 +124,7 @@ public class Empleado {
         private EmpleadoRol rol;
         private String contrato;
 
-        public Builder conId(String id) {
+        public Builder conId(Long id) {
             this.id = id;
             return this;
         }
@@ -167,18 +171,16 @@ public class Empleado {
     }
 
     public Boolean esLiderDeRecursosHumanos() {
-        return true;
+        return this.rol.equals(EmpleadoRol.LIDER_RRHH);
     }
 
     @Override
     public String toString() {
         return String.format(
                 "nombre: " + nombre +
-                "apellido: " + apellido +
-                "dni: " + dni +
-                "fechaNacimiento: " + fechaNacimiento.toString() +
-                "rol: " + rol +
-                "contrato: " + contrato
+                ", apellido: " + apellido +
+                ", dni: " + dni +
+                ", fechaNacimiento: " + fechaNacimiento.toString()
         );
     }
 
@@ -195,9 +197,7 @@ public class Empleado {
         return nombre.equals(empleado.nombre) &&
                 apellido.equals(empleado.apellido) &&
                 dni.equals(empleado.dni) &&
-                fechaNacimiento.equals(empleado.fechaNacimiento) &&
-                rol.equals(empleado.rol) &&
-                contrato.equals(empleado.contrato);
+                fechaNacimiento.equals(empleado.fechaNacimiento);
     }
 
 }
