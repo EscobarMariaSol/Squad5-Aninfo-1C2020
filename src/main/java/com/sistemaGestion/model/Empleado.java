@@ -1,6 +1,7 @@
 package com.sistemaGestion.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.function.Consumer;
 
 @Entity
@@ -12,6 +13,24 @@ public class Empleado {
 
     @Column
     private String nombre;
+
+    @Column
+    private String apellido;
+
+    @Column
+    private String dni;
+
+    @Column
+    private LocalDate fechaNacimiento;
+
+    @Column
+    private String legajo;
+
+    @Column
+    private String rol;
+
+    @Column
+    private String contrato;
 
     public Empleado(){
 
@@ -67,7 +86,7 @@ public class Empleado {
         }
 
     }
-
+//TODO Implementar
     public Boolean esLiderDeRecursosHumanos() {
         return true;
     }
