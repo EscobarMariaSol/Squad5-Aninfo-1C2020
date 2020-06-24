@@ -33,7 +33,7 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
 
     @Y("no existe el empleado con legajo {string}")
     public void noExisteElEmpleadoConLegajo(String arg0) {
-
+        // No agrego empleados a la base de datos.
     }
 
     // Cuando
@@ -45,12 +45,14 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     // Entonces
     @Entonces("obtengo los datos del empleado  con legajo {string}")
     public void obtengoLosDatosDelEmpleadoConLegajo(String arg0) {
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assert.assertEquals(empleado, response.getBody());
     }
 
     @Entonces("obtengo un mensaje indicando que el empleado con legajo {string} no pudo ser encontrado")
     public void obtengoUnMensajeIndicandoQueElEmpleadoConLegajoNoPudoSerEncontrado(String arg0) {
+        Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        Assert.assertEquals("Empleado with legajo " + arg0 + " not found.", response.getBody());
     }
 
     @After
