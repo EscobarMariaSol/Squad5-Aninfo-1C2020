@@ -14,6 +14,6 @@ Característica: mostrar horas trabajadas por un empleado en una tarea
   Escenario: como lider de recursos humanos quiero consultar las horas trabajadas por un empleado en una tarea,
   para poder liquidar su sueldo.
     Dado que soy el lider de recursos humanos
-    Y no hay empleados registrado
+    Y no hay empleados registrados
     Cuando realizo una búsqueda de un empleado en el sistema
     Entonces obtengo un mensaje indicandome que no hay empleados registrados

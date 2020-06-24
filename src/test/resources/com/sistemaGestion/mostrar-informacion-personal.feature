@@ -1,6 +1,6 @@
 # language: es
 
-Característica: consultar esfuerzo segun area
+Característica: mostrar informacion personal de un empleado
 
   Escenario: como Lider de Recursos Humanos, quiero consultar los empleados asignados a un proyecto,
     para así generar el reporte correspondiente.

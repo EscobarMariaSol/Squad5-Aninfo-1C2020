@@ -19,8 +19,8 @@ public class MostrarHorasPorTareaStepDefinitions {
     public void hay_empleado_registrado(Integer int1) {
     }
 
-    @Y("no hay empleados registrado")
-    public void no_hay_empleados_registrado() {
+    @Y("no hay empleados registrados")
+    public void no_hay_empleados_registrados() {
         // Write code here that turns the phrase above into concrete actions
     }
 
