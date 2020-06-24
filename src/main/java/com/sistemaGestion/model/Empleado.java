@@ -32,6 +32,9 @@ public class Empleado {
     @Column
     private String contrato;
 
+    @Column
+    private Seniority seniority;
+
     public Empleado(){
 
     }
@@ -112,6 +115,14 @@ public class Empleado {
         this.fechaNacimiento = builder.fechaNacimiento;
         this.rol = builder.rol;
         this.contrato = builder.contrato;
+    }
+
+    public void setSeniority(Seniority seniority) {
+        this.seniority = seniority;
+    }
+
+    public Seniority getSeniority() {
+        return this.seniority;
     }
 
     public static class Builder {

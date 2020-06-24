@@ -1,12 +1,14 @@
 package com.sistemaGestion.controller;
 
+import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.service.EmpleadoService;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/empleados")
@@ -27,4 +29,8 @@ public class EmpleadoController {
         );
     }
 
+    @PutMapping
+    public String asignarSeniority() {
+        return "Seniority Asignada";
+    }
 }
