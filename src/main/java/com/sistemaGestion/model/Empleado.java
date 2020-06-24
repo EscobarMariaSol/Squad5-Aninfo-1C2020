@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.function.Consumer;
 
 @Entity
+@Table(indexes = { @Index(columnList = "legajo", unique = true) })
 public class Empleado {
 
     @Id
