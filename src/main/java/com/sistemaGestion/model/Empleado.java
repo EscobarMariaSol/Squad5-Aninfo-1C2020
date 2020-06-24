@@ -13,7 +13,6 @@ public class Empleado {
 
     @Column
     private String nombre;
-    private String seniority;
 
     @Column
     private String apellido;
@@ -57,22 +56,6 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-<<<<<<< HEAD
-    public Boolean es_lider_de_RRHH() {
-        return true;
-    }
-
-    public void setSeniority(String seniority) {
-        this.seniority = seniority;
-    }
-
-    public String getSeniority() {
-        return this.seniority;
-    }
-    public Boolean tieneSeniorityAsignada() {
-        return true;
-    }
-=======
     public String getApellido() {
         return apellido;
     }
@@ -195,9 +178,9 @@ public class Empleado {
     public String toString() {
         return String.format(
                 "nombre: " + nombre +
-                ", apellido: " + apellido +
-                ", dni: " + dni +
-                ", fechaNacimiento: " + fechaNacimiento.toString()
+                        ", apellido: " + apellido +
+                        ", dni: " + dni +
+                        ", fechaNacimiento: " + fechaNacimiento.toString()
         );
     }
 
@@ -217,5 +200,4 @@ public class Empleado {
                 fechaNacimiento.equals(empleado.fechaNacimiento);
     }
 
->>>>>>> b8c6d0610ab05edea5d441c2419ce9099d41efa7
 }
