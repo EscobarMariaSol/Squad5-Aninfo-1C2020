@@ -1,6 +1,6 @@
 # language: es
 
-Característica: asignar el rol a un empleado
+Característica: aplicar filtros para generar reportes
 
   Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
     para generar reportes de la información asociada a los filtros aplicados
