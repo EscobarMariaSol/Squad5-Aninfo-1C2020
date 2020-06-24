@@ -21,4 +21,7 @@ public class EmpleadoService {
         return empleadoRepository.findAll();
     }
 
+    public Empleado ingresarEmpleado(Empleado empleado) {
+        return empleadoRepository.save(empleado);
+    }
 }

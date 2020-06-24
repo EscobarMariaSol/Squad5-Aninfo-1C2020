@@ -1,6 +1,10 @@
 package com.sistemaGestion.assets;
 
 import com.sistemaGestion.model.Empleado;
+import com.sistemaGestion.model.EmpleadoRol;
+
+import java.util.List;
+import java.util.Map;
 
 public class EmpleadoFactory {
 
@@ -50,4 +54,15 @@ public class EmpleadoFactory {
         }).build();
     }
 
+    public static Empleado crearEmpleado(Map<String, String> atributosEmpleado) {
+        return new Empleado.Builder().con(empleadoData -> {
+            empleadoData.conId(Long.valueOf(1));
+            empleadoData.conNombre(atributosEmpleado.get("nombre"));
+            empleadoData.conApellido(atributosEmpleado.get("apellido"));
+            empleadoData.conDni(atributosEmpleado.get("dni"));
+            empleadoData.conFechaNacimiento(Constants.EMPLEADO_FECHA_NACIMIENTO_1);
+            empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
+            empleadoData.conContrato(atributosEmpleado.get("contrato"));
+        }).build();
+    }
 }
