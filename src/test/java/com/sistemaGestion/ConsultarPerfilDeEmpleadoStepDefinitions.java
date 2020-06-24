@@ -6,14 +6,12 @@ import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.java.After;
 import io.cucumber.java.es.Cuando;
-import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationTest {
 
@@ -23,41 +21,36 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     @Autowired
     private EmpleadoController empleadoController;
 
-    private Empleado liderRecursosHumanos;
-    private List<Empleado> coleccionEmpleados = new ArrayList<>();
+    private Empleado empleado;
     private ResponseEntity response;
 
-    //Dado
-    @Dado("^que soy un lider de recursos humanos$")
-    public void soy_lider_de_recursos_humanos() throws Throwable {
-        liderRecursosHumanos = EmpleadoFactory.crearLiderDeRecursosHumanos();
-    }
-
     // Y
-    @Y("existe el empleado {int}")
-    public void existeElEmpleado(int arg0) {
-
+    @Y("existe el empleado con legajo {string}")
+    public void existeElEmpleadoConLegajo(String arg0) {
+        empleado = EmpleadoFactory.crearEmpleado(3L);
+        empleadoRepository.save(empleado);
     }
 
-    @Y("no existe el empleado {int}")
-    public void noExisteElEmpleado(int arg0) {
+    @Y("no existe el empleado con legajo {string}")
+    public void noExisteElEmpleadoConLegajo(String arg0) {
 
     }
 
     // Cuando
-    @Cuando("consulto los datos del empleado {int}")
-    public void consultoLosDatosDelEmpleado(int arg0) {
-
+    @Cuando("consulto los datos del empleado con legajo {string}")
+    public void consultoLosDatosDelEmpleadoConLegajo(String arg0) {
+        response = empleadoController.consultarEmpleado(arg0);
     }
 
     // Entonces
-    @Entonces("obtengo los datos del empleado {int}")
-    public void obtengoLosDatosDelEmpleado(int arg0) {
-
+    @Entonces("obtengo los datos del empleado  con legajo {string}")
+    public void obtengoLosDatosDelEmpleadoConLegajo(String arg0) {
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
+        Assert.assertEquals(empleado, response.getBody());
     }
 
-    @Entonces("obtengo un mensaje indicando que el empleado {int} no pudo ser encontrado")
-    public void obtengoUnMensajeIndicandoQueElEmpleadoNoPudoSerEncontrado(int arg0) {
+    @Entonces("obtengo un mensaje indicando que el empleado con legajo {string} no pudo ser encontrado")
+    public void obtengoUnMensajeIndicandoQueElEmpleadoConLegajoNoPudoSerEncontrado(String arg0) {
     }
 
     @After
