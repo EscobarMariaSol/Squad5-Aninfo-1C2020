@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.function.Consumer;
 
 @Entity
+@Table(indexes = { @Index(columnList = "legajo", unique = true) })
 public class Empleado {
 
     @Id
@@ -113,6 +114,7 @@ public class Empleado {
         this.apellido = builder.apellido;
         this.dni = builder.dni;
         this.fechaNacimiento = builder.fechaNacimiento;
+        this.legajo = builder.legajo;
         this.rol = builder.rol;
         this.contrato = builder.contrato;
     }
@@ -131,6 +133,7 @@ public class Empleado {
         private String nombre;
         private String apellido;
         private String dni;
+        private String legajo;
         private LocalDate fechaNacimiento;
         private EmpleadoRol rol;
         private String contrato;
@@ -157,6 +160,11 @@ public class Empleado {
 
         public Builder conFechaNacimiento(LocalDate fechaNacimiento) {
             this.fechaNacimiento = fechaNacimiento;
+            return this;
+        }
+
+        public Builder conLegajo(String legajo) {
+            this.legajo = legajo;
             return this;
         }
 
