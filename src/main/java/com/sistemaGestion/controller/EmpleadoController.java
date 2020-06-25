@@ -1,5 +1,6 @@
 package com.sistemaGestion.controller;
 
+import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,27 @@ public class EmpleadoController {
         );
     }
 
-    @PostMapping(value = "/empleado/")
+    @PostMapping(value = "/")
     public ResponseEntity ingresarEmpleado(@RequestBody Empleado nuevoEmpleado) {
         return new ResponseEntity<>(
                 empleadoService.ingresarEmpleado(nuevoEmpleado),
                 HttpStatus.OK
         );
+    }
+
+    @GetMapping(value = "/{legajo}")
+    public ResponseEntity consultarEmpleado(@PathVariable("legajo") String legajo) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.consultarEmpleadoPorLegajo(legajo),
+                    HttpStatus.OK
+            );
+        } catch(EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
     }
 
 }

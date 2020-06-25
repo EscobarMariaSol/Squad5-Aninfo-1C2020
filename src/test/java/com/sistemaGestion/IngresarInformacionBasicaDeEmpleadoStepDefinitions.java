@@ -35,7 +35,7 @@ public class IngresarInformacionBasicaDeEmpleadoStepDefinitions {
         liderRecursosHumanos = EmpleadoFactory.crearLiderDeRecursosHumanos();
     }
 
-    @Y("^existe un empledo con  los siguientes atributos$")
+    @Y("^quiero guardar un empledo con  los siguientes atributos$")
     public void existeUnEmpleadoConLosSiguientesAtributos(DataTable empleadoDt) {
         List<Map<String, String>> empleados = empleadoDt.asMaps(String.class, String.class);
         empleado = EmpleadoFactory.crearEmpleado(empleados.get(0));

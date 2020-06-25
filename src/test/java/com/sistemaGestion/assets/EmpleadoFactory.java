@@ -3,6 +3,7 @@ package com.sistemaGestion.assets;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.EmpleadoRol;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ public class EmpleadoFactory {
                 empleadoData.conApellido(Constants.EMPLEADO_APELLIDO_1);
                 empleadoData.conDni(Constants.EMPLEADO_DNI_1);
                 empleadoData.conFechaNacimiento(Constants.EMPLEADO_FECHA_NACIMIENTO_1);
+                empleadoData.conLegajo(Constants.EMPLEADO_LEGAJO_1);
                 empleadoData.conRol(Constants.EMPLEADO_ROL_1);
                 empleadoData.conContrato(Constants.EMPLEADO_CONTRATO_1);
             }).build();
@@ -26,6 +28,7 @@ public class EmpleadoFactory {
                 empleadoData.conApellido(Constants.EMPLEADO_APELLIDO_2);
                 empleadoData.conDni(Constants.EMPLEADO_DNI_2);
                 empleadoData.conFechaNacimiento(Constants.EMPLEADO_FECHA_NACIMIENTO_2);
+                empleadoData.conLegajo(Constants.EMPLEADO_LEGAJO_2);
                 empleadoData.conRol(Constants.EMPLEADO_ROL_2);
                 empleadoData.conContrato(Constants.EMPLEADO_CONTRATO_2);
             }).build();
@@ -36,6 +39,7 @@ public class EmpleadoFactory {
                 empleadoData.conApellido(Constants.EMPLEADO_APELLIDO_3);
                 empleadoData.conDni(Constants.EMPLEADO_DNI_3);
                 empleadoData.conFechaNacimiento(Constants.EMPLEADO_FECHA_NACIMIENTO_3);
+                empleadoData.conLegajo(Constants.EMPLEADO_LEGAJO_3);
                 empleadoData.conRol(Constants.EMPLEADO_ROL_3);
                 empleadoData.conContrato(Constants.EMPLEADO_CONTRATO_3);
             }).build();
@@ -49,6 +53,7 @@ public class EmpleadoFactory {
             empleadoData.conApellido(Constants.LIDER_RRHH_APELLIDO);
             empleadoData.conDni(Constants.LIDER_RRHH_DNI);
             empleadoData.conFechaNacimiento(Constants.LIDER_RRHH_FECHA_NACIMIENTO);
+            empleadoData.conLegajo(Constants.LIDER_RRHH_LEGAJO);
             empleadoData.conRol(Constants.LIDER_RRHH_ROL);
             empleadoData.conContrato(Constants.LIDER_RRHH_CONTRATO);
         }).build();
@@ -60,7 +65,8 @@ public class EmpleadoFactory {
             empleadoData.conNombre(atributosEmpleado.get("nombre"));
             empleadoData.conApellido(atributosEmpleado.get("apellido"));
             empleadoData.conDni(atributosEmpleado.get("dni"));
-            empleadoData.conFechaNacimiento(Constants.EMPLEADO_FECHA_NACIMIENTO_1);
+            LocalDate fechaDeNacimiento = LocalDate.parse(atributosEmpleado.get("fechaDeNacimiento"));
+            empleadoData.conFechaNacimiento(fechaDeNacimiento);
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
             empleadoData.conContrato(atributosEmpleado.get("contrato"));
         }).build();
