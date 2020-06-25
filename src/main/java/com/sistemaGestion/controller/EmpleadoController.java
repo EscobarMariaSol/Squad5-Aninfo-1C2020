@@ -1,6 +1,7 @@
 package com.sistemaGestion.controller;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
+import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,14 @@ public class EmpleadoController {
     public ResponseEntity consultarEmpleados() {
         return new ResponseEntity<>(
                 empleadoService.consultarEmpleados(),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping(value = "/")
+    public ResponseEntity ingresarEmpleado(@RequestBody Empleado nuevoEmpleado) {
+        return new ResponseEntity<>(
+                empleadoService.ingresarEmpleado(nuevoEmpleado),
                 HttpStatus.OK
         );
     }

@@ -1,6 +1,11 @@
 package com.sistemaGestion.assets;
 
 import com.sistemaGestion.model.Empleado;
+import com.sistemaGestion.model.EmpleadoRol;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 public class EmpleadoFactory {
 
@@ -53,4 +58,20 @@ public class EmpleadoFactory {
             empleadoData.conContrato(Constants.LIDER_RRHH_CONTRATO);
         }).build();
     }
+<<<<<<< HEAD
+=======
+
+    public static Empleado crearEmpleado(Map<String, String> atributosEmpleado) {
+        return new Empleado.Builder().con(empleadoData -> {
+            empleadoData.conId(Long.valueOf(1));
+            empleadoData.conNombre(atributosEmpleado.get("nombre"));
+            empleadoData.conApellido(atributosEmpleado.get("apellido"));
+            empleadoData.conDni(atributosEmpleado.get("dni"));
+            LocalDate fechaDeNacimiento = LocalDate.parse(atributosEmpleado.get("fechaDeNacimiento"));
+            empleadoData.conFechaNacimiento(fechaDeNacimiento);
+            empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
+            empleadoData.conContrato(atributosEmpleado.get("contrato"));
+        }).build();
+    }
+>>>>>>> ba90c95bfc503d21285b40b77faa8fc66095eb77
 }
