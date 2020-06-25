@@ -1,14 +1,12 @@
 package com.sistemaGestion.controller;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
+import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/empleados")
@@ -25,6 +23,14 @@ public class EmpleadoController {
     public ResponseEntity consultarEmpleados() {
         return new ResponseEntity<>(
                 empleadoService.consultarEmpleados(),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping(value = "/")
+    public ResponseEntity ingresarEmpleado(@RequestBody Empleado nuevoEmpleado) {
+        return new ResponseEntity<>(
+                empleadoService.ingresarEmpleado(nuevoEmpleado),
                 HttpStatus.OK
         );
     }

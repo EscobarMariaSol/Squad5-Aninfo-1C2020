@@ -8,7 +8,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = {"pretty"})
+@CucumberOptions(plugin = {"pretty",  "json:target/report.json","html:target/Destination"})
 public class RunCucumberTest {
 
     private TestNGCucumberRunner testNGCucumberRunner;
@@ -22,5 +22,6 @@ public class RunCucumberTest {
     public void tearDownClass() throws Exception {
         testNGCucumberRunner.finish();
     }
+
 
 }
