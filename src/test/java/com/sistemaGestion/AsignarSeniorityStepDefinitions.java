@@ -30,8 +30,8 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
     private ResponseEntity response;
     private Long idEmpleado;
 
-    @Dado("que soy lider de recursos humanos")
-    public void que_soy_lider_de_recursos_humanos() {
+    @Dado("que soy Lider de Recursos Humanos")
+    public void que_soy_Lider_de_Recursos_Humanos() {
         // Write code here that turns the phrase above into concrete actions
         liderDeRecursosHumanos = EmpleadoFactory.crearLiderDeRecursosHumanos();
     }

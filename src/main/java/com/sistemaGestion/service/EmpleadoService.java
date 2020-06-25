@@ -33,7 +33,6 @@ public class EmpleadoService {
                         new EmpleadoException("Empleado with legajo " + legajo + " not found.")
                 );
     }
-<<<<<<< HEAD
 
     public Empleado asignarSeniorityAEmpleado(long id, String seniority) {
         empleado = consultarEmpleadoPorId(id);
@@ -47,6 +46,4 @@ public class EmpleadoService {
                         new EmpleadoException("Empleado with id " + id + " not found.")
                 );
     }
-=======
->>>>>>> ba90c95bfc503d21285b40b77faa8fc66095eb77
 }

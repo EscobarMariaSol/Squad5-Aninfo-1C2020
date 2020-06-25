@@ -58,8 +58,6 @@ public class EmpleadoFactory {
             empleadoData.conContrato(Constants.LIDER_RRHH_CONTRATO);
         }).build();
     }
-<<<<<<< HEAD
-=======
 
     public static Empleado crearEmpleado(Map<String, String> atributosEmpleado) {
         return new Empleado.Builder().con(empleadoData -> {
@@ -73,5 +71,4 @@ public class EmpleadoFactory {
             empleadoData.conContrato(atributosEmpleado.get("contrato"));
         }).build();
     }
->>>>>>> ba90c95bfc503d21285b40b77faa8fc66095eb77
 }
