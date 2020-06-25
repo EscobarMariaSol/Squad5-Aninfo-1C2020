@@ -50,18 +50,12 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
         response = empleadoController.asignarSeniority(idEmpleado, seniority);
     }
 
-    @Y("consulto el perfil del empleado con id {int}")
-    public void consulto_el_perfil_del_empleado_con_id(Integer id) {
+    @Entonces("al empleado con id {int} se le asigna la seniority {string}")
+    public void al_empleado_con_id_se_le_asigna_la_seniority(Integer id, String seniority) {
         // Write code here that turns the phrase above into concrete actions
         idEmpleado = Long.valueOf(id);
-        response = empleadoController.consultarEmpleadoPorId(idEmpleado);
-    }
-
-    @Entonces("obtengo la información del empleado actualizada.")
-    public void obtengo_la_información_del_empleado_actualizada() {
-        // Write code here that turns the phrase above into concrete actions
-        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertEquals(empleado, response.getBody());
+        empleado = empleadoRepository.findOne(idEmpleado);
+        Assert.assertEquals(empleado.getSeniority(), seniority);
     }
 
     @Y("no existe el empleado con id {int}")
@@ -87,4 +81,5 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
     public void tearDown() {
         empleadoRepository.deleteAll();
     }
+
 }

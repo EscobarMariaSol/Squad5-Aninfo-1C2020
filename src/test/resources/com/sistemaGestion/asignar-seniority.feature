@@ -7,8 +7,7 @@ Característica: Asignar seniority a un empleado
     Dado que soy Lider de Recursos Humanos
     Y existe un empleado con id 1
     Cuando asigno la seniority 'Junior' a dicho empleado
-    Y consulto el perfil del empleado con id 1
-    Entonces obtengo la información del empleado actualizada.
+    Entonces al empleado con id 1 se le asigna la seniority 'Junior'
 
   Escenario: Como lider de recursos humanos quiero asignar la seniority de un empleado,
   para así conocer la seniority del mismo.

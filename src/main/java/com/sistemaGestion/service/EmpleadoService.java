@@ -37,6 +37,7 @@ public class EmpleadoService {
     public Empleado asignarSeniorityAEmpleado(long id, String seniority) {
         empleado = consultarEmpleadoPorId(id);
         empleado.setSeniority(seniority);
+        empleadoRepository.save(empleado);
         return empleado;
     }
 
