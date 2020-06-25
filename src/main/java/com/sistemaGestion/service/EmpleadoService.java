@@ -1,5 +1,6 @@
 package com.sistemaGestion.service;
 
+import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,14 @@ public class EmpleadoService {
         return empleadoRepository.findAll();
     }
 
+    public Empleado ingresarEmpleado(Empleado empleado) {
+        return empleadoRepository.save(empleado);
+    }
+
+    public Empleado consultarEmpleadoPorLegajo(String legajo) {
+        return empleadoRepository.findByLegajo(legajo)
+                .orElseThrow( () ->
+                        new EmpleadoException("Empleado with legajo " + legajo + " not found.")
+                );
+    }
 }
