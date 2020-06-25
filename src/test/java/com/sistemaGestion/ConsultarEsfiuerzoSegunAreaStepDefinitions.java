@@ -1,4 +1,4 @@
-package com.sistemaGestion;
+package com.sistemaGestion.consultas;
 
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Entonces;

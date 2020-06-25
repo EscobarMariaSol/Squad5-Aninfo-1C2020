@@ -1,5 +1,6 @@
-package com.sistemaGestion;
+package com.sistemaGestion.consultas;
 
+import com.sistemaGestion.SpringIntegrationTest;
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.model.Empleado;
@@ -16,6 +17,7 @@ import io.cucumber.java.After;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
 

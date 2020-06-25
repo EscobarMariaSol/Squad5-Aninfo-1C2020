@@ -1,4 +1,4 @@
-package com.sistemaGestion;
+package com.sistemaGestion.consultas;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.model.Empleado;
