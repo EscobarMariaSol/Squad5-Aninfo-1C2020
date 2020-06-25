@@ -186,9 +186,9 @@ public class Empleado {
     public String toString() {
         return String.format(
                 "nombre: " + nombre +
-                ", apellido: " + apellido +
-                ", dni: " + dni +
-                ", fechaNacimiento: " + fechaNacimiento.toString()
+                        ", apellido: " + apellido +
+                        ", dni: " + dni +
+                        ", fechaNacimiento: " + fechaNacimiento.toString()
         );
     }
 
