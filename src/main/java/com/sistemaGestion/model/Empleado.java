@@ -119,12 +119,20 @@ public class Empleado {
         this.contrato = builder.contrato;
     }
 
-    public void setSeniority(Seniority seniority) {
-        this.seniority = seniority;
+    public void setSeniority(String seniority) {
+        if (seniority.equalsIgnoreCase("junior")) {
+            this.seniority = Seniority.Junior;
+        }
+        else if (seniority.equalsIgnoreCase("senior")) {
+            this.seniority = Seniority.Senior;
+        }
+        else if (seniority.equalsIgnoreCase("senior")) {
+            this.seniority = Seniority.SemiSenior;
+        }
     }
 
-    public Seniority getSeniority() {
-        return this.seniority;
+    public String getSeniority() {
+        return this.seniority.name();
     }
 
     public static class Builder {

@@ -53,16 +53,4 @@ public class EmpleadoFactory {
             empleadoData.conContrato(Constants.LIDER_RRHH_CONTRATO);
         }).build();
     }
-
-    public static Empleado crearDesarrollador() {
-        return new Empleado.Builder().con(empleadoData -> {
-            empleadoData.conId(Constants.DESARROLLADOR_ID);
-            empleadoData.conNombre(Constants.DESARROLLADOR_NOMBRE);
-            empleadoData.conApellido(Constants.DESARROLLADOR_APELLIDO);
-            empleadoData.conDni(Constants.DESARROLLADOR_DNI);
-            empleadoData.conFechaNacimiento(Constants.DESARROLLADOR_FECHA_NACIMIENTO);
-            empleadoData.conRol(Constants.DESARROLLADOR_ROL);
-            empleadoData.conContrato(Constants.DESARROLLADOR_CONTRATO);
-        }).build();
-    }
 }
