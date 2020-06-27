@@ -53,7 +53,6 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
     @Entonces("al empleado con id {int} se le asigna la seniority {string}")
     public void al_empleado_con_id_se_le_asigna_la_seniority(Integer id, String seniority) {
         // Write code here that turns the phrase above into concrete actions
-        idEmpleado = Long.valueOf(id);
         empleado = empleadoRepository.findOne(idEmpleado);
         Assert.assertEquals(empleado.getSeniority(), seniority);
     }
