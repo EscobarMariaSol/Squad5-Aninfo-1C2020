@@ -54,4 +54,12 @@ public class Constants {
     public final static String LIDER_RRHH_CONTRATO = FULL_TIME;
 
 
+    public static final Long DESARROLLADOR_ID = 4L;
+    public static final String DESARROLLADOR_NOMBRE = "Felipe";
+    public static final String DESARROLLADOR_APELLIDO = "Codeo";
+    public static final String DESARROLLADOR_DNI = "34567891";
+    public static final LocalDate DESARROLLADOR_FECHA_NACIMIENTO =
+            LocalDate.of(1990, 11, 23);
+    public static final EmpleadoRol DESARROLLADOR_ROL = EmpleadoRol.DESARROLLADOR;
+    public static final String DESARROLLADOR_CONTRATO = FULL_TIME;
 }
