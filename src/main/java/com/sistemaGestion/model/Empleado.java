@@ -33,6 +33,9 @@ public class Empleado {
     @Column
     private String contrato;
 
+    @Column
+    private Seniority seniority;
+
     public Empleado(){
 
     }
@@ -114,6 +117,22 @@ public class Empleado {
         this.legajo = builder.legajo;
         this.rol = builder.rol;
         this.contrato = builder.contrato;
+    }
+
+    public void setSeniority(String seniority) {
+        if (seniority.equalsIgnoreCase("junior")) {
+            this.seniority = Seniority.Junior;
+        }
+        else if (seniority.equalsIgnoreCase("senior")) {
+            this.seniority = Seniority.Senior;
+        }
+        else if (seniority.equalsIgnoreCase("senior")) {
+            this.seniority = Seniority.SemiSenior;
+        }
+    }
+
+    public String getSeniority() {
+        return this.seniority.name();
     }
 
     public static class Builder {

@@ -50,4 +50,33 @@ public class EmpleadoController {
         }
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity asignarSeniority(@PathVariable("id") long id, String seniority) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.asignarSeniorityAEmpleado(id, seniority),
+                    HttpStatus.OK
+            );
+        } catch(EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity consultarEmpleadoPorId(Long id) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.consultarEmpleadoPorId(id),
+                    HttpStatus.OK
+            );
+        } catch(EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
 }
