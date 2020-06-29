@@ -21,7 +21,7 @@ public class EmpleadoService {
     }
 
     public List<Empleado> consultarEmpleados() {
-        return empleadoRepository.findAll();
+        return empleadoRepository.findAllByActivoIsTrue();
     }
 
     public Empleado ingresarEmpleado(Empleado empleado) {
@@ -29,7 +29,7 @@ public class EmpleadoService {
     }
 
     public Empleado consultarEmpleadoPorLegajo(String legajo) {
-        return empleadoRepository.findByLegajo(legajo)
+        return empleadoRepository.findByLegajoAndActivoIsTrue(legajo)
                 .orElseThrow( () ->
                         new EmpleadoException("Empleado with legajo " + legajo + " not found.")
                 );
@@ -54,7 +54,7 @@ public class EmpleadoService {
                 .orElseThrow(() ->
                         new EmpleadoException("Empleado with legajo " + legajo + " not found.")
                 );
-        empleado.setActivo(true);
+        empleado.setActivo(false);
         return empleadoRepository.save(empleado);
     }
 
