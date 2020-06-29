@@ -79,4 +79,19 @@ public class EmpleadoController {
             );
         }
     }
+
+    @DeleteMapping(value = "/{legajo}")
+    public ResponseEntity darDeBajaEmpleado(@PathVariable("legajo") String legajo) {
+        try {
+            empleadoService.darDeBajaEmpleado(legajo);
+            return new ResponseEntity(
+                    HttpStatus.OK
+            );
+        } catch(EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
 }
