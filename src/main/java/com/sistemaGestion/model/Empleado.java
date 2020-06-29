@@ -135,6 +135,7 @@ public class Empleado {
         return this.seniority.name();
     }
 
+    
     public static class Builder {
 
         private Long id;
