@@ -37,6 +37,9 @@ public class Empleado {
     @Column
     private Seniority seniority;
 
+    @Column
+    private Boolean activo;
+
     @ManyToMany
     private Set<Proyecto> proyectos;
 
@@ -110,6 +113,14 @@ public class Empleado {
 
     public void setContrato(String contrato) {
         this.contrato = contrato;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public Set<Proyecto> getProyectos() {
