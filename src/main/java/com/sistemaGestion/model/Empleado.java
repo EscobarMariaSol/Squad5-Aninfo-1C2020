@@ -2,6 +2,7 @@ package com.sistemaGestion.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.function.Consumer;
 
 @Entity
@@ -35,6 +36,9 @@ public class Empleado {
 
     @Column
     private Seniority seniority;
+
+    @ManyToMany
+    private Set<Proyecto> proyectos;
 
     public Empleado(){
 
@@ -106,6 +110,14 @@ public class Empleado {
 
     public void setContrato(String contrato) {
         this.contrato = contrato;
+    }
+
+    public Set<Proyecto> getProyectos() {
+        return proyectos;
+    }
+
+    public void setProyectos(Set<Proyecto> proyectos) {
+        this.proyectos = proyectos;
     }
 
     public Empleado(Builder builder) {
