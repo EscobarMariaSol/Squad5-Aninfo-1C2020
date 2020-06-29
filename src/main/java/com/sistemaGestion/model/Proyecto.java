@@ -22,4 +22,35 @@ public class Proyecto {
     @ManyToMany
     private Set<Empleado> empleados;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Set<Tarea> getTareas() {
+        return tareas;
+    }
+
+    public void setTareas(Set<Tarea> tareas) {
+        this.tareas = tareas;
+    }
+
+    public Set<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(Set<Empleado> empleados) {
+        this.empleados = empleados;
+    }
 }
