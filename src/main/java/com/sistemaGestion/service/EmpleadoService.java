@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.sistemaGestion.model.Empleado;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadoService {
@@ -47,4 +48,14 @@ public class EmpleadoService {
                         new EmpleadoException("Empleado with id " + id + " not found.")
                 );
     }
+
+    public Empleado darDeBajaEmpleado(String legajo) {
+        Empleado empleado = empleadoRepository.findByLegajo(legajo)
+                .orElseThrow(() ->
+                        new EmpleadoException("Empleado with legajo " + legajo + " not found.")
+                );
+        empleado.setActivo(true);
+        return empleadoRepository.save(empleado);
+    }
+
 }
