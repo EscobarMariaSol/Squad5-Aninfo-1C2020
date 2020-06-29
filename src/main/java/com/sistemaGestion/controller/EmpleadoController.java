@@ -35,19 +35,42 @@ public class EmpleadoController {
         );
     }
 
-    @GetMapping(value = "/{legajo}")
-    public ResponseEntity consultarEmpleado(@PathVariable("legajo") String legajo) {
+    @GetMapping
+    public ResponseEntity consultarEmpleado(
+            @RequestParam(required = false) String legajo,
+            @RequestParam(required = false) Long id
+    ) {
         try {
-            return new ResponseEntity(
-                    empleadoService.consultarEmpleadoPorLegajo(legajo),
-                    HttpStatus.OK
-            );
+            if ((legajo != null && id != null) || legajo == null && id == null){
+                return new ResponseEntity(
+                        "Por favor ingrese un único valor de búsqueda.",
+                        HttpStatus.BAD_REQUEST
+                );
+            } else if (legajo != null) {
+                return consultarEmpleadoPorLegajo(legajo);
+            } else {
+                return consultarEmpleadoPorId(id);
+            }
         } catch(EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.NOT_FOUND
             );
         }
+    }
+
+    private ResponseEntity consultarEmpleadoPorLegajo(String legajo) {
+        return new ResponseEntity(
+                empleadoService.consultarEmpleadoPorLegajo(legajo),
+                HttpStatus.OK
+        );
+    }
+
+    private ResponseEntity consultarEmpleadoPorId(Long id) {
+        return new ResponseEntity(
+                empleadoService.consultarEmpleadoPorId(id),
+                HttpStatus.OK
+        );
     }
 
     @PutMapping(value = "/{id}")
@@ -55,21 +78,6 @@ public class EmpleadoController {
         try {
             return new ResponseEntity(
                     empleadoService.asignarSeniorityAEmpleado(id, seniority),
-                    HttpStatus.OK
-            );
-        } catch(EmpleadoException e) {
-            return new ResponseEntity(
-                    e.getMessage(),
-                    HttpStatus.NOT_FOUND
-            );
-        }
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity consultarEmpleadoPorId(Long id) {
-        try {
-            return new ResponseEntity(
-                    empleadoService.consultarEmpleadoPorId(id),
                     HttpStatus.OK
             );
         } catch(EmpleadoException e) {
