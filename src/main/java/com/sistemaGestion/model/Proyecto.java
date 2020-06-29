@@ -16,6 +16,10 @@ public class Proyecto {
     @Column
     private String codigo;
 
-    
+    @OneToMany
+    private Set<Tarea> tareas;
+
+    @ManyToMany
+    private Set<Empleado> empleados;
 
 }
