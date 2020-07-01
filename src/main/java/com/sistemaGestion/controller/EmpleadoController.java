@@ -55,18 +55,42 @@ public class EmpleadoController {
     }
 
     @PutMapping(value = "/{legajo}")
-    public ResponseEntity asignarSeniority(@PathVariable("legajo") String legajo, String seniority) {
+    public ResponseEntity actualizarEmpleado(
+            @PathVariable("legajo") String legajo,
+            @RequestParam(required = false) String seniority,
+            @RequestParam(required = false) String rol
+    ) {
         try {
-            return new ResponseEntity(
-                    empleadoService.asignarSeniorityAEmpleado(legajo, seniority),
-                    HttpStatus.OK
-            );
+            if ((seniority != null && rol != null) || (seniority == null && rol == null))
+                return new ResponseEntity(
+                        "Por favor ingrese un campo.",
+                        HttpStatus.BAD_REQUEST
+                );
+            if (seniority != null) {
+                return asignarSeniority(legajo, seniority);
+            } else {
+                return asignarRol(legajo, rol);
+            }
         } catch(EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.NOT_FOUND
             );
         }
+    }
+
+    private ResponseEntity asignarSeniority(String legajo, String seniority) {
+        return new ResponseEntity(
+                empleadoService.asignarSeniorityAEmpleado(legajo, seniority),
+                HttpStatus.OK
+        );
+    }
+
+    private ResponseEntity asignarRol(String legajo, String rol) {
+        return new ResponseEntity(
+                empleadoService.asignarRolAEmpleado(legajo, rol),
+                HttpStatus.OK
+        );
     }
 
     @DeleteMapping(value = "/{legajo}")
@@ -80,21 +104,6 @@ public class EmpleadoController {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST
-            );
-        }
-    }
-
-    @PutMapping(value = "/{legajo}")
-    public ResponseEntity asignarRol(String legajo, String rol) {
-        try {
-            return new ResponseEntity(
-                    empleadoService.asignarRolAEmpleado(legajo, rol),
-                    HttpStatus.OK
-            );
-        } catch(EmpleadoException e) {
-            return new ResponseEntity(
-                    e.getMessage(),
-                    HttpStatus.NOT_FOUND
             );
         }
     }
