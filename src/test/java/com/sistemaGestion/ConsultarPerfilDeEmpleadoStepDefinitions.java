@@ -27,7 +27,7 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     // Y
     @Y("existe el empleado con legajo {string}")
     public void existeElEmpleadoConLegajo(String arg0) {
-        empleado = EmpleadoFactory.crearEmpleado(3L);
+        empleado = EmpleadoFactory.crearEmpleado(arg0);
         empleadoRepository.save(empleado);
     }
 
