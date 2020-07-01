@@ -13,7 +13,6 @@ import java.util.List;
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-    private Empleado empleado;
 
     @Autowired
     public EmpleadoService(EmpleadoRepository empleadoRepository) {
@@ -36,7 +35,7 @@ public class EmpleadoService {
     }
 
     public Empleado asignarSeniorityAEmpleado(long id, String seniority) {
-        empleado = consultarEmpleadoPorId(id);
+        Empleado empleado = consultarEmpleadoPorId(id);
         empleado.setSeniority(seniority);
         empleadoRepository.save(empleado);
         return empleado;
@@ -50,7 +49,7 @@ public class EmpleadoService {
     }
 
     public Empleado asignarRolAEmpleado(String legajo, String rol) {
-        empleado = consultarEmpleadoPorLegajo(legajo);
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
         EmpleadoRol nuevoRol = EmpleadoRol.valueOf(rol.toUpperCase());
         empleado.setRol(nuevoRol);
         empleadoRepository.save(empleado);
