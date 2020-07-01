@@ -2,8 +2,10 @@ package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.EmpleadoRepository;
+import com.sun.org.apache.bcel.internal.generic.ATHROW;
 import io.cucumber.java.After;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
@@ -24,7 +26,6 @@ public class AsignarRolStepDefinitions {
 
     private Empleado liderDeRecursosHumanos, empleado;
     private ResponseEntity response;
-    private Long idEmpleado;
 
     @Dado("que soy lider de Recursos Humanos y quiero asignar el rol a un empleado")
     public void que_soy_lider_de_Recursos_Humanos_y_quiero_asignar_el_rol_a_un_empleado() {
@@ -48,7 +49,9 @@ public class AsignarRolStepDefinitions {
     @Entonces("el rol {string} queda registrado en la informacion personal del empleado con legajo {string}.")
     public void el_rol_queda_registrado_en_la_informacion_personal_del_empleado_con_legajo(String rol, String legajo) {
         // Write code here that turns the phrase above into concrete actions
-        empleado = empleadoRepository.findOneByLegajo(legajo);
+        empleado = empleadoRepository.findByLegajo(legajo).orElseThrow( () ->
+                new EmpleadoException("Empleado with legajo " + legajo + " not found.")
+        );
         Assert.assertEquals(empleado.getRol().name(), rol.toUpperCase());
     }
 
