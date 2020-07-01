@@ -118,16 +118,6 @@ public class Empleado {
         this.proyectos = proyectos;
     }
 
-    public Empleado(Builder builder) {
-        this.nombre = builder.nombre;
-        this.apellido = builder.apellido;
-        this.dni = builder.dni;
-        this.fechaNacimiento = builder.fechaNacimiento;
-        this.legajo = builder.legajo;
-        this.rol = builder.rol;
-        this.contrato = builder.contrato;
-    }
-
     public void setSeniority(String seniority) {
         if (seniority.equalsIgnoreCase("junior")) {
             this.seniority = Seniority.Junior;
@@ -143,7 +133,18 @@ public class Empleado {
     public String getSeniority() {
         return this.seniority.name();
     }
-    
+
+    public Empleado(Builder builder) {
+        this.nombre = builder.nombre;
+        this.apellido = builder.apellido;
+        this.dni = builder.dni;
+        this.fechaNacimiento = builder.fechaNacimiento;
+        this.legajo = builder.legajo;
+        this.rol = builder.rol;
+        this.contrato = builder.contrato;
+        this.activo = builder.activo;
+    }
+
     public static class Builder {
 
         private String nombre;
@@ -153,6 +154,7 @@ public class Empleado {
         private LocalDate fechaNacimiento;
         private EmpleadoRol rol;
         private String contrato;
+        private Boolean activo;
 
         public Builder conNombre(String nombre) {
             this.nombre = nombre;
@@ -186,6 +188,11 @@ public class Empleado {
 
         public Builder conContrato(String contrato) {
             this.contrato = contrato;
+            return this;
+        }
+
+        public Builder conActivo(Boolean activo) {
+            this.activo = activo;
             return this;
         }
 
