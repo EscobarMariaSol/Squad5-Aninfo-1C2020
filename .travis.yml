@@ -1,0 +1,10 @@
+language: java
+
+jdk: openjdk12
+
+deploy:
+  provider: heroku
+  app: mapache-recursos
+  skip_cleanup: true
+  api_key:
+    secure: 66e3c09e-0857-447f-beab-737c41504b46
