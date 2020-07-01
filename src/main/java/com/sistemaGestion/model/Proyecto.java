@@ -15,9 +15,6 @@ public class Proyecto {
     @OneToMany
     private Set<Tarea> tareas;
 
-    @ManyToOne
-    private Empleado empleado;
-
     public String getCodigo() {
         return codigo;
     }
