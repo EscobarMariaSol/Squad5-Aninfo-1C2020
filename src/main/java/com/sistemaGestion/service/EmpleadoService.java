@@ -13,7 +13,6 @@ import java.util.Optional;
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-    private Empleado empleado;
 
     @Autowired
     public EmpleadoService(EmpleadoRepository empleadoRepository) {
@@ -36,10 +35,19 @@ public class EmpleadoService {
     }
 
     public Empleado asignarSeniorityAEmpleado(String legajo, String seniority) {
-        empleado = consultarEmpleadoPorLegajo(legajo);
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
         empleado.setSeniority(seniority);
         empleadoRepository.save(empleado);
         return empleado;
+    }
+
+    private void validarDarDeBaja(Empleado empleado) {
+        if (empleado.getProyectos().size() > 0)
+            throw new EmpleadoException(
+                    "No se puede dar de baja al empleado con legajo: " +
+                    empleado.getLegajo() +
+                    " porque forma parte de algún proyecto."
+            );
     }
 
     public Empleado darDeBajaEmpleado(String legajo) {
@@ -47,6 +55,7 @@ public class EmpleadoService {
                 .orElseThrow(() ->
                         new EmpleadoException("Empleado with legajo " + legajo + " not found.")
                 );
+        validarDarDeBaja(empleado);
         empleado.setActivo(false);
         return empleadoRepository.save(empleado);
     }
