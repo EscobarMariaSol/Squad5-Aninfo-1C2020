@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {
+public interface EmpleadoRepository extends JpaRepository<Empleado, String> {
 
     Optional<Empleado> findByLegajo(String legajo);
 
