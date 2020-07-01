@@ -2,6 +2,7 @@ package com.sistemaGestion.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -35,11 +36,11 @@ public class Empleado {
     @Column
     private Boolean activo;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Proyecto> proyectos;
 
     public Empleado(){
-
+        this.proyectos = new HashSet<>();
     }
 
     public Empleado(String nombre) {
@@ -143,6 +144,7 @@ public class Empleado {
         this.rol = builder.rol;
         this.contrato = builder.contrato;
         this.activo = builder.activo;
+        this.proyectos = builder.proyectos;
     }
 
     public static class Builder {
@@ -155,6 +157,7 @@ public class Empleado {
         private EmpleadoRol rol;
         private String contrato;
         private Boolean activo;
+        private Set<Proyecto> proyectos;
 
         public Builder conNombre(String nombre) {
             this.nombre = nombre;
@@ -193,6 +196,11 @@ public class Empleado {
 
         public Builder conActivo(Boolean activo) {
             this.activo = activo;
+            return this;
+        }
+
+        public Builder conProyectos(Set<Proyecto> proyectos) {
+            this.proyectos = proyectos;
             return this;
         }
 
