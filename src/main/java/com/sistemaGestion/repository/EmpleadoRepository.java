@@ -15,4 +15,5 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, String> {
     Optional<Empleado> findByLegajoAndActivoIsTrue(String legajo);
 
     List<Empleado> findAllByActivoIsTrue();
+
 }
