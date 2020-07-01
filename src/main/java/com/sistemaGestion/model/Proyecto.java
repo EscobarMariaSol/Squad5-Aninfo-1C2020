@@ -19,8 +19,8 @@ public class Proyecto {
     @OneToMany
     private Set<Tarea> tareas;
 
-    @ManyToMany
-    private Set<Empleado> empleados;
+    @ManyToOne
+    private Empleado empleado;
 
     public Long getId() {
         return id;
@@ -46,11 +46,4 @@ public class Proyecto {
         this.tareas = tareas;
     }
 
-    public Set<Empleado> getEmpleados() {
-        return empleados;
-    }
-
-    public void setEmpleados(Set<Empleado> empleados) {
-        this.empleados = empleados;
-    }
 }
