@@ -4,6 +4,7 @@ import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.EmpleadoRepository;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Entonces;
@@ -12,6 +13,9 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Map;
 
 public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationTest {
 
@@ -25,9 +29,10 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     private ResponseEntity response;
 
     // Y
-    @Y("existe el empleado con legajo {string}")
-    public void existeElEmpleadoConLegajo(String arg0) {
-        empleado = EmpleadoFactory.crearEmpleado(arg0);
+    @Y("^existe el empleado con los atributos$")
+    public void existeElEmpleadoConLosAtributos(DataTable empleadoDt) {
+        List<Map<String, String>> empleados = empleadoDt.asMaps(String.class, String.class);
+        empleado = EmpleadoFactory.crearEmpleado(empleados.get(0));
         empleadoRepository.save(empleado);
     }
 
@@ -37,12 +42,13 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     }
 
     // Cuando
-    @Cuando("consulto los datos del empleado con legajo {string}")
-    public void consultoLosDatosDelEmpleadoConLegajo(String arg0) {
-        response = empleadoController.consultarEmpleado(arg0);
-    }
 
+    @Cuando("consulto los datos del empleado con legajo {string}")
+    public void consultoLosDatosDelEmpleadoConLegajo(String legajo) {
+        response = empleadoController.consultarEmpleado(legajo);
+    }
     // Entonces
+
     @Entonces("obtengo los datos del empleado  con legajo {string}")
     public void obtengoLosDatosDelEmpleadoConLegajo(String arg0) {
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -59,5 +65,4 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     public void tearDown() {
         empleadoRepository.deleteAll();
     }
-
 }
