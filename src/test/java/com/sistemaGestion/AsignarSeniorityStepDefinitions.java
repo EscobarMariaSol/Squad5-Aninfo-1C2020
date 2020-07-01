@@ -36,43 +36,28 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
         liderDeRecursosHumanos = EmpleadoFactory.crearLiderDeRecursosHumanos();
     }
 
-    @Y("existe un empleado con legajo {string}")
-    public void existe_un_empleado_con_legajo(String legajo) {
-        // Write code here that turns the phrase above into concrete actions
+    @Cuando("asigno la seniority {string} al empleado con legajo {string}")
+    public void asignoLaSeniorityJuniorAlEmpleadoConLegajo(String seniority, String legajo) {
         legajoEmpleado = legajo;
-        empleado = EmpleadoFactory.crearEmpleado(legajo);
-        empleadoRepository.save(empleado);
-    }
-
-    @Cuando("asigno la seniority {string} a dicho empleado")
-    public void asigno_la_seniority_a_dicho_empleado(String seniority) {
-        // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.asignarSeniority(legajoEmpleado, seniority);
+        response = empleadoController.asignarSeniority(legajo, seniority);
     }
 
     @Entonces("al empleado con legajo {string} se le asigna la seniority {string}")
     public void al_empleado_con_legajo_se_le_asigna_la_seniority(String legajo, String seniority) {
         // Write code here that turns the phrase above into concrete actions
-        Empleado empleado = empleadoRepository.findByLegajo(legajoEmpleado).orElse(null);
+        empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
         Assert.assertEquals(empleado.getSeniority(), seniority);
     }
 
-    @Cuando("quiero asignar la seniority {string} a dicho empleado")
-    public void quiero_asignar_la_seniority_a_dicho_empleado(String seniority) {
-        // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.asignarSeniority(legajoEmpleado, seniority);
-    }
-
-    @Entonces("obtengo un mensaje indicando que el empleado con id {int} no pudo ser encontrado")
-    public void obtengo_un_mensaje_indicando_que_el_empleado_con_id_no_pudo_ser_encontrado(Integer int1) {
+    @Entonces("obtengo un mensaje indicando que el empleado con legajo {string} no fue encontrado")
+    public void obtengo_un_mensaje_indicando_que_el_empleado_con_legajo_no_fue_encontrado(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        Assert.assertEquals("Empleado with id " + legajoEmpleado + " not found.", response.getBody());
+        Assert.assertEquals("Empleado with legajo " + legajo + " not found.", response.getBody());
     }
 
     @After
     public void tearDown() {
         empleadoRepository.deleteAll();
     }
-
 }
