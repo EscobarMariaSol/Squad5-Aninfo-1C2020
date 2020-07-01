@@ -28,7 +28,7 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
 
     private Empleado liderDeRecursosHumanos, empleado;
     private ResponseEntity response;
-    private Long idEmpleado;
+    private String legajoEmpleado;
 
     @Dado("que soy Lider de Recursos Humanos")
     public void que_soy_Lider_de_Recursos_Humanos() {
@@ -36,49 +36,28 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
         liderDeRecursosHumanos = EmpleadoFactory.crearLiderDeRecursosHumanos();
     }
 
-    @Y("existe un empleado con id {int}")
-    public void existe_un_empleado_con_id(Integer id) {
-        // Write code here that turns the phrase above into concrete actions
-        idEmpleado = Long.valueOf(id);
-        empleado = EmpleadoFactory.crearEmpleado(idEmpleado);
-        empleadoRepository.save(empleado);
+    @Cuando("asigno la seniority {string} al empleado con legajo {string}")
+    public void asignoLaSeniorityJuniorAlEmpleadoConLegajo(String seniority, String legajo) {
+        legajoEmpleado = legajo;
+        response = empleadoController.actualizarEmpleado(legajo, seniority, null);
     }
 
-    @Cuando("asigno la seniority {string} a dicho empleado")
-    public void asigno_la_seniority_a_dicho_empleado(String seniority) {
+    @Entonces("al empleado con legajo {string} se le asigna la seniority {string}")
+    public void al_empleado_con_legajo_se_le_asigna_la_seniority(String legajo, String seniority) {
         // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.asignarSeniority(idEmpleado, seniority);
-    }
-
-    @Entonces("al empleado con id {int} se le asigna la seniority {string}")
-    public void al_empleado_con_id_se_le_asigna_la_seniority(Integer id, String seniority) {
-        // Write code here that turns the phrase above into concrete actions
-        empleado = empleadoRepository.findOne(idEmpleado);
+        empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
         Assert.assertEquals(empleado.getSeniority(), seniority);
     }
 
-    @Y("no existe el empleado con id {int}")
-    public void no_existe_el_empleado_con_id(Integer id) {
-        // Write code here that turns the phrase above into concrete actions
-        idEmpleado = Long.valueOf(id);
-    }
-
-    @Cuando("quiero asignar la seniority {string} a dicho empleado")
-    public void quiero_asignar_la_seniority_a_dicho_empleado(String seniority) {
-        // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.asignarSeniority(idEmpleado, seniority);
-    }
-
-    @Entonces("obtengo un mensaje indicando que el empleado con id {int} no pudo ser encontrado")
-    public void obtengo_un_mensaje_indicando_que_el_empleado_con_id_no_pudo_ser_encontrado(Integer int1) {
+    @Entonces("obtengo un mensaje indicando que el empleado con legajo {string} no fue encontrado")
+    public void obtengo_un_mensaje_indicando_que_el_empleado_con_legajo_no_fue_encontrado(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        Assert.assertEquals("Empleado with id " + idEmpleado + " not found.", response.getBody());
+        Assert.assertEquals("Empleado with legajo " + legajo + " not found.", response.getBody());
     }
 
     @After
     public void tearDown() {
         empleadoRepository.deleteAll();
     }
-
 }

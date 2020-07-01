@@ -38,10 +38,7 @@ public class EmpleadoController {
     @GetMapping(value = "/{legajo}")
     public ResponseEntity consultarEmpleado(@PathVariable("legajo") String legajo) {
         try {
-            return new ResponseEntity(
-                    empleadoService.consultarEmpleadoPorLegajo(legajo),
-                    HttpStatus.OK
-            );
+            return consultarEmpleadoPorLegajo(legajo);
         } catch(EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
@@ -50,47 +47,63 @@ public class EmpleadoController {
         }
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity asignarSeniority(@PathVariable("id") long id, String seniority) {
-        try {
-            return new ResponseEntity(
-                    empleadoService.asignarSeniorityAEmpleado(id, seniority),
-                    HttpStatus.OK
-            );
-        } catch(EmpleadoException e) {
-            return new ResponseEntity(
-                    e.getMessage(),
-                    HttpStatus.NOT_FOUND
-            );
-        }
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity consultarEmpleadoPorId(Long id) {
-        try {
-            return new ResponseEntity(
-                    empleadoService.consultarEmpleadoPorId(id),
-                    HttpStatus.OK
-            );
-        } catch(EmpleadoException e) {
-            return new ResponseEntity(
-                    e.getMessage(),
-                    HttpStatus.NOT_FOUND
-            );
-        }
+    private ResponseEntity consultarEmpleadoPorLegajo(String legajo) {
+        return new ResponseEntity(
+                empleadoService.consultarEmpleadoPorLegajo(legajo),
+                HttpStatus.OK
+        );
     }
 
     @PutMapping(value = "/{legajo}")
-    public ResponseEntity asignarRol(String legajo, String rol) {
+    public ResponseEntity actualizarEmpleado(
+            @PathVariable("legajo") String legajo,
+            @RequestParam(required = false) String seniority,
+            @RequestParam(required = false) String rol
+    ) {
         try {
+            if ((seniority != null && rol != null) || (seniority == null && rol == null))
+                return new ResponseEntity(
+                        "Por favor ingrese un campo.",
+                        HttpStatus.BAD_REQUEST
+                );
+            if (seniority != null) {
+                return asignarSeniority(legajo, seniority);
+            } else {
+                return asignarRol(legajo, rol);
+            }
+        } catch(EmpleadoException e) {
             return new ResponseEntity(
-                    empleadoService.asignarRolAEmpleado(legajo, rol),
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
+
+    private ResponseEntity asignarSeniority(String legajo, String seniority) {
+        return new ResponseEntity(
+                empleadoService.asignarSeniorityAEmpleado(legajo, seniority),
+                HttpStatus.OK
+        );
+    }
+
+    private ResponseEntity asignarRol(String legajo, String rol) {
+        return new ResponseEntity(
+                empleadoService.asignarRolAEmpleado(legajo, rol),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping(value = "/{legajo}")
+    public ResponseEntity darDeBajaEmpleado(@PathVariable("legajo") String legajo) {
+        try {
+            empleadoService.darDeBajaEmpleado(legajo);
+            return new ResponseEntity(
                     HttpStatus.OK
             );
         } catch(EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.BAD_REQUEST
             );
         }
     }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.sistemaGestion.model.Empleado;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadoService {
@@ -20,7 +21,7 @@ public class EmpleadoService {
     }
 
     public List<Empleado> consultarEmpleados() {
-        return empleadoRepository.findAll();
+        return empleadoRepository.findAllByActivoIsTrue();
     }
 
     public Empleado ingresarEmpleado(Empleado empleado) {
@@ -28,24 +29,36 @@ public class EmpleadoService {
     }
 
     public Empleado consultarEmpleadoPorLegajo(String legajo) {
-        return empleadoRepository.findByLegajo(legajo)
+        return empleadoRepository.findByLegajoAndActivoIsTrue(legajo)
                 .orElseThrow( () ->
                         new EmpleadoException("Empleado with legajo " + legajo + " not found.")
                 );
     }
 
-    public Empleado asignarSeniorityAEmpleado(long id, String seniority) {
-        Empleado empleado = consultarEmpleadoPorId(id);
+    public Empleado asignarSeniorityAEmpleado(String legajo, String seniority) {
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
         empleado.setSeniority(seniority);
         empleadoRepository.save(empleado);
         return empleado;
     }
 
-    public Empleado consultarEmpleadoPorId(Long id) {
-        return empleadoRepository.findById(id)
-                .orElseThrow( () ->
-                        new EmpleadoException("Empleado with id " + id + " not found.")
+    private void validarDarDeBaja(Empleado empleado) {
+        if (empleado.getProyectos().size() > 0)
+            throw new EmpleadoException(
+                    "No se puede dar de baja al empleado con legajo: " +
+                    empleado.getLegajo() +
+                    " porque forma parte de algún proyecto."
+            );
+    }
+
+    public Empleado darDeBajaEmpleado(String legajo) {
+        Empleado empleado = empleadoRepository.findByLegajo(legajo)
+                .orElseThrow(() ->
+                        new EmpleadoException("Empleado with legajo " + legajo + " not found.")
                 );
+        validarDarDeBaja(empleado);
+        empleado.setActivo(false);
+        return empleadoRepository.save(empleado);
     }
 
     public Empleado asignarRolAEmpleado(String legajo, String rol) {
@@ -55,4 +68,5 @@ public class EmpleadoService {
         empleadoRepository.save(empleado);
         return empleado;
     }
+
 }

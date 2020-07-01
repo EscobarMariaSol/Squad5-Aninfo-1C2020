@@ -2,15 +2,15 @@ package com.sistemaGestion.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Consumer;
 
 @Entity
-@Table(indexes = { @Index(columnList = "legajo", unique = true) })
 public class Empleado {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private String legajo;
 
     @Column
     private String nombre;
@@ -25,9 +25,6 @@ public class Empleado {
     private LocalDate fechaNacimiento;
 
     @Column
-    private String legajo;
-
-    @Column
     private EmpleadoRol rol;
 
     @Column
@@ -36,20 +33,18 @@ public class Empleado {
     @Column
     private Seniority seniority;
 
-    public Empleado(){
+    @Column
+    private Boolean activo;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Proyecto> proyectos;
+
+    public Empleado(){
+        this.proyectos = new HashSet<>();
     }
 
     public Empleado(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -108,15 +103,20 @@ public class Empleado {
         this.contrato = contrato;
     }
 
-    public Empleado(Builder builder) {
-        this.id = builder.id;
-        this.nombre = builder.nombre;
-        this.apellido = builder.apellido;
-        this.dni = builder.dni;
-        this.fechaNacimiento = builder.fechaNacimiento;
-        this.legajo = builder.legajo;
-        this.rol = builder.rol;
-        this.contrato = builder.contrato;
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public Set<Proyecto> getProyectos() {
+        return proyectos;
+    }
+
+    public void setProyectos(Set<Proyecto> proyectos) {
+        this.proyectos = proyectos;
     }
 
     public void setSeniority(String seniority) {
@@ -135,10 +135,20 @@ public class Empleado {
         return this.seniority.name();
     }
 
-    
+    public Empleado(Builder builder) {
+        this.nombre = builder.nombre;
+        this.apellido = builder.apellido;
+        this.dni = builder.dni;
+        this.fechaNacimiento = builder.fechaNacimiento;
+        this.legajo = builder.legajo;
+        this.rol = builder.rol;
+        this.contrato = builder.contrato;
+        this.activo = builder.activo;
+        this.proyectos = builder.proyectos;
+    }
+
     public static class Builder {
 
-        private Long id;
         private String nombre;
         private String apellido;
         private String dni;
@@ -146,11 +156,8 @@ public class Empleado {
         private LocalDate fechaNacimiento;
         private EmpleadoRol rol;
         private String contrato;
-
-        public Builder conId(Long id) {
-            this.id = id;
-            return this;
-        }
+        private Boolean activo;
+        private Set<Proyecto> proyectos;
 
         public Builder conNombre(String nombre) {
             this.nombre = nombre;
@@ -184,6 +191,16 @@ public class Empleado {
 
         public Builder conContrato(String contrato) {
             this.contrato = contrato;
+            return this;
+        }
+
+        public Builder conActivo(Boolean activo) {
+            this.activo = activo;
+            return this;
+        }
+
+        public Builder conProyectos(Set<Proyecto> proyectos) {
+            this.proyectos = proyectos;
             return this;
         }
 

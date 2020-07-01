@@ -9,10 +9,9 @@ import java.util.Map;
 
 public class EmpleadoFactory {
 
-    public static Empleado crearEmpleado(Long id) {
-        if (id.equals(Constants.EMPLEADO_ID_1)) {
+    public static Empleado crearEmpleado(String legajo) {
+        if (legajo.equals(Constants.EMPLEADO_LEGAJO_1)) {
             return new Empleado.Builder().con(empleadoData -> {
-                empleadoData.conId(id);
                 empleadoData.conNombre(Constants.EMPLEADO_NOMBRE_1);
                 empleadoData.conApellido(Constants.EMPLEADO_APELLIDO_1);
                 empleadoData.conDni(Constants.EMPLEADO_DNI_1);
@@ -21,9 +20,8 @@ public class EmpleadoFactory {
                 empleadoData.conRol(Constants.EMPLEADO_ROL_1);
                 empleadoData.conContrato(Constants.EMPLEADO_CONTRATO_1);
             }).build();
-        } else if (id.equals(Constants.EMPLEADO_ID_2)) {
+        } else if (legajo.equals(Constants.EMPLEADO_LEGAJO_2)) {
             return new Empleado.Builder().con(empleadoData -> {
-                empleadoData.conId(id);
                 empleadoData.conNombre(Constants.EMPLEADO_NOMBRE_2);
                 empleadoData.conApellido(Constants.EMPLEADO_APELLIDO_2);
                 empleadoData.conDni(Constants.EMPLEADO_DNI_2);
@@ -34,7 +32,6 @@ public class EmpleadoFactory {
             }).build();
         } else {
             return new Empleado.Builder().con(empleadoData -> {
-                empleadoData.conId(id);
                 empleadoData.conNombre(Constants.EMPLEADO_NOMBRE_3);
                 empleadoData.conApellido(Constants.EMPLEADO_APELLIDO_3);
                 empleadoData.conDni(Constants.EMPLEADO_DNI_3);
@@ -48,7 +45,6 @@ public class EmpleadoFactory {
 
     public static Empleado crearLiderDeRecursosHumanos() {
         return new Empleado.Builder().con(empleadoData -> {
-            empleadoData.conId(Constants.LIDER_RRHH_ID);
             empleadoData.conNombre(Constants.LIDER_RRHH_NOMBRE);
             empleadoData.conApellido(Constants.LIDER_RRHH_APELLIDO);
             empleadoData.conDni(Constants.LIDER_RRHH_DNI);
@@ -61,7 +57,7 @@ public class EmpleadoFactory {
 
     public static Empleado crearEmpleado(Map<String, String> atributosEmpleado) {
         return new Empleado.Builder().con(empleadoData -> {
-            empleadoData.conId(Long.valueOf(1));
+            empleadoData.conLegajo(atributosEmpleado.get("legajo"));
             empleadoData.conNombre(atributosEmpleado.get("nombre"));
             empleadoData.conApellido(atributosEmpleado.get("apellido"));
             empleadoData.conDni(atributosEmpleado.get("dni"));
@@ -69,6 +65,7 @@ public class EmpleadoFactory {
             empleadoData.conFechaNacimiento(fechaDeNacimiento);
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
             empleadoData.conContrato(atributosEmpleado.get("contrato"));
+            empleadoData.conActivo(atributosEmpleado.get("activo").equals("true"));
         }).build();
     }
 }

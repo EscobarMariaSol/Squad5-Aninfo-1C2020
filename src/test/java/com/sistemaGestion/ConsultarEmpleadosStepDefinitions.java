@@ -1,10 +1,11 @@
-package com.sistemaGestion.consultas;
+package com.sistemaGestion;
 
 import com.sistemaGestion.SpringIntegrationTest;
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.EmpleadoRepository;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
@@ -17,6 +18,7 @@ import io.cucumber.java.After;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
@@ -38,13 +40,13 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
     }
 
     //Y
-    @Y("hay {int} empleados")
-    public void hayEmpleados(int arg0) {
-        for (int i=1; i<=arg0; i++) {
-            Long idx = Long.valueOf(i);
-            Empleado empleado = EmpleadoFactory.crearEmpleado(idx);
-            coleccionEmpleados.add(empleado);
+    @Y("hay empleados con los siguientes atributos$")
+    public void hayEmpleadosConLosSiguientesAtributos(DataTable empleadoDt) {
+        for (int i=0; i<3; i++) {
+            List<Map<String, String>> empleados = empleadoDt.asMaps(String.class, String.class);
+            Empleado empleado = EmpleadoFactory.crearEmpleado(empleados.get(i));
             empleadoRepository.save(empleado);
+            coleccionEmpleados.add(empleado);
         }
     }
 
@@ -52,14 +54,14 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
     public void noHayEmpleados() {
         coleccionEmpleados = new ArrayList<>();
     }
-
     //Cuando
+
     @Cuando("consulto los empleados")
     public void consultoLosEmpleados() {
         response = empleadoController.consultarEmpleados();
     }
-
     //Entonces
+
     @Entonces("obtengo un listado de los {int} empleados")
     public void obtengoUnListadoDeLosEmpleados(int arg0) {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -76,5 +78,4 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
     public void tearDown() {
         empleadoRepository.deleteAll();
     }
-    
 }
