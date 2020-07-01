@@ -10,6 +10,26 @@ public enum EmpleadoRol {
     /**
      * Rol de Desarrollador
      * */
-    DESARROLLADOR
+    DESARROLLADOR,
+
+    /**
+     * Rol de QA
+     * */
+    QA,
+
+    /**
+     * Rol de UX
+     * */
+    UX,
+
+    /**
+     * Rol de Arquitecto
+     * */
+    ARQUITECTO,
+
+    /**
+     * Rol de Líder de Proyecto
+     * */
+    LIDER_PROYECTO
 
 }
