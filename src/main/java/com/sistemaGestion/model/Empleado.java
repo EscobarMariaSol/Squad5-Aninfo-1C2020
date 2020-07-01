@@ -6,12 +6,10 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 @Entity
-@Table(indexes = { @Index(columnList = "legajo", unique = true) })
 public class Empleado {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private String legajo;
 
     @Column
     private String nombre;
@@ -24,9 +22,6 @@ public class Empleado {
 
     @Column
     private LocalDate fechaNacimiento;
-
-    @Column
-    private String legajo;
 
     @Column
     private EmpleadoRol rol;
@@ -49,14 +44,6 @@ public class Empleado {
 
     public Empleado(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -132,7 +119,6 @@ public class Empleado {
     }
 
     public Empleado(Builder builder) {
-        this.id = builder.id;
         this.nombre = builder.nombre;
         this.apellido = builder.apellido;
         this.dni = builder.dni;
@@ -157,11 +143,9 @@ public class Empleado {
     public String getSeniority() {
         return this.seniority.name();
     }
-
     
     public static class Builder {
 
-        private Long id;
         private String nombre;
         private String apellido;
         private String dni;
@@ -169,11 +153,6 @@ public class Empleado {
         private LocalDate fechaNacimiento;
         private EmpleadoRol rol;
         private String contrato;
-
-        public Builder conId(Long id) {
-            this.id = id;
-            return this;
-        }
 
         public Builder conNombre(String nombre) {
             this.nombre = nombre;
