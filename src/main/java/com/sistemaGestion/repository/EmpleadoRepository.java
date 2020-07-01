@@ -12,4 +12,6 @@ public interface EmpleadoRepository extends JpaRepository<Empleado, Long> {
     Optional<Empleado> findByLegajo(String legajo);
 
     Optional<Empleado> findById(Long id);
+
+    Empleado findOneByLegajo(String legajo);
 }

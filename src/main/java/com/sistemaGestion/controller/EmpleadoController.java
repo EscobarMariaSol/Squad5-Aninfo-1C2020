@@ -79,4 +79,19 @@ public class EmpleadoController {
             );
         }
     }
+
+    @PutMapping(value = "/{legajo}")
+    public ResponseEntity asignarRol(String legajo, String rol) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.asignarRolAEmpleado(legajo, rol),
+                    HttpStatus.OK
+            );
+        } catch(EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
 }
