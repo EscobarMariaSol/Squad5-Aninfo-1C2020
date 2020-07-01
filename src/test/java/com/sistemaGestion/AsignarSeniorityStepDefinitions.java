@@ -40,7 +40,7 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
     public void existe_un_empleado_con_legajo(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         legajoEmpleado = legajo;
-        empleado = EmpleadoFactory.crearEmpleado(1L);
+        empleado = EmpleadoFactory.crearEmpleado(legajo);
         empleadoRepository.save(empleado);
     }
 
@@ -50,17 +50,11 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
         response = empleadoController.asignarSeniority(legajoEmpleado, seniority);
     }
 
-    @Entonces("al empleado con id {int} se le asigna la seniority {string}")
-    public void al_empleado_con_id_se_le_asigna_la_seniority(Integer id, String seniority) {
+    @Entonces("al empleado con legajo {string} se le asigna la seniority {string}")
+    public void al_empleado_con_legajo_se_le_asigna_la_seniority(String legajo, String seniority) {
         // Write code here that turns the phrase above into concrete actions
-        empleado = empleadoRepository.findByLegajo(legajoEmpleado).orElse(null);
+        Empleado empleado = empleadoRepository.findByLegajo(legajoEmpleado).orElse(null);
         Assert.assertEquals(empleado.getSeniority(), seniority);
-    }
-
-    @Y("no existe el empleado con legajo {string}")
-    public void no_existe_el_empleado_con_id(String legajo) {
-        // Write code here that turns the phrase above into concrete actions
-        legajoEmpleado = legajo;
     }
 
     @Cuando("quiero asignar la seniority {string} a dicho empleado")
