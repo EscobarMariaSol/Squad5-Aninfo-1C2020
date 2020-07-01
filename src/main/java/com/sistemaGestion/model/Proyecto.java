@@ -6,14 +6,10 @@ import java.util.Set;
 @Entity
 public class Proyecto {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
-
     /**
      * Código identificador del proyecto que viene del Módulo de Proyectos.
      * */
-    @Column
+    @Id
     private String codigo;
 
     @OneToMany
@@ -21,14 +17,6 @@ public class Proyecto {
 
     @ManyToOne
     private Empleado empleado;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCodigo() {
         return codigo;
