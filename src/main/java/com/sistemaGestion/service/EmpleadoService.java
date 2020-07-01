@@ -35,18 +35,11 @@ public class EmpleadoService {
                 );
     }
 
-    public Empleado asignarSeniorityAEmpleado(long id, String seniority) {
-        empleado = consultarEmpleadoPorId(id);
+    public Empleado asignarSeniorityAEmpleado(String legajo, String seniority) {
+        empleado = consultarEmpleadoPorLegajo(legajo);
         empleado.setSeniority(seniority);
         empleadoRepository.save(empleado);
         return empleado;
-    }
-
-    public Empleado consultarEmpleadoPorId(Long id) {
-        return empleadoRepository.findById(id)
-                .orElseThrow( () ->
-                        new EmpleadoException("Empleado with id " + id + " not found.")
-                );
     }
 
     public Empleado darDeBajaEmpleado(String legajo) {

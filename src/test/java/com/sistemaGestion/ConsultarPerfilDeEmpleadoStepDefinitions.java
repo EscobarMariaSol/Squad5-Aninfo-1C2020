@@ -39,7 +39,7 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     // Cuando
     @Cuando("consulto los datos del empleado con legajo {string}")
     public void consultoLosDatosDelEmpleadoConLegajo(String arg0) {
-        response = empleadoController.consultarEmpleado(arg0, null);
+        response = empleadoController.consultarEmpleado(arg0);
     }
 
     // Entonces

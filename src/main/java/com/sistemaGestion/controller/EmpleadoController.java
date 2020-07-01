@@ -35,22 +35,10 @@ public class EmpleadoController {
         );
     }
 
-    @GetMapping
-    public ResponseEntity consultarEmpleado(
-            @RequestParam(required = false) String legajo,
-            @RequestParam(required = false) Long id
-    ) {
+    @GetMapping(value = "/{legajo}")
+    public ResponseEntity consultarEmpleado(@PathVariable("legajo") String legajo) {
         try {
-            if ((legajo != null && id != null) || legajo == null && id == null){
-                return new ResponseEntity(
-                        "Por favor ingrese un único valor de búsqueda.",
-                        HttpStatus.BAD_REQUEST
-                );
-            } else if (legajo != null) {
-                return consultarEmpleadoPorLegajo(legajo);
-            } else {
-                return consultarEmpleadoPorId(id);
-            }
+            return consultarEmpleadoPorLegajo(legajo);
         } catch(EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
@@ -66,18 +54,11 @@ public class EmpleadoController {
         );
     }
 
-    private ResponseEntity consultarEmpleadoPorId(Long id) {
-        return new ResponseEntity(
-                empleadoService.consultarEmpleadoPorId(id),
-                HttpStatus.OK
-        );
-    }
-
-    @PutMapping(value = "/{id}")
-    public ResponseEntity asignarSeniority(@PathVariable("id") long id, String seniority) {
+    @PutMapping(value = "/{legajo}")
+    public ResponseEntity asignarSeniority(@PathVariable("legajo") String legajo, String seniority) {
         try {
             return new ResponseEntity(
-                    empleadoService.asignarSeniorityAEmpleado(id, seniority),
+                    empleadoService.asignarSeniorityAEmpleado(legajo, seniority),
                     HttpStatus.OK
             );
         } catch(EmpleadoException e) {
