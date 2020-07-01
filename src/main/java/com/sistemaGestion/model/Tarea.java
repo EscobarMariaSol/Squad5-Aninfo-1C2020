@@ -8,7 +8,20 @@ public class Tarea {
     @EmbeddedId
     private TareaId id;
 
-    @ManyToOne
-    private Empleado empleado;
+    public TareaId getId() {
+        return id;
+    }
+
+    public void setId(TareaId id) {
+        this.id = id;
+    }
+
+    public Tarea(TareaId id, Empleado empleado) {
+        this.id = id;
+    }
+
+    public Tarea() {
+
+    }
 
 }
