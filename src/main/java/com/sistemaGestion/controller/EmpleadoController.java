@@ -79,7 +79,7 @@ public class EmpleadoController {
         } catch(EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
-                    HttpStatus.NOT_FOUND
+                    HttpStatus.BAD_REQUEST
             );
         }
     }
