@@ -1,6 +1,7 @@
 package com.sistemaGestion.service;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
+import com.sistemaGestion.model.EmpleadoRol;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import java.util.List;
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-    private Empleado empleado;
 
     @Autowired
     public EmpleadoService(EmpleadoRepository empleadoRepository) {
@@ -35,7 +35,7 @@ public class EmpleadoService {
     }
 
     public Empleado asignarSeniorityAEmpleado(long id, String seniority) {
-        empleado = consultarEmpleadoPorId(id);
+        Empleado empleado = consultarEmpleadoPorId(id);
         empleado.setSeniority(seniority);
         empleadoRepository.save(empleado);
         return empleado;
@@ -46,5 +46,13 @@ public class EmpleadoService {
                 .orElseThrow( () ->
                         new EmpleadoException("Empleado with id " + id + " not found.")
                 );
+    }
+
+    public Empleado asignarRolAEmpleado(String legajo, String rol) {
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
+        EmpleadoRol nuevoRol = EmpleadoRol.valueOf(rol.toUpperCase());
+        empleado.setRol(nuevoRol);
+        empleadoRepository.save(empleado);
+        return empleado;
     }
 }
