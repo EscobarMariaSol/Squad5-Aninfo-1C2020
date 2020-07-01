@@ -35,7 +35,7 @@ public class Empleado {
     @Column
     private Boolean activo;
 
-    @ManyToMany
+    @OneToMany
     private Set<Proyecto> proyectos;
 
     public Empleado(){
