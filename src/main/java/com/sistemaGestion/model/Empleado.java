@@ -1,10 +1,13 @@
 package com.sistemaGestion.model;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @Entity
 public class Empleado {
@@ -36,7 +39,7 @@ public class Empleado {
     @Column
     private Boolean activo;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Proyecto> proyectos;
 
     public Empleado(){
@@ -146,6 +149,23 @@ public class Empleado {
         this.activo = builder.activo;
         this.proyectos = builder.proyectos;
     }
+
+    public void cargarTarea(Tarea tarea) {
+        if (proyectos == null) {
+            proyectos = new HashSet<>();
+        }
+
+        if (! proyectos.contains(tarea.getId().getCodigoProyecto())) {
+            proyectos.add(new Proyecto(tarea.getId().getCodigoProyecto()));
+        }
+
+         Proyecto proyectoCorrespondiente = this.proyectos.stream()
+                  .filter(proyecto -> proyecto.getCodigo() == tarea.getId().getCodigoProyecto())
+                  .findAny().orElse(null);
+         proyectoCorrespondiente.cargarTarea(tarea);
+    }
+
+
 
     public static class Builder {
 

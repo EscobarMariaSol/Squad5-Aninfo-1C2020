@@ -1,6 +1,7 @@
 package com.sistemaGestion.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,7 @@ public class Proyecto {
     @Id
     private String codigo;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Tarea> tareas;
 
     public String getCodigo() {
@@ -31,4 +32,16 @@ public class Proyecto {
         this.tareas = tareas;
     }
 
+    public void cargarTarea(Tarea tarea) {
+        tareas.add(tarea);
+    }
+
+    public Proyecto() {
+
+    }
+
+    public Proyecto(String codigoProyecto) {
+        this.codigo = codigoProyecto;
+        this.tareas = new HashSet<>();
+    }
 }

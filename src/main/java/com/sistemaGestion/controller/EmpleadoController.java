@@ -2,6 +2,7 @@ package com.sistemaGestion.controller;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
+import com.sistemaGestion.model.HorasCargadas;
 import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -104,6 +105,22 @@ public class EmpleadoController {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+
+    @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
+    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId, @PathVariable("tareaId") String tareaId, HorasCargadas horasCargadas) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
+            HttpStatus.OK
+            );
+        } catch (EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
             );
         }
     }

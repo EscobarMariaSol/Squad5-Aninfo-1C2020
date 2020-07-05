@@ -19,6 +19,7 @@ public class EmpleadoFactory {
                 empleadoData.conLegajo(Constants.EMPLEADO_LEGAJO_1);
                 empleadoData.conRol(Constants.EMPLEADO_ROL_1);
                 empleadoData.conContrato(Constants.EMPLEADO_CONTRATO_1);
+                empleadoData.conActivo(true);
             }).build();
         } else if (legajo.equals(Constants.EMPLEADO_LEGAJO_2)) {
             return new Empleado.Builder().con(empleadoData -> {

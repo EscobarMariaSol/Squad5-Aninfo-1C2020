@@ -1,11 +1,10 @@
 package com.sistemaGestion.service;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
-import com.sistemaGestion.model.EmpleadoRol;
+import com.sistemaGestion.model.*;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sistemaGestion.model.Empleado;
 
 import java.util.List;
 import java.util.Optional;
@@ -69,4 +68,12 @@ public class EmpleadoService {
         return empleado;
     }
 
+    public Empleado cargarHorasDeEmpleadoEnUnaTarea(String legajo, String proyectoId, String tareaId, HorasCargadas horasCargadas) {
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
+        TareaId id = new TareaId(proyectoId, tareaId);
+        Tarea tarea = new Tarea(id, empleado);
+        tarea.cargarHoras(horasCargadas, legajo);
+        empleado.cargarTarea(tarea);
+        return empleadoRepository.save(empleado);
+    }
 }
