@@ -46,7 +46,7 @@ public class CargarHorasAUnaTareaStepDefinitions {
     @Cuando("cargo {int} horas trabajadas en el dia {string} a una tarea cuyo id es {string} del proyecto con id {string}")
     public void cargo_horas_a_una_tarea(int horas, String fecha, String idTarea, String idProyecto) {
         // Write code here that turns the phrase above into concrete actions
-        horasCargadas = new HorasCargadas(LocalDate.parse(fecha), horas);
+        horasCargadas = new HorasCargadas(fecha, horas);
         tareaId = new TareaId(idTarea, idProyecto);
         response = empleadoController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(), idProyecto, idTarea, horasCargadas);
         empleado = empleadoRepository.findByLegajo(empleado.getLegajo()).orElse(null);

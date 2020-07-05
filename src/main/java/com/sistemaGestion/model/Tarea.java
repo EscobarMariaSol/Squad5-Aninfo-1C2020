@@ -57,7 +57,7 @@ public class Tarea {
     }
 
     public void cargarHoras(HorasCargadas horasCargadas, String legajoEmpleado) {
-        this.fechaFinalizacion = horasCargadas.getFecha();
+        this.fechaFinalizacion = LocalDate.parse(horasCargadas.getFecha());
         this.horasTrabajadas = horasCargadas.getHoras();
         this.legajoEmpleado = legajoEmpleado;
     }

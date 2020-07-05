@@ -1,18 +1,16 @@
 package com.sistemaGestion.model;
 
-import java.time.LocalDate;
-
 public class HorasCargadas {
 
-    LocalDate fecha;
+    String fecha;
 
     int horas;
 
-    public LocalDate getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -24,7 +22,11 @@ public class HorasCargadas {
         this.horas = horas;
     }
 
-    public HorasCargadas(LocalDate fecha, int horas) {
+    public HorasCargadas(){
+
+    }
+
+    public HorasCargadas(String fecha, int horas) {
         this.fecha = fecha;
         this.horas = horas;
     }
