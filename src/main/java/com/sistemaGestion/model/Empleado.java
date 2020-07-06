@@ -151,8 +151,12 @@ public class Empleado {
         this.proyectos.add(proyecto);
     }
 
-    public boolean empleadoPerteneceAProyecto(Proyecto proyecto) {
-        return true;
+    public boolean perteneceAProyecto(Proyecto proyecto) {
+        for (Proyecto p: this.proyectos) {
+            if (p.equals(proyecto))
+                return true;
+        }
+        return false;
     }
 
     public static class Builder {

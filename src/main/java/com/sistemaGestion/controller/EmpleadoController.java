@@ -109,9 +109,9 @@ public class EmpleadoController {
         }
     }
 
-    public ResponseEntity agregarAProyecto(String legajo, String codigoProyecto) {
+    public ResponseEntity agregarAProyecto(String legajo, Proyecto proyecto) {
         try {
-            empleadoService.asignarAProyecto(legajo, codigoProyecto);
+            empleadoService.asignarAProyecto(legajo, proyecto);
             return new ResponseEntity(
                     HttpStatus.OK
             );

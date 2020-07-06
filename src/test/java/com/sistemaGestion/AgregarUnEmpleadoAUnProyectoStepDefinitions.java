@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.HashSet;
+
 public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
 
     @Autowired
@@ -39,6 +41,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     public void que_soy_lider_del_proyecto_y_quiero_agregar_un_empleado_a_mi_proyecto(String codigo) {
         // Write code here that turns the phrase above into concrete actions
         Proyecto proyecto = new Proyecto(codigo);
+        proyectoRepository.save(proyecto);
         liderDeProyecto = EmpleadoFactory.crearLiderDeProyecto();
     }
 
@@ -46,13 +49,17 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     public void hay_un_empleado_cuyo_legajo_es(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         empleado = EmpleadoFactory.crearEmpleado(legajo);
+        empleado.setProyectos(new HashSet<Proyecto>());
+        empleado.setActivo(true);
         empleadoRepository.save(empleado);
     }
 
     @Cuando("agrego al empleado, con lejago {string}, al proyecto {string}")
     public void agrego_al_empleado_con_lejago_al_proyecto(String legajo, String codigo) {
         // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.agregarAProyecto(legajo, codigo);
+        proyecto = proyectoRepository.findByCodigo(codigo)
+                .orElse(new Proyecto(codigo));
+        response = empleadoController.agregarAProyecto(legajo, proyecto);
     }
 
     @Entonces("el empleado {string} queda asignado al proyecto {string}.")
@@ -60,7 +67,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
         proyecto = proyectoRepository.findByCodigo(codigo).orElse(null);
-        Assert.assertTrue(empleado.empleadoPerteneceAProyecto(proyecto));
+        Assert.assertTrue(empleado.perteneceAProyecto(proyecto));
     }
 
     @Dado("no hay un empleado cuyo legajo es {string}")
@@ -78,12 +85,6 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
 
     @Dado("que soy líder de un proyecto que ya ha sido finalizado")
     public void que_soy_líder_de_un_proyecto_que_ya_ha_sido_finalizado() {
-        // Write code here that turns the phrase above into concrete actions
-
-    }
-
-    @Entonces("se me informa que no se pueden agregar empleados a un proyecto que ya ha sido finalizado.")
-    public void se_me_informa_que_no_se_pueden_agregar_empleados_a_un_proyecto_que_ya_ha_sido_finalizado() {
         // Write code here that turns the phrase above into concrete actions
 
     }

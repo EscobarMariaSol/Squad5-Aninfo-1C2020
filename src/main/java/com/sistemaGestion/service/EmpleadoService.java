@@ -16,12 +16,10 @@ import java.util.List;
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-    private ProyectoRepository proyectoRepository;
 
     @Autowired
-    public EmpleadoService(EmpleadoRepository empleadoRepository, ProyectoRepository proyectoRepository) {
+    public EmpleadoService(EmpleadoRepository empleadoRepository) {
         this.empleadoRepository = empleadoRepository;
-        this.proyectoRepository = proyectoRepository;
     }
 
     public List<Empleado> consultarEmpleados() {
@@ -73,11 +71,8 @@ public class EmpleadoService {
         return empleado;
     }
 
-    public Empleado asignarAProyecto(String legajo, String codigoProyecto) {
+    public Empleado asignarAProyecto(String legajo, Proyecto proyecto) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        Proyecto proyecto = proyectoRepository.findByCodigo(codigoProyecto)
-                .orElse(new Proyecto(codigoProyecto));
-        proyectoRepository.save(proyecto);
         empleado.addProyecto(proyecto);
         empleadoRepository.save(empleado);
         return empleado;

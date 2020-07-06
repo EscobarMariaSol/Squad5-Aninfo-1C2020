@@ -15,6 +15,8 @@ public class Proyecto {
     @OneToMany
     private Set<Tarea> tareas;
 
+    public Proyecto(){}
+
     public Proyecto(String codigo) {
         this.codigo = codigo;
     }

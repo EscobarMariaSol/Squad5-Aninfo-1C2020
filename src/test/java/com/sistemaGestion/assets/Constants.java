@@ -24,7 +24,6 @@ public class Constants {
     public final static String EMPLEADO_LEGAJO_1 = "123";
     public final static EmpleadoRol EMPLEADO_ROL_1 = EmpleadoRol.DESARROLLADOR;
     public final static String EMPLEADO_CONTRATO_1 = FULL_TIME;
-    public final static Set<Proyecto> EMPLEADO_PROYECTOS_1 = new HashSet<Proyecto>();
 
     public final static Long EMPLEADO_ID_2 = 2L;
     public final static String EMPLEADO_NOMBRE_2 = "Jon";
