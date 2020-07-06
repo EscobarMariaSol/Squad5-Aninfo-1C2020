@@ -83,12 +83,6 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
         Assert.assertEquals("Empleado with legajo " + legajo + " not found.", response.getBody());
     }
 
-    @Dado("que soy líder de un proyecto que ya ha sido finalizado")
-    public void que_soy_líder_de_un_proyecto_que_ya_ha_sido_finalizado() {
-        // Write code here that turns the phrase above into concrete actions
-
-    }
-
     @After
     public void tearDown() {
         empleadoRepository.deleteAll();
