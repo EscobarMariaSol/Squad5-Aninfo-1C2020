@@ -15,6 +15,10 @@ public class Proyecto {
     @OneToMany
     private Set<Tarea> tareas;
 
+    public Proyecto(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -31,4 +35,16 @@ public class Proyecto {
         this.tareas = tareas;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Proyecto proyecto = (Proyecto) o;
+        return codigo.equals(proyecto.codigo);
+    }
 }

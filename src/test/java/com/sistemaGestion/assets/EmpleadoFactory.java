@@ -19,6 +19,8 @@ public class EmpleadoFactory {
                 empleadoData.conLegajo(Constants.EMPLEADO_LEGAJO_1);
                 empleadoData.conRol(Constants.EMPLEADO_ROL_1);
                 empleadoData.conContrato(Constants.EMPLEADO_CONTRATO_1);
+                empleadoData.conProyectos(Constants.EMPLEADO_PROYECTOS_1);
+
             }).build();
         } else if (legajo.equals(Constants.EMPLEADO_LEGAJO_2)) {
             return new Empleado.Builder().con(empleadoData -> {
@@ -66,6 +68,18 @@ public class EmpleadoFactory {
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
             empleadoData.conContrato(atributosEmpleado.get("contrato"));
             empleadoData.conActivo(atributosEmpleado.get("activo").equals("true"));
+        }).build();
+    }
+
+    public static Empleado crearLiderDeProyecto() {
+        return new Empleado.Builder().con(empleadoData -> {
+            empleadoData.conNombre(Constants.LIDER_PROYECTO_NOMBRE);
+            empleadoData.conApellido(Constants.LIDER_PROYECTO_APELLIDO);
+            empleadoData.conDni(Constants.LIDER_PROYECTO_DNI);
+            empleadoData.conFechaNacimiento(Constants.LIDER_PROYECTO_FECHA_NACIMIENTO);
+            empleadoData.conLegajo(Constants.LIDER_PROYECTO_LEGAJO);
+            empleadoData.conRol(Constants.LIDER_PROYECTO_ROL);
+            empleadoData.conContrato(Constants.LIDER_PROYECTO_CONTRATO);
         }).build();
     }
 }

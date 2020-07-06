@@ -1,8 +1,11 @@
 package com.sistemaGestion.assets;
 
 import com.sistemaGestion.model.EmpleadoRol;
+import com.sistemaGestion.model.Proyecto;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Constants {
 
@@ -21,6 +24,7 @@ public class Constants {
     public final static String EMPLEADO_LEGAJO_1 = "123";
     public final static EmpleadoRol EMPLEADO_ROL_1 = EmpleadoRol.DESARROLLADOR;
     public final static String EMPLEADO_CONTRATO_1 = FULL_TIME;
+    public final static Set<Proyecto> EMPLEADO_PROYECTOS_1 = new HashSet<Proyecto>();
 
     public final static Long EMPLEADO_ID_2 = 2L;
     public final static String EMPLEADO_NOMBRE_2 = "Jon";
@@ -53,7 +57,7 @@ public class Constants {
     public final static EmpleadoRol LIDER_RRHH_ROL = EmpleadoRol.LIDER_RRHH;
     public final static String LIDER_RRHH_CONTRATO = FULL_TIME;
 
-
+    // Desarrollador
     public static final Long DESARROLLADOR_ID = 4L;
     public static final String DESARROLLADOR_NOMBRE = "Felipe";
     public static final String DESARROLLADOR_APELLIDO = "Codeo";
@@ -62,4 +66,16 @@ public class Constants {
             LocalDate.of(1990, 11, 23);
     public static final EmpleadoRol DESARROLLADOR_ROL = EmpleadoRol.DESARROLLADOR;
     public static final String DESARROLLADOR_CONTRATO = FULL_TIME;
+
+    // Líder de proyecto
+    public final static Long LIDER_PROYECTO_ID = 5L;
+    public final static String LIDER_PROYECTO_NOMBRE = "Maximiliano";
+    public final static String LIDER_PROYECTO_APELLIDO = "Gantt";
+    public final static String LIDER_PROYECTO_DNI = "2219737";
+    public final static LocalDate LIDER_PROYECTO_FECHA_NACIMIENTO =
+            LocalDate.of(1975, 4, 9);
+    public final static String LIDER_PROYECTO_LEGAJO = "890";
+    public final static EmpleadoRol LIDER_PROYECTO_ROL = EmpleadoRol.LIDER_PROYECTO;
+    public final static String LIDER_PROYECTO_CONTRATO = FULL_TIME;
+
 }

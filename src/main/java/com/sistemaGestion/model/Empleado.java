@@ -147,6 +147,14 @@ public class Empleado {
         this.proyectos = builder.proyectos;
     }
 
+    public void addProyecto(Proyecto proyecto) {
+        this.proyectos.add(proyecto);
+    }
+
+    public boolean empleadoPerteneceAProyecto(Proyecto proyecto) {
+        return true;
+    }
+
     public static class Builder {
 
         private String nombre;

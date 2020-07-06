@@ -2,6 +2,7 @@ package com.sistemaGestion.controller;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
+import com.sistemaGestion.model.Proyecto;
 import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -97,6 +98,20 @@ public class EmpleadoController {
     public ResponseEntity darDeBajaEmpleado(@PathVariable("legajo") String legajo) {
         try {
             empleadoService.darDeBajaEmpleado(legajo);
+            return new ResponseEntity(
+                    HttpStatus.OK
+            );
+        } catch(EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    public ResponseEntity agregarAProyecto(String legajo, String codigoProyecto) {
+        try {
+            empleadoService.asignarAProyecto(legajo, codigoProyecto);
             return new ResponseEntity(
                     HttpStatus.OK
             );

@@ -2,22 +2,26 @@ package com.sistemaGestion.service;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.EmpleadoRol;
+import com.sistemaGestion.model.Proyecto;
 import com.sistemaGestion.repository.EmpleadoRepository;
+import com.sistemaGestion.repository.ProyectoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sistemaGestion.model.Empleado;
+import org.springframework.util.Assert;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
+    private ProyectoRepository proyectoRepository;
 
     @Autowired
-    public EmpleadoService(EmpleadoRepository empleadoRepository) {
+    public EmpleadoService(EmpleadoRepository empleadoRepository, ProyectoRepository proyectoRepository) {
         this.empleadoRepository = empleadoRepository;
+        this.proyectoRepository = proyectoRepository;
     }
 
     public List<Empleado> consultarEmpleados() {
@@ -69,4 +73,13 @@ public class EmpleadoService {
         return empleado;
     }
 
+    public Empleado asignarAProyecto(String legajo, String codigoProyecto) {
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
+        Proyecto proyecto = proyectoRepository.findByCodigo(codigoProyecto)
+                .orElse(new Proyecto(codigoProyecto));
+        proyectoRepository.save(proyecto);
+        empleado.addProyecto(proyecto);
+        empleadoRepository.save(empleado);
+        return empleado;
+    }
 }
