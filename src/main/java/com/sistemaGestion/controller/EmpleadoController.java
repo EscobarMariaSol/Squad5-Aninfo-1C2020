@@ -109,7 +109,10 @@ public class EmpleadoController {
         }
     }
 
-    public ResponseEntity agregarAProyecto(String legajo, Proyecto proyecto) {
+    @PostMapping(value = "/{legajo}")
+    public ResponseEntity agregarAProyecto(
+                        @PathVariable("legajo") String legajo,
+                        @RequestParam Proyecto proyecto) {
         try {
             empleadoService.asignarAProyecto(legajo, proyecto);
             return new ResponseEntity(
