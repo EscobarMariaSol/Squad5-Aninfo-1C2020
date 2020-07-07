@@ -2,7 +2,8 @@ package com.sistemaGestion.model;
 
 public enum Seniority {
 
-    Junior,
-    Senior,
-    SemiSenior
+    JUNIOR,
+    SENIOR,
+    SEMI_SENIOR,
+    SIN_SENIORITY
 }

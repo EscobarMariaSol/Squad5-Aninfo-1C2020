@@ -1,11 +1,8 @@
 package com.sistemaGestion.assets;
 
 import com.sistemaGestion.model.EmpleadoRol;
-import com.sistemaGestion.model.Proyecto;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 public class Constants {
 

@@ -2,7 +2,6 @@ package com.sistemaGestion.controller;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
-import com.sistemaGestion.model.Proyecto;
 import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,10 +29,17 @@ public class EmpleadoController {
 
     @PostMapping(value = "/")
     public ResponseEntity ingresarEmpleado(@RequestBody Empleado nuevoEmpleado) {
-        return new ResponseEntity<>(
-                empleadoService.ingresarEmpleado(nuevoEmpleado),
-                HttpStatus.OK
-        );
+        try {
+            return new ResponseEntity<>(
+                    empleadoService.ingresarEmpleado(nuevoEmpleado),
+                    HttpStatus.OK
+            );
+        } catch(Exception e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
     @GetMapping(value = "/{legajo}")
@@ -109,20 +115,4 @@ public class EmpleadoController {
         }
     }
 
-    @PostMapping(value = "/{legajo}")
-    public ResponseEntity agregarAProyecto(
-                        @PathVariable("legajo") String legajo,
-                        @RequestParam Proyecto proyecto) {
-        try {
-            empleadoService.asignarAProyecto(legajo, proyecto);
-            return new ResponseEntity(
-                    HttpStatus.OK
-            );
-        } catch(EmpleadoException e) {
-            return new ResponseEntity(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-    }
 }
