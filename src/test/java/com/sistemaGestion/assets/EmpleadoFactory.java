@@ -66,7 +66,7 @@ public class EmpleadoFactory {
             empleadoData.conFechaNacimiento(fechaDeNacimiento);
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
             empleadoData.conContrato(atributosEmpleado.get("contrato"));
-            empleadoData.conActivo(atributosEmpleado.get("activo").equals("true"));
+            empleadoData.conActivo(true);
         }).build();
     }
 }

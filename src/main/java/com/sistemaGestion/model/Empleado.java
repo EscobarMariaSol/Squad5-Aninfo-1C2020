@@ -42,6 +42,17 @@ public class Empleado {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Proyecto> proyectos;
 
+    public Set<CargaDeHoras> getHorasCargadas() {
+        return horasCargadas;
+    }
+
+    public void setHorasCargadas(Set<CargaDeHoras> horasCargadas) {
+        this.horasCargadas = horasCargadas;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<CargaDeHoras> horasCargadas;
+
     public Empleado(){
         this.proyectos = new HashSet<>();
     }
@@ -148,23 +159,12 @@ public class Empleado {
         this.contrato = builder.contrato;
         this.activo = builder.activo;
         this.proyectos = builder.proyectos;
+        this.horasCargadas = builder.horasCargadas;
     }
 
-    public void cargarTarea(Tarea tarea) {
-        if (proyectos == null) {
-            proyectos = new HashSet<>();
-        }
-
-        if (! proyectos.contains(tarea.getId().getCodigoProyecto())) {
-            proyectos.add(new Proyecto(tarea.getId().getCodigoProyecto()));
-        }
-
-         Proyecto proyectoCorrespondiente = this.proyectos.stream()
-                  .filter(proyecto -> proyecto.getCodigo() == tarea.getId().getCodigoProyecto())
-                  .findAny().orElse(null);
-         proyectoCorrespondiente.cargarTarea(tarea);
+    public void cargarHoras(CargaDeHoras cargaDeHoras) {
+        horasCargadas.add(cargaDeHoras);
     }
-
 
 
     public static class Builder {
@@ -178,6 +178,7 @@ public class Empleado {
         private String contrato;
         private Boolean activo;
         private Set<Proyecto> proyectos;
+        private Set<CargaDeHoras> horasCargadas;
 
         public Builder conNombre(String nombre) {
             this.nombre = nombre;
@@ -221,6 +222,11 @@ public class Empleado {
 
         public Builder conProyectos(Set<Proyecto> proyectos) {
             this.proyectos = proyectos;
+            return this;
+        }
+
+        public Builder conHorasCargadas(Set<CargaDeHoras> cargaDeHoras) {
+            this.horasCargadas = horasCargadas;
             return this;
         }
 

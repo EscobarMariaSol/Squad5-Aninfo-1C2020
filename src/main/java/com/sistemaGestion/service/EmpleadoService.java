@@ -70,10 +70,8 @@ public class EmpleadoService {
 
     public Empleado cargarHorasDeEmpleadoEnUnaTarea(String legajo, String proyectoId, String tareaId, HorasCargadas horasCargadas) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        TareaId id = new TareaId(proyectoId, tareaId);
-        Tarea tarea = new Tarea(id, empleado);
-        tarea.cargarHoras(horasCargadas, legajo);
-        empleado.cargarTarea(tarea);
+        CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras());
+        empleado.cargarHoras(cargaDeHoras);
         return empleadoRepository.save(empleado);
     }
 }
