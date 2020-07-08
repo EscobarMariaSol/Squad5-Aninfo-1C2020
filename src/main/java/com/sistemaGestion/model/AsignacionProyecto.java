@@ -25,9 +25,11 @@ public class AsignacionProyecto {
 
     public AsignacionProyecto(){}
 
-    public AsignacionProyecto(String codigo) {
-
+    public AsignacionProyecto(String codigo, String fechaInicio, String fechaFin, String rol) {
         this.codigo = codigo;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.rolEmpleado = rol;
     }
 
     public String getCodigo() {
@@ -64,6 +66,10 @@ public class AsignacionProyecto {
 
     public void setRolEmpleado(String rol) {
         this.rolEmpleado = rol;
+    }
+
+    public String getRolEmpleado() {
+        return this.rolEmpleado;
     }
 
     @Override

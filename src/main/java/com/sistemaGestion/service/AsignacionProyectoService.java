@@ -18,16 +18,7 @@ public class AsignacionProyectoService {
     }
 
 
-    public void asignarEmpleadoAProyecto(
-            String legajo,
-            String codigo,
-            String fechaInicio,
-            String fechaFin,
-            String rolEmpleado) {
-        AsignacionProyecto asignacionProyecto = new AsignacionProyecto(codigo);
-        asignacionProyecto.setFechaInicio(fechaInicio);
-        asignacionProyecto.setFechaFin(fechaFin);
-        asignacionProyecto.setRolEmpleado(rolEmpleado);
+    public void asignarEmpleadoAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
         asignacionProyectoRepository.save(asignacionProyecto);
         empleadoService.asignarAProyecto(legajo, asignacionProyecto);
     }

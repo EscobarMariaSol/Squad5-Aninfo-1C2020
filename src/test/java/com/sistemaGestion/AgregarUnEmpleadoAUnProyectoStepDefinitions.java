@@ -58,7 +58,8 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
         String fechaInicio = "2020-06-07";
         String fechaFin = "2020-06-16";
         String rol = "DESARROLLADOR";
-        response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, codigo, fechaInicio, fechaFin, rol);
+        asignacionProyecto = new AsignacionProyecto(codigo, fechaInicio, fechaFin, rol);
+        response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
     }
 
     @Entonces("el empleado {string} queda asignado al proyecto {string}.")
