@@ -46,7 +46,7 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
     public void al_empleado_con_legajo_se_le_asigna_la_seniority(String legajo, String seniority) {
         // Write code here that turns the phrase above into concrete actions
         empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
-        Assert.assertEquals(empleado.getSeniority(), seniority);
+        Assert.assertEquals(empleado.getSeniority(), seniority.toUpperCase());
     }
 
     @Entonces("obtengo un mensaje indicando que el empleado con legajo {string} no fue encontrado")

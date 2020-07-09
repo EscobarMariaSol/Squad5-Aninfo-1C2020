@@ -36,7 +36,7 @@ public class DarDeBajaUnEmpleadoStepDefinitions extends SpringIntegrationTest {
 
     @Y("no forma parte de ningun proyecto")
     public void noFormaParteDeNingunProyecto() {
-        empleado.setProyectos(new HashSet<>());
+        empleado.setAsignacionProyectos(new HashSet<>());
     }
 
     @Y("no tiene tickets asignados")

@@ -69,4 +69,16 @@ public class EmpleadoFactory {
             empleadoData.conActivo(true);
         }).build();
     }
+
+    public static Empleado crearLiderDeProyecto() {
+        return new Empleado.Builder().con(empleadoData -> {
+            empleadoData.conNombre(Constants.LIDER_PROYECTO_NOMBRE);
+            empleadoData.conApellido(Constants.LIDER_PROYECTO_APELLIDO);
+            empleadoData.conDni(Constants.LIDER_PROYECTO_DNI);
+            empleadoData.conFechaNacimiento(Constants.LIDER_PROYECTO_FECHA_NACIMIENTO);
+            empleadoData.conLegajo(Constants.LIDER_PROYECTO_LEGAJO);
+            empleadoData.conRol(Constants.LIDER_PROYECTO_ROL);
+            empleadoData.conContrato(Constants.LIDER_PROYECTO_CONTRATO);
+        }).build();
+    }
 }

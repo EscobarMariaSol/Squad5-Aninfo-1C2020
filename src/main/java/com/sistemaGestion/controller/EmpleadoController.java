@@ -30,10 +30,17 @@ public class EmpleadoController {
 
     @PostMapping(value = "/")
     public ResponseEntity ingresarEmpleado(@RequestBody Empleado nuevoEmpleado) {
-        return new ResponseEntity<>(
-                empleadoService.ingresarEmpleado(nuevoEmpleado),
-                HttpStatus.OK
-        );
+        try {
+            return new ResponseEntity<>(
+                    empleadoService.ingresarEmpleado(nuevoEmpleado),
+                    HttpStatus.OK
+            );
+        } catch(Exception e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
     @GetMapping(value = "/{legajo}")

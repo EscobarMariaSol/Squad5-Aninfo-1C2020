@@ -39,8 +39,8 @@ public class Empleado {
     @Column
     private Boolean activo;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Proyecto> proyectos;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<AsignacionProyecto> asignacionProyectos;
 
     public Set<CargaDeHoras> getHorasCargadas() {
         return horasCargadas;
@@ -54,7 +54,7 @@ public class Empleado {
     private Set<CargaDeHoras> horasCargadas;
 
     public Empleado(){
-        this.proyectos = new HashSet<>();
+        this.asignacionProyectos = new HashSet<>();
     }
 
     public Empleado(String nombre) {
@@ -125,23 +125,25 @@ public class Empleado {
         this.activo = activo;
     }
 
-    public Set<Proyecto> getProyectos() {
-        return proyectos;
+    public Set<AsignacionProyecto> getAsignacionProyectos() {
+        return asignacionProyectos;
     }
 
-    public void setProyectos(Set<Proyecto> proyectos) {
-        this.proyectos = proyectos;
+    public void setAsignacionProyectos(Set<AsignacionProyecto> asignacionProyectos) {
+        this.asignacionProyectos = asignacionProyectos;
     }
 
     public void setSeniority(String seniority) {
         if (seniority.equalsIgnoreCase("junior")) {
-            this.seniority = Seniority.Junior;
+            this.seniority = Seniority.JUNIOR;
         }
         else if (seniority.equalsIgnoreCase("senior")) {
-            this.seniority = Seniority.Senior;
+            this.seniority = Seniority.SENIOR;
         }
         else if (seniority.equalsIgnoreCase("senior")) {
-            this.seniority = Seniority.SemiSenior;
+            this.seniority = Seniority.SEMI_SENIOR;
+        } else {
+            this.seniority = Seniority.SIN_SENIORITY;
         }
     }
 
@@ -158,8 +160,20 @@ public class Empleado {
         this.rol = builder.rol;
         this.contrato = builder.contrato;
         this.activo = builder.activo;
-        this.proyectos = builder.proyectos;
         this.horasCargadas = builder.horasCargadas;
+        this.asignacionProyectos = builder.asignacionProyectos;
+    }
+
+    public void addProyecto(AsignacionProyecto asignacionProyecto) {
+        this.asignacionProyectos.add(asignacionProyecto);
+    }
+
+    public boolean perteneceAProyecto(AsignacionProyecto asignacionProyecto) {
+        for (AsignacionProyecto p: this.asignacionProyectos) {
+            if (p.equals(asignacionProyecto))
+                return true;
+        }
+        return false;
     }
 
     public void cargarHoras(CargaDeHoras cargaDeHoras) {
@@ -177,8 +191,8 @@ public class Empleado {
         private EmpleadoRol rol;
         private String contrato;
         private Boolean activo;
-        private Set<Proyecto> proyectos;
         private Set<CargaDeHoras> horasCargadas;
+        private Set<AsignacionProyecto> asignacionProyectos;
 
         public Builder conNombre(String nombre) {
             this.nombre = nombre;
@@ -220,8 +234,8 @@ public class Empleado {
             return this;
         }
 
-        public Builder conProyectos(Set<Proyecto> proyectos) {
-            this.proyectos = proyectos;
+        public Builder conProyectos(Set<AsignacionProyecto> asignacionProyectos) {
+            this.asignacionProyectos = asignacionProyectos;
             return this;
         }
 
