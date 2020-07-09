@@ -18,6 +18,12 @@ public class CargaDeHoras {
     @Column
     public String proyectoId;
 
+    @Column
+    public LocalDate fecha;
+
+    @Column
+    public Integer horasTrabajadas;
+
     public String getId() {
         return id;
     }
@@ -58,11 +64,7 @@ public class CargaDeHoras {
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    @Column
-    public LocalDate fecha;
 
-    @Column
-    public Integer horasTrabajadas;
 
     public CargaDeHoras() {
 

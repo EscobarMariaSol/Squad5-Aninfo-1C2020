@@ -42,6 +42,9 @@ public class Empleado {
     @OneToMany(fetch = FetchType.EAGER)
     private Set<AsignacionProyecto> asignacionProyectos;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<CargaDeHoras> horasCargadas;
+
     public Set<CargaDeHoras> getHorasCargadas() {
         return horasCargadas;
     }
@@ -49,9 +52,6 @@ public class Empleado {
     public void setHorasCargadas(Set<CargaDeHoras> horasCargadas) {
         this.horasCargadas = horasCargadas;
     }
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<CargaDeHoras> horasCargadas;
 
     public Empleado(){
         this.asignacionProyectos = new HashSet<>();
