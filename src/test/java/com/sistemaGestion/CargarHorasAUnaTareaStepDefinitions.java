@@ -24,10 +24,6 @@ public class CargarHorasAUnaTareaStepDefinitions {
     @Autowired
     private EmpleadoController empleadoController;
 
-    @Autowired
-    private CargaDeHorasRepository cargaDeHorasRepository;
-
-
     private Empleado  empleado;
     private ResponseEntity response;
     private HorasCargadas horasCargadas;
