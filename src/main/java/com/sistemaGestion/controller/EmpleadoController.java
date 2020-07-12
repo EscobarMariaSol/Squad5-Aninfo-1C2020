@@ -1,6 +1,7 @@
 package com.sistemaGestion.controller;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
+import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
 import com.sistemaGestion.service.EmpleadoService;
@@ -123,6 +124,20 @@ public class EmpleadoController {
             return new ResponseEntity(
                     empleadoService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
             HttpStatus.OK
+            );
+        } catch (EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
+    @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/horas")
+    public ResponseEntity obtenerHorasDeUnEmpleadoEnUnProyecto(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId){
+        try {
+            return new ResponseEntity(
+                    empleadoService.obtenerHorasDeUnEmpleadoEnUnProyecto(legajo, proyectoId),
+                    HttpStatus.OK
             );
         } catch (EmpleadoException e) {
             return new ResponseEntity(
