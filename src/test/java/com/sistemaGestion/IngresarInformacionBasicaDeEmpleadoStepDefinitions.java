@@ -7,6 +7,7 @@ import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.After;
 import io.cucumber.java.es.*;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,10 @@ public class IngresarInformacionBasicaDeEmpleadoStepDefinitions {
     public void se_guarda_ok() {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
         Assert.assertEquals(empleado, response.getBody());
+    }
+
+    @After
+    public void tearDown() {
+        empleadoRepository.deleteAll();
     }
 }

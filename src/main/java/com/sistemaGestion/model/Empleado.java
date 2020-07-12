@@ -1,10 +1,13 @@
 package com.sistemaGestion.model;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @Entity
 public class Empleado {
@@ -38,6 +41,17 @@ public class Empleado {
 
     @OneToMany(fetch = FetchType.EAGER)
     private Set<AsignacionProyecto> asignacionProyectos;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<CargaDeHoras> horasCargadas;
+
+    public Set<CargaDeHoras> getHorasCargadas() {
+        return horasCargadas;
+    }
+
+    public void setHorasCargadas(Set<CargaDeHoras> horasCargadas) {
+        this.horasCargadas = horasCargadas;
+    }
 
     public Empleado(){
         this.asignacionProyectos = new HashSet<>();
@@ -146,6 +160,7 @@ public class Empleado {
         this.rol = builder.rol;
         this.contrato = builder.contrato;
         this.activo = builder.activo;
+        this.horasCargadas = builder.horasCargadas;
         this.asignacionProyectos = builder.asignacionProyectos;
     }
 
@@ -161,6 +176,11 @@ public class Empleado {
         return false;
     }
 
+    public void cargarHoras(CargaDeHoras cargaDeHoras) {
+        horasCargadas.add(cargaDeHoras);
+    }
+
+
     public static class Builder {
 
         private String nombre;
@@ -171,6 +191,7 @@ public class Empleado {
         private EmpleadoRol rol;
         private String contrato;
         private Boolean activo;
+        private Set<CargaDeHoras> horasCargadas;
         private Set<AsignacionProyecto> asignacionProyectos;
 
         public Builder conNombre(String nombre) {
@@ -215,6 +236,11 @@ public class Empleado {
 
         public Builder conProyectos(Set<AsignacionProyecto> asignacionProyectos) {
             this.asignacionProyectos = asignacionProyectos;
+            return this;
+        }
+
+        public Builder conHorasCargadas(Set<CargaDeHoras> cargaDeHoras) {
+            this.horasCargadas = horasCargadas;
             return this;
         }
 
