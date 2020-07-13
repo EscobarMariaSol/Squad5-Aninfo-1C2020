@@ -13,7 +13,6 @@ import java.util.List;
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-    private AsignacionProyectoRepository asignacionProyectoRepository;
 
     @Autowired
     public EmpleadoService(EmpleadoRepository empleadoRepository) {
@@ -33,6 +32,13 @@ public class EmpleadoService {
                 .orElseThrow( () ->
                         new EmpleadoException("Empleado with legajo " + legajo + " not found.")
                 );
+    }
+
+    public Empleado actualizarEmpleado(Empleado empleado) {
+        empleadoRepository.findByLegajo(empleado.getLegajo()).orElseThrow(() ->
+            new EmpleadoException("El empleado con legajo " + empleado.getLegajo() + " no existe.")
+        );
+        return empleadoRepository.save(empleado);
     }
 
     public Empleado asignarSeniorityAEmpleado(String legajo, String seniority) {
