@@ -28,6 +28,9 @@ public class Empleado {
     private LocalDate fechaNacimiento;
 
     @Column
+    private LocalDate fechaIngreso;
+
+    @Column
     private EmpleadoRol rol;
 
     @Column
@@ -151,19 +154,6 @@ public class Empleado {
         return this.seniority.name();
     }
 
-    public Empleado(Builder builder) {
-        this.nombre = builder.nombre;
-        this.apellido = builder.apellido;
-        this.dni = builder.dni;
-        this.fechaNacimiento = builder.fechaNacimiento;
-        this.legajo = builder.legajo;
-        this.rol = builder.rol;
-        this.contrato = builder.contrato;
-        this.activo = builder.activo;
-        this.horasCargadas = builder.horasCargadas;
-        this.asignacionProyectos = builder.asignacionProyectos;
-    }
-
     public void addProyecto(AsignacionProyecto asignacionProyecto) {
         this.asignacionProyectos.add(asignacionProyecto);
     }
@@ -180,6 +170,32 @@ public class Empleado {
         horasCargadas.add(cargaDeHoras);
     }
 
+    public LocalDate getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(LocalDate fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public void setSeniority(Seniority seniority) {
+        this.seniority = seniority;
+    }
+
+    public Empleado(Builder builder) {
+        this.nombre = builder.nombre;
+        this.apellido = builder.apellido;
+        this.dni = builder.dni;
+        this.fechaNacimiento = builder.fechaNacimiento;
+        this.fechaIngreso = builder.fechaIngreso;
+        this.legajo = builder.legajo;
+        this.rol = builder.rol;
+        this.seniority = builder.seniority;
+        this.contrato = builder.contrato;
+        this.activo = builder.activo;
+        this.horasCargadas = builder.horasCargadas;
+        this.asignacionProyectos = builder.asignacionProyectos;
+    }
 
     public static class Builder {
 
@@ -188,8 +204,10 @@ public class Empleado {
         private String dni;
         private String legajo;
         private LocalDate fechaNacimiento;
+        private LocalDate fechaIngreso;
         private EmpleadoRol rol;
         private String contrato;
+        private Seniority seniority;
         private Boolean activo;
         private Set<CargaDeHoras> horasCargadas;
         private Set<AsignacionProyecto> asignacionProyectos;
@@ -214,6 +232,11 @@ public class Empleado {
             return this;
         }
 
+        public Builder conFechaIngreso(LocalDate fechaIngreso) {
+            this.fechaIngreso = fechaIngreso;
+            return this;
+        }
+
         public Builder conLegajo(String legajo) {
             this.legajo = legajo;
             return this;
@@ -221,6 +244,11 @@ public class Empleado {
 
         public Builder conRol(EmpleadoRol rol) {
             this.rol = rol;
+            return this;
+        }
+
+        public Builder conSeniority(Seniority seniority) {
+            this.seniority = seniority;
             return this;
         }
 
