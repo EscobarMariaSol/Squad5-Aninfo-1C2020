@@ -63,6 +63,20 @@ public class EmpleadoController {
     }
 
     @PutMapping(value = "/{legajo}")
+    public ResponseEntity actualizarEmpleado(@RequestBody Empleado empleado){
+        try {
+            empleadoService.actualizarEmpleado(empleado);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch(EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    /*
+    @PutMapping(value = "/{legajo}")
     public ResponseEntity actualizarEmpleado(
             @PathVariable("legajo") String legajo,
             @RequestParam(required = false) String seniority,
@@ -85,7 +99,7 @@ public class EmpleadoController {
                     HttpStatus.NOT_FOUND
             );
         }
-    }
+    }*/
 
     private ResponseEntity asignarSeniority(String legajo, String seniority) {
         return new ResponseEntity(
