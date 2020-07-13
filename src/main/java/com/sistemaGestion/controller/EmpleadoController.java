@@ -1,5 +1,6 @@
 package com.sistemaGestion.controller;
 
+import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
@@ -63,9 +64,13 @@ public class EmpleadoController {
     }
 
     @PutMapping(value = "/{legajo}")
-    public ResponseEntity actualizarEmpleado(@RequestBody Empleado empleado){
+    public ResponseEntity actualizarEmpleado(@RequestBody PerfilEmpleadoDTO perfilEmpleado){
         try {
-            empleadoService.actualizarEmpleado(empleado);
+            Empleado empleadoAActualizar = empleadoService.consultarEmpleadoPorLegajo(
+                    perfilEmpleado.getLegajo()
+            );
+            empleadoAActualizar = perfilEmpleado.convertirAEmpleadoModelo(empleadoAActualizar);
+            empleadoService.actualizarEmpleado(empleadoAActualizar);
             return new ResponseEntity(HttpStatus.OK);
         } catch(EmpleadoException e) {
             return new ResponseEntity(
