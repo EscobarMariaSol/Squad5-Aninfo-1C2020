@@ -1,5 +1,6 @@
 package com.sistemaGestion.assets;
 
+import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.EmpleadoRol;
 
@@ -66,7 +67,23 @@ public class EmpleadoFactory {
             empleadoData.conFechaNacimiento(fechaDeNacimiento);
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
             empleadoData.conContrato(atributosEmpleado.get("contrato"));
-            empleadoData.conActivo(true);
+            Boolean activo = atributosEmpleado.get("activo").equals("true");
+            empleadoData.conActivo(activo);
+        }).build();
+    }
+
+    public static PerfilEmpleadoDTO crearPerfilEmpleadoDTO(Map<String, String> atributosEmpleado) {
+        return new PerfilEmpleadoDTO.Builder().con(empleadoData -> {
+            empleadoData.conLegajo(atributosEmpleado.get("legajo"));
+            empleadoData.conNombre(atributosEmpleado.get("nombre"));
+            empleadoData.conApellido(atributosEmpleado.get("apellido"));
+            empleadoData.conDni(atributosEmpleado.get("dni"));
+            LocalDate fechaDeNacimiento = LocalDate.parse(atributosEmpleado.get("fechaDeNacimiento"));
+            empleadoData.conFechaNacimiento(fechaDeNacimiento);
+            empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
+            empleadoData.conContrato(atributosEmpleado.get("contrato"));
+            Boolean activo = atributosEmpleado.get("activo").equals("true");
+            empleadoData.conActivo(activo);
         }).build();
     }
 
