@@ -2,18 +2,23 @@ package com.sistemaGestion.service;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
+import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
     private AsignacionProyectoRepository asignacionProyectoRepository;
+
+    @Autowired
+    private CargaDeHorasRepository cargaDeHorasRepository;
 
     @Autowired
     public EmpleadoService(EmpleadoRepository empleadoRepository) {
@@ -87,9 +92,9 @@ public class EmpleadoService {
     public HorasTrabajadas obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, String proyectoId) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
         Integer cantidadDeHoras = empleado.getHorasCargadas().stream()
-                                            .filter(cargaDeHoras -> cargaDeHoras.proyectoId == proyectoId)
-                                            .map(cargaDeHoras -> cargaDeHoras.horasTrabajadas)
-                                            .reduce(0, (a, b) -> a +b );
+                                        .filter(cargaDeHoras -> cargaDeHoras.getProyectoId().equals(proyectoId))
+                                        .map(CargaDeHoras::getHorasTrabajadas)
+                                        .reduce(Integer::sum).orElse(0);
         return new HorasTrabajadas(legajo, cantidadDeHoras, proyectoId, empleado.getContrato());
 
     }

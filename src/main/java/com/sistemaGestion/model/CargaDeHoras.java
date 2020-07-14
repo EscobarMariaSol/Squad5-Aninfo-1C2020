@@ -8,7 +8,8 @@ import java.time.LocalDate;
 @Entity
 public class CargaDeHoras {
 
-    @Id @GeneratedValue(generator="system-uuid")
+    @Id
+    @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     public String id;
 

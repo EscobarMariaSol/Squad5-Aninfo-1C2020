@@ -13,4 +13,22 @@ public class HorasTrabajadas {
         this.nombreProyecto = nombreProyecto;
         this.tipoContrato = tipoContrato;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        HorasTrabajadas horasTrabajadas = (HorasTrabajadas) o;
+        return this.legajo.equals(horasTrabajadas.legajo) &&
+                this.cantidadDeHorasTrabajadas.equals(horasTrabajadas.cantidadDeHorasTrabajadas) &&
+                this.nombreProyecto.equals(horasTrabajadas.nombreProyecto) &&
+                this.tipoContrato.equals(horasTrabajadas.tipoContrato);
+    }
+
 }

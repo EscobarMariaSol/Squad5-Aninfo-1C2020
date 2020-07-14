@@ -1,18 +1,61 @@
 package com.sistemaGestion;
 
+import com.sistemaGestion.assets.EmpleadoFactory;
+import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.model.CargaDeHoras;
+import com.sistemaGestion.model.Empleado;
+import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.HorasTrabajadas;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.es.Cuando;
+import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
+import io.cucumber.java.es.Y;
+import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Map;
 
 public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
 
-    @Cuando("consulto las horas trabajadas por un empleado en un proyecto")
-    public void consulto_las_horas_trabajadas_por_un_empleado_en_un_proyecto() {
-        // Write code here that turns the phrase above into concrete actions
+    private Empleado liderRRHH;
+    private Empleado empleado;
+    @Autowired
+    private EmpleadoController empleadoController;
+    private ResponseEntity response;
+
+    @Dado("que soy jefe de RRHH")
+    public void dado_que_soy_jefe_de_recursos_humanos() {
+        liderRRHH = EmpleadoFactory.crearLiderDeRecursosHumanos();
+    }
+    @Y("tengo un empleado con los siguientes datos")
+    public void tengo_un_empleado_con_los_siguientes_datos(DataTable empleadoTable) {
+        List<Map<String, String>> empleados = empleadoTable.asMaps(String.class, String.class);
+        empleado = EmpleadoFactory.crearEmpleado(empleados.get(0));
+        empleadoController.ingresarEmpleado(empleado);
     }
 
-    @Entonces("obtengo la información detallada del empleado y sus horas de trabajo.")
-    public void obtengo_la_información_detallada_del_empleado_y_sus_horas_de_trabajo() {
-        // Write code here that turns the phrase above into concrete actions
+    @Y("este empleado ha cargado las horas trabajadas en las siguientes tareas")
+    public void este_empleado_ha_cargado_las_horas_trabajadas_en_las_siguientes_tareas(DataTable horasTable) {
+        List<Map<String, String>> horasCargadas = horasTable.asMaps(String.class, String.class);
+        horasCargadas.stream().forEach(datosHora ->{
+            empleadoController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(),datosHora.get("proyectoId"),datosHora.get("tareaId"), new HorasCargadas(datosHora.get("fechaCargaDeHoras"), Integer.parseInt(datosHora.get("horasTrabajadas"))));
+        });
+
+    }
+    @Cuando("consulto las horas trabajadas por el empleado en el proyecto cuyo id es {string}")
+    public void consulto_las_horas_trabajadas_por_el_empleado_en_el_proyecto_cuyo_id_es(String proyectoId) {
+        response = empleadoController.obtenerHorasDeUnEmpleadoEnUnProyecto(empleado.getLegajo(), proyectoId);
+    }
+
+    @Entonces("obtengo la siguiente informacion")
+    public void obtengo_la_siguiente_informacion(DataTable horasTrabajadasTable) {
+        List<Map<String, String>> horasTrabajadas =  horasTrabajadasTable.asMaps(String.class, String.class);
+        HorasTrabajadas horasEsperadasTrabajadas = new HorasTrabajadas(horasTrabajadas.get(0).get("legajo"),Integer.parseInt(horasTrabajadas.get(0).get("cantidadDeHorasTrabajadas")), horasTrabajadas.get(0).get("nombreDeProyecto"), horasTrabajadas.get(0).get("tipoDeContrato"));
+        HorasTrabajadas horasObtenidas = (HorasTrabajadas) response.getBody();
+        Assert.assertEquals(horasEsperadasTrabajadas, horasObtenidas);
     }
 
     @Entonces("obtengo un mensaje que me indica que el empleado no tiene horas trabajadas en el proyecto.")
