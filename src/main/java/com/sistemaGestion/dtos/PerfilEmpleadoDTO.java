@@ -18,6 +18,9 @@ public class PerfilEmpleadoDTO {
     private Seniority seniority;
     private Boolean activo;
 
+    public PerfilEmpleadoDTO() {
+    }
+
     public String getLegajo() {
         return legajo;
     }
@@ -56,6 +59,46 @@ public class PerfilEmpleadoDTO {
 
     public Boolean getActivo() {
         return activo;
+    }
+
+    public void setLegajo(String legajo) {
+        this.legajo = legajo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public void setFechaIngreso(LocalDate fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public void setRol(EmpleadoRol rol) {
+        this.rol = rol;
+    }
+
+    public void setContrato(String contrato) {
+        this.contrato = contrato;
+    }
+
+    public void setSeniority(Seniority seniority) {
+        this.seniority = seniority;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public PerfilEmpleadoDTO(PerfilEmpleadoDTO.Builder builder) {
