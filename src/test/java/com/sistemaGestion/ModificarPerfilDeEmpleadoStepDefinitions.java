@@ -5,6 +5,7 @@ import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
+import com.sistemaGestion.model.EmpleadoRol;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import com.sistemaGestion.service.EmpleadoService;
 import io.cucumber.datatable.DataTable;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.testng.Assert;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +57,63 @@ public class ModificarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
         response = empleadoController.actualizarEmpleado(perfilEmpleadoDTO);
     }
 
+    @Cuando("cambio el apellido del empleado por {string}")
+    public void cambioElApellidoDelEmpleadoPorWeasley(String nuevoApellido) {
+        perfilEmpleadoDTO = new PerfilEmpleadoDTO.Builder().con(empleadoData -> {
+            empleadoData.conNombre(perfilEmpleadoDTO.getNombre());
+            empleadoData.conApellido(nuevoApellido);
+            empleadoData.conDni(perfilEmpleadoDTO.getDni());
+            empleadoData.conFechaNacimiento(perfilEmpleadoDTO.getFechaNacimiento());
+            empleadoData.conLegajo(perfilEmpleadoDTO.getLegajo());
+            empleadoData.conRol(perfilEmpleadoDTO.getRol());
+            empleadoData.conContrato(perfilEmpleadoDTO.getContrato());
+            empleadoData.conSeniority(perfilEmpleadoDTO.getSeniority());
+            empleadoData.conActivo(perfilEmpleadoDTO.getActivo());
+        }).build();
+        response = empleadoController.actualizarEmpleado(perfilEmpleadoDTO);
+    }
+
+    @Cuando("cambio el dni del empleado por {string}")
+    public void cambioElDniDelEmpleadoPor(String nuevoDni) {
+        perfilEmpleadoDTO = new PerfilEmpleadoDTO.Builder().con(empleadoData -> {
+            empleadoData.conNombre(perfilEmpleadoDTO.getNombre());
+            empleadoData.conApellido(perfilEmpleadoDTO.getApellido());
+            empleadoData.conDni(nuevoDni);
+            empleadoData.conFechaNacimiento(perfilEmpleadoDTO.getFechaNacimiento());
+            empleadoData.conLegajo(perfilEmpleadoDTO.getLegajo());
+            empleadoData.conRol(perfilEmpleadoDTO.getRol());
+            empleadoData.conContrato(perfilEmpleadoDTO.getContrato());
+            empleadoData.conSeniority(perfilEmpleadoDTO.getSeniority());
+            empleadoData.conActivo(perfilEmpleadoDTO.getActivo());
+        }).build();
+        response = empleadoController.actualizarEmpleado(perfilEmpleadoDTO);
+    }
+
+    @Cuando("cambio la fecha de nacimiento del empleado por {string}")
+    public void cambioLaFechaDeNacimientoDelEmpleadoPor(String nuevaFechanacimiento) {
+        perfilEmpleadoDTO = new PerfilEmpleadoDTO.Builder().con(empleadoData -> {
+            empleadoData.conNombre(perfilEmpleadoDTO.getNombre());
+            empleadoData.conApellido(perfilEmpleadoDTO.getApellido());
+            empleadoData.conDni(perfilEmpleadoDTO.getDni());
+            LocalDate fechaDeNacimiento = LocalDate.parse(nuevaFechanacimiento);
+            empleadoData.conFechaNacimiento(fechaDeNacimiento);
+            empleadoData.conLegajo(perfilEmpleadoDTO.getLegajo());
+            empleadoData.conRol(perfilEmpleadoDTO.getRol());
+            empleadoData.conContrato(perfilEmpleadoDTO.getContrato());
+            empleadoData.conSeniority(perfilEmpleadoDTO.getSeniority());
+            empleadoData.conActivo(perfilEmpleadoDTO.getActivo());
+        }).build();
+        response = empleadoController.actualizarEmpleado(perfilEmpleadoDTO);
+    }
+
+    @Cuando("ingreso los nuevos datos")
+    public void ingresoLosNuevosDatos(DataTable empleadoDt) {
+        List<Map<String, String>> empleados = empleadoDt.asMaps(String.class, String.class);
+        perfilEmpleadoDTO = EmpleadoFactory.crearPerfilEmpleadoDTO(empleados.get(0));
+
+        response = empleadoController.actualizarEmpleado(perfilEmpleadoDTO);
+    }
+
     @Entonces("el empleado con legajo {string} presenta los siguientes datos")
     public void elEmpleadoConLegajoPresentaLosSiguientesDatos(String legajo, DataTable empleadoDt) {
         Empleado empleadoActualizado = empleadoRepository.findByLegajo(legajo).orElse(null);
@@ -64,5 +123,14 @@ public class ModificarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
 
         Assert.assertEquals(empleadoEsperado, empleadoActualizado);
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Entonces("se me informa que el empleado con legajo {string} no existe")
+    public void seMeInformaQueElEmpleadoConLegajoNoExiste(String legajo) {
+        Assert.assertEquals(
+                "El empleado con legajo " + legajo + " no existe.",
+                response.getBody()
+        );
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
