@@ -1,6 +1,6 @@
 package com.sistemaGestion.assets;
 
-import com.sistemaGestion.model.EmpleadoRol;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 
 import java.time.LocalDate;
 

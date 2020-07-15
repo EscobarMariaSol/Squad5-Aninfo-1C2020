@@ -2,10 +2,9 @@ package com.sistemaGestion.assets;
 
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.Empleado;
-import com.sistemaGestion.model.EmpleadoRol;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 public class EmpleadoFactory {

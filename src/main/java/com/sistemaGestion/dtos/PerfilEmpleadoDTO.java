@@ -1,6 +1,7 @@
 package com.sistemaGestion.dtos;
 
 import com.sistemaGestion.model.*;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 
 import java.time.LocalDate;
 import java.util.function.Consumer;
@@ -15,7 +16,7 @@ public class PerfilEmpleadoDTO {
     private LocalDate fechaIngreso;
     private EmpleadoRol rol;
     private String contrato;
-    private Seniority seniority;
+    private String seniority;
     private Boolean activo;
 
     public PerfilEmpleadoDTO() {
@@ -53,7 +54,7 @@ public class PerfilEmpleadoDTO {
         return contrato;
     }
 
-    public Seniority getSeniority() {
+    public String getSeniority() {
         return seniority;
     }
 
@@ -93,7 +94,7 @@ public class PerfilEmpleadoDTO {
         this.contrato = contrato;
     }
 
-    public void setSeniority(Seniority seniority) {
+    public void setSeniority(String seniority) {
         this.seniority = seniority;
     }
 
@@ -121,7 +122,7 @@ public class PerfilEmpleadoDTO {
         private LocalDate fechaNacimiento;
         private LocalDate fechaIngreso;
         private EmpleadoRol rol;
-        private Seniority seniority;
+        private String seniority;
         private String contrato;
         private Boolean activo;
 
@@ -160,7 +161,7 @@ public class PerfilEmpleadoDTO {
             return this;
         }
 
-        public PerfilEmpleadoDTO.Builder conSeniority(Seniority seniority) {
+        public PerfilEmpleadoDTO.Builder conSeniority(String seniority) {
             this.seniority = seniority;
             return this;
         }
@@ -200,6 +201,21 @@ public class PerfilEmpleadoDTO {
             empleadoData.conActivo(this.activo);
             empleadoData.conProyectos(empleado.getAsignacionProyectos());
             empleadoData.conHorasCargadas(empleado.getHorasCargadas());
+        }).build();
+    }
+
+    public static PerfilEmpleadoDTO convertirAEmpleadoDTO(Empleado empleado) {
+        return new PerfilEmpleadoDTO.Builder().con(empleadoData -> {
+            empleadoData.conNombre(empleado.getNombre());
+            empleadoData.conApellido(empleado.getApellido());
+            empleadoData.conDni(empleado.getDni());
+            empleadoData.conFechaNacimiento(empleado.getFechaNacimiento());
+            empleadoData.conFechaIngreso(empleado.getFechaIngreso());
+            empleadoData.conLegajo(empleado.getLegajo());
+            empleadoData.conRol(empleado.getRol());
+            empleadoData.conContrato(empleado.getContrato());
+            empleadoData.conSeniority(empleado.getSeniority());
+            empleadoData.conActivo(empleado.getActivo());
         }).build();
     }
 

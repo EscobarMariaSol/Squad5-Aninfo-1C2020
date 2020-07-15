@@ -1,13 +1,12 @@
 package com.sistemaGestion.model;
 
+import com.sistemaGestion.model.enums.EmpleadoRol;
+
 import javax.persistence.*;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 @Entity
 public class Empleado {
