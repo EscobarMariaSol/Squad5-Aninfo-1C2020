@@ -43,7 +43,7 @@ public class AsignarRolStepDefinitions {
     @Cuando("asigno el rol de {string} al empleado con legajo {string}")
     public void asigno_el_rol_de_al_empleado_con_legajo(String rol, String legajo) {
         // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.actualizarEmpleado(legajo, null, rol);
+        //response = empleadoController.actualizarEmpleado(legajo, null, rol);
     }
 
     @Entonces("el rol {string} queda registrado en la informacion personal del empleado con legajo {string}.")
@@ -64,7 +64,7 @@ public class AsignarRolStepDefinitions {
     @Cuando("selecciono asignar rol {string} al empleado con legajo {string}")
     public void selecciono_asignar_rol_al_empleado_con_legajo(String rol, String legajo) {
         // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.actualizarEmpleado(legajo, null, rol);
+        response = empleadoController.actualizarParcialmenteEmpleado(legajo, null, rol);
     }
 
     @Entonces("se me indica que no existe el empleado con legajo {string}.")

@@ -39,7 +39,7 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
     @Cuando("asigno la seniority {string} al empleado con legajo {string}")
     public void asignoLaSeniorityJuniorAlEmpleadoConLegajo(String seniority, String legajo) {
         legajoEmpleado = legajo;
-        response = empleadoController.actualizarEmpleado(legajo, seniority, null);
+        response = empleadoController.actualizarParcialmenteEmpleado(legajo, seniority, null);
     }
 
     @Entonces("al empleado con legajo {string} se le asigna la seniority {string}")
