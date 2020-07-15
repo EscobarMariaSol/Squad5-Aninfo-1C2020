@@ -53,7 +53,10 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
     public void obtengo_un_mensaje_indicando_que_el_empleado_con_legajo_no_fue_encontrado(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        Assert.assertEquals("Empleado with legajo " + legajo + " not found.", response.getBody());
+        Assert.assertEquals(
+                "El empleado con legajo " + legajo + " no existe.",
+                response.getBody()
+        );
     }
 
     @After

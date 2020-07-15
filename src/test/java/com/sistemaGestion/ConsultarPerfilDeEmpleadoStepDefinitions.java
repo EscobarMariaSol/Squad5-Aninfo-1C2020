@@ -56,9 +56,12 @@ public class ConsultarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     }
 
     @Entonces("obtengo un mensaje indicando que el empleado con legajo {string} no pudo ser encontrado")
-    public void obtengoUnMensajeIndicandoQueElEmpleadoConLegajoNoPudoSerEncontrado(String arg0) {
+    public void obtengoUnMensajeIndicandoQueElEmpleadoConLegajoNoPudoSerEncontrado(String legajo) {
         Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        Assert.assertEquals("Empleado with legajo " + arg0 + " not found.", response.getBody());
+        Assert.assertEquals(
+                "El empleado con legajo " + legajo + " no existe.",
+                response.getBody()
+        );
     }
 
     @After

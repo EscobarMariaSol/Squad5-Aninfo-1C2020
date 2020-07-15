@@ -80,7 +80,10 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     public void se_me_informa_que_no_puedo_agregar_al_empleado_con_legajo_porque_no_existe(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        Assert.assertEquals("Empleado with legajo " + legajo + " not found.", response.getBody());
+        Assert.assertEquals(
+                "El empleado con legajo " + legajo + " no existe.",
+                response.getBody()
+        );
     }
 
     @After
