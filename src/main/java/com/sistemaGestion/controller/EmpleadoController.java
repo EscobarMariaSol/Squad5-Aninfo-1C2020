@@ -30,10 +30,12 @@ public class EmpleadoController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity ingresarEmpleado(@RequestBody Empleado nuevoEmpleado) {
+    public ResponseEntity ingresarEmpleado(@RequestBody PerfilEmpleadoDTO perfilEmpleado) {
         try {
+            Empleado empleadoAIngresar = new Empleado();
+            empleadoAIngresar = perfilEmpleado.convertirAEmpleadoModelo(empleadoAIngresar);
             return new ResponseEntity<>(
-                    empleadoService.ingresarEmpleado(nuevoEmpleado),
+                    empleadoService.ingresarEmpleado(empleadoAIngresar),
                     HttpStatus.OK
             );
         } catch(Exception e) {

@@ -4,6 +4,7 @@ package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.datatable.DataTable;
@@ -29,7 +30,7 @@ public class IngresarInformacionBasicaDeEmpleadoStepDefinitions {
     private Empleado liderRecursosHumanos;
     private Empleado empleado;
     private ResponseEntity response;
-
+    private PerfilEmpleadoDTO perfilEmpleadoDTO;
 
     @Dado("^que soy un lider de proyecto$")
     public void soy_lider_de_proyecto() throws Throwable {
@@ -40,11 +41,12 @@ public class IngresarInformacionBasicaDeEmpleadoStepDefinitions {
     public void existeUnEmpleadoConLosSiguientesAtributos(DataTable empleadoDt) {
         List<Map<String, String>> empleados = empleadoDt.asMaps(String.class, String.class);
         empleado = EmpleadoFactory.crearEmpleado(empleados.get(0));
+        perfilEmpleadoDTO = EmpleadoFactory.crearPerfilEmpleadoDTO(empleados.get(0));
     }
 
     @Cuando("^guardo el nuevo empleado$")
     public void guardo_nuevo_empleado() {
-        response = empleadoController.ingresarEmpleado(empleado);
+        response = empleadoController.ingresarEmpleado(perfilEmpleadoDTO);
     }
 
     @Entonces("se guarda OK")

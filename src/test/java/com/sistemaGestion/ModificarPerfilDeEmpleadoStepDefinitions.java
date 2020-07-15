@@ -34,8 +34,7 @@ public class ModificarPerfilDeEmpleadoStepDefinitions extends SpringIntegrationT
     public void existeElEmpleadoConLosAtributos(DataTable empleadoDt) {
         List<Map<String, String>> empleados = empleadoDt.asMaps(String.class, String.class);
         perfilEmpleadoDTO = EmpleadoFactory.crearPerfilEmpleadoDTO(empleados.get(0));
-        empleado = EmpleadoFactory.crearEmpleado(empleados.get(0));
-        empleadoController.ingresarEmpleado(empleado);
+        empleadoController.ingresarEmpleado(perfilEmpleadoDTO);
     }
 
     @Cuando("cambio el nombre del empleado por {string}")
