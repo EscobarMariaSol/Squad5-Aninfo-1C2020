@@ -30,7 +30,7 @@ public class EmpleadoService {
     public Empleado consultarEmpleadoPorLegajo(String legajo) {
         return empleadoRepository.findByLegajoAndActivoIsTrue(legajo)
                 .orElseThrow( () ->
-                        new EmpleadoException("Empleado with legajo " + legajo + " not found.")
+                        new EmpleadoException("El empleado con legajo " + legajo + " no existe.")
                 );
     }
 
