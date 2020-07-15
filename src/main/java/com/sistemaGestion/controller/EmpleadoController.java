@@ -64,7 +64,7 @@ public class EmpleadoController {
     }
 
     @PutMapping(value = "/{legajo}")
-    public ResponseEntity actualizarParcialmenteEmpleado(@RequestBody PerfilEmpleadoDTO perfilEmpleado){
+    public ResponseEntity actualizarEmpleado(@RequestBody PerfilEmpleadoDTO perfilEmpleado){
         try {
             Empleado empleadoAActualizar = empleadoService.consultarEmpleadoPorLegajo(
                     perfilEmpleado.getLegajo()
@@ -81,7 +81,7 @@ public class EmpleadoController {
     }
 
     @PatchMapping(value = "/{legajo}")
-    public ResponseEntity actualizarEmpleado(
+    public ResponseEntity actualizarParcialmenteEmpleado(
             @PathVariable("legajo") String legajo,
             @RequestParam(required = false) String seniority,
             @RequestParam(required = false) String rol
