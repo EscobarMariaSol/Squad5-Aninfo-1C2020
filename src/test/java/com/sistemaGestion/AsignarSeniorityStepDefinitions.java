@@ -3,20 +3,16 @@ package com.sistemaGestion;
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.model.Empleado;
-import com.sistemaGestion.model.Seniority;
+import com.sistemaGestion.model.enums.Seniority;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.java.After;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
-import io.cucumber.java.es.Y;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
 

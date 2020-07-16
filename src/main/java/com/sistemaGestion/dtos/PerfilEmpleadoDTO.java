@@ -2,6 +2,7 @@ package com.sistemaGestion.dtos;
 
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoRol;
+import com.sistemaGestion.model.enums.Seniority;
 
 import java.time.LocalDate;
 import java.util.function.Consumer;

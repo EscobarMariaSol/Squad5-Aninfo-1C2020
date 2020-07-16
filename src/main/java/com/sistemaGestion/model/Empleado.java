@@ -1,6 +1,7 @@
 package com.sistemaGestion.model;
 
 import com.sistemaGestion.model.enums.EmpleadoRol;
+import com.sistemaGestion.model.enums.Seniority;
 
 import javax.persistence.*;
 import java.time.LocalDate;

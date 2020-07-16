@@ -3,6 +3,7 @@ package com.sistemaGestion.service;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoRol;
+import com.sistemaGestion.model.enums.Seniority;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

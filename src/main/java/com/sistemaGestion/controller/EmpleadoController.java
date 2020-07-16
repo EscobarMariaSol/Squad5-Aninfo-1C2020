@@ -4,7 +4,7 @@ import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
-import com.sistemaGestion.model.Seniority;
+import com.sistemaGestion.model.enums.Seniority;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
