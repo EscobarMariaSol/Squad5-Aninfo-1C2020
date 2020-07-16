@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -189,6 +190,18 @@ public class Empleado {
                 cont += cargaDeHoras.horasTrabajadas;
         }
         return cont;
+    }
+
+    public List<HorasCargadas> getHorasCargadas(String idTarea, String idProyecto) {
+        List<HorasCargadas> horasRegistradas = new ArrayList<HorasCargadas>();
+        for (CargaDeHoras cargaDeHoras : this.horasCargadas) {
+            if (cargaDeHoras.tareaId.equals(idTarea) &
+                    cargaDeHoras.proyectoId.equals(idProyecto))
+                horasRegistradas.add(
+                        new HorasCargadas(cargaDeHoras.getFecha().toString(),
+                                cargaDeHoras.getHorasTrabajadas()));
+        }
+        return horasRegistradas;
     }
 
 

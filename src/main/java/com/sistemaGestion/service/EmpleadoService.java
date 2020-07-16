@@ -91,7 +91,7 @@ public class EmpleadoService {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
         List<HorasCargadas> totalHoras;
         if (fecha == null) {
-            totalHoras = new ArrayList<HorasCargadas>();
+            totalHoras = empleado.getHorasCargadas(idTarea, idProyecto);
         } else {
             totalHoras = new ArrayList<HorasCargadas>();
             totalHoras.add(new HorasCargadas(fecha, empleado.getHorasCargadas(idTarea, idProyecto, fecha)));

@@ -68,6 +68,22 @@ public class MostrarHorasPorTareaStepDefinitions {
         Assert.assertEquals(horas.intValue(), horasTrabajadas.get(0).getHoras());
     }
 
+    @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string} del proyecto {string}")
+    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto(String legajo, String idTarea, String idProyecto) {
+        // Write code here that turns the phrase above into concrete actions
+        response = empleadoController.consultarHorasEnUnaTarea(legajo, idTarea, idProyecto, null);
+    }
+
+    @Entonces("se me devuelve un listado con las horas trabajadas por el empleado con legajo {string}, en la tarea {string}, del proyecto {string}.")
+    public void se_me_devuelve_un_listado_con_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto(String string, String string2, String string3) {
+        // Write code here that turns the phrase above into concrete actions
+        List<HorasCargadas> horasTrabajadas = (List<HorasCargadas>) response.getBody();
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertEquals(5, horasTrabajadas.get(0).getHoras());
+        Assert.assertEquals(3, horasTrabajadas.get(1).getHoras());
+        Assert.assertEquals(6, horasTrabajadas.get(2).getHoras());
+    }
+
     @Y("no existe el empleado con legajo {string} cargo {int} horas en la tarea {string}, del proyecto {string}, el dia {string}")
     public void no_existe_el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String string, Integer int1, String string2, String string3, String string4) {
         // Write code here that turns the phrase above into concrete actions
