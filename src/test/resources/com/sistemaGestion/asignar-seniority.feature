@@ -7,7 +7,7 @@ Característica: Asignar seniority a un empleado
     Dado que soy Lider de Recursos Humanos
     Y existe el empleado con los atributos
         | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-        | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full-time    | DESARROLLADOR | true   |
+        | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Cuando asigno la seniority 'Junior' al empleado con legajo '5'
     Entonces al empleado con legajo '5' se le asigna la seniority 'Junior'
 

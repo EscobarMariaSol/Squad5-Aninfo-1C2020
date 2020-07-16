@@ -9,7 +9,7 @@ Característica: dar de baja un empleado determinado
     Dado que soy lider de recursos humanos
     Y existe el empleado con los atributos:
         | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-        | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full-time    | DESARROLLADOR | true   |
+        | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Y no forma parte de ningun proyecto
     Y no tiene tickets asignados
     Cuando doy de baja al empleado con legajo '5'
@@ -22,7 +22,7 @@ Característica: dar de baja un empleado determinado
     Dado que soy lider de recursos humanos
     Y existe el empleado con los atributos:
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-      | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full-time    | DESARROLLADOR | true   |
+      | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Y forma parte del proyecto '1'
     Y no tiene tickets asignados
     Cuando doy de baja al empleado con legajo '5'
@@ -36,7 +36,7 @@ Característica: dar de baja un empleado determinado
     Dado que soy lider de recursos humanos
     Y existe el empleado con los atributos:
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-      | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full-time    | DESARROLLADOR | true   |
+      | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Y forma parte del proyecto '1'
     Y no tiene tickets asignados
     Cuando doy de baja al empleado con legajo '5'
@@ -49,7 +49,7 @@ Característica: dar de baja un empleado determinado
     Dado que soy lider de recursos humanos
     Y existe el empleado con los atributos:
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-      | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full-time    | DESARROLLADOR | true   |
+      | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Y forma parte del proyecto '1'
     Y tiene el ticket '1' asignado
     Cuando doy de baja al empleado con legajo '5'

@@ -66,7 +66,7 @@ public class EmpleadoFactory {
             LocalDate fechaDeNacimiento = LocalDate.parse(atributosEmpleado.get("fechaDeNacimiento"));
             empleadoData.conFechaNacimiento(fechaDeNacimiento);
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
-            empleadoData.conContrato(EmpleadoContrato.valueOf(atributosEmpleado.get("contrato")));
+            empleadoData.conContrato(EmpleadoContrato.valueOf(atributosEmpleado.get("contrato").toUpperCase()));
             Boolean activo = atributosEmpleado.get("activo").equals("true");
             empleadoData.conActivo(activo);
         }).build();
@@ -81,7 +81,7 @@ public class EmpleadoFactory {
             LocalDate fechaDeNacimiento = LocalDate.parse(atributosEmpleado.get("fechaDeNacimiento"));
             empleadoData.conFechaNacimiento(fechaDeNacimiento);
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
-            empleadoData.conContrato(EmpleadoContrato.valueOf(atributosEmpleado.get("contrato")));
+            empleadoData.conContrato(EmpleadoContrato.valueOf(atributosEmpleado.get("contrato").toUpperCase()));
             Boolean activo = atributosEmpleado.get("activo").equals("true");
             empleadoData.conActivo(activo);
         }).build();
