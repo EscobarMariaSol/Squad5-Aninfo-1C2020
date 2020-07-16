@@ -131,4 +131,19 @@ public class EmpleadoController {
             );
         }
     }
+
+    @GetMapping(value = "/{legajo}/proyectos/{proyectoId/tareas/{tareaId}/horas")
+    public ResponseEntity consultarHorasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, idProyecto, fecha),
+                    HttpStatus.OK
+            );
+        } catch (EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
 }

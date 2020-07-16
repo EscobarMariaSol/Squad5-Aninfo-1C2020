@@ -180,6 +180,17 @@ public class Empleado {
         horasCargadas.add(cargaDeHoras);
     }
 
+    public Integer getHorasCargadas(String idTarea, String idProyecto, String fecha) {
+        int cont = 0;
+        for (CargaDeHoras cargaDeHoras : this.horasCargadas) {
+            if (cargaDeHoras.fecha.equals(LocalDate.parse(fecha)) &
+                    cargaDeHoras.tareaId.equals(idTarea) &
+                    cargaDeHoras.proyectoId.equals(idProyecto))
+                cont += cargaDeHoras.horasTrabajadas;
+        }
+        return cont;
+    }
+
 
     public static class Builder {
 

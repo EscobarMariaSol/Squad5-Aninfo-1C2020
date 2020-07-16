@@ -83,4 +83,10 @@ public class EmpleadoService {
         empleadoRepository.save(empleado);
         return empleado;
     }
+
+    public HorasCargadas consultarHorasTrabajadasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
+        Integer horasCargadas = empleado.getHorasCargadas(idTarea, idProyecto, fecha);
+        return new HorasCargadas(fecha, horasCargadas);
+    }
 }
