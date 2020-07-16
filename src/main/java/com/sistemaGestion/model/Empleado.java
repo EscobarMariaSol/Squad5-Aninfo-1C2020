@@ -1,5 +1,6 @@
 package com.sistemaGestion.model;
 
+import com.sistemaGestion.model.enums.EmpleadoContrato;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.model.enums.Seniority;
 
@@ -34,7 +35,7 @@ public class Empleado {
     private EmpleadoRol rol;
 
     @Column
-    private String contrato;
+    private EmpleadoContrato contrato;
 
     @Column
     private Seniority seniority;
@@ -112,11 +113,11 @@ public class Empleado {
         this.rol = rol;
     }
 
-    public String getContrato() {
+    public EmpleadoContrato getContrato() {
         return contrato;
     }
 
-    public void setContrato(String contrato) {
+    public void setContrato(EmpleadoContrato contrato) {
         this.contrato = contrato;
     }
 
@@ -192,7 +193,7 @@ public class Empleado {
         private LocalDate fechaNacimiento;
         private LocalDate fechaIngreso;
         private EmpleadoRol rol;
-        private String contrato;
+        private EmpleadoContrato contrato;
         private Seniority seniority;
         private Boolean activo;
         private Set<CargaDeHoras> horasCargadas;
@@ -238,7 +239,7 @@ public class Empleado {
             return this;
         }
 
-        public Builder conContrato(String contrato) {
+        public Builder conContrato(EmpleadoContrato contrato) {
             this.contrato = contrato;
             return this;
         }

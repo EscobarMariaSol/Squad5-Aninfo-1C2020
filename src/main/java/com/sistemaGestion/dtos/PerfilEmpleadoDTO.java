@@ -1,6 +1,7 @@
 package com.sistemaGestion.dtos;
 
 import com.sistemaGestion.model.*;
+import com.sistemaGestion.model.enums.EmpleadoContrato;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.model.enums.Seniority;
 
@@ -16,7 +17,7 @@ public class PerfilEmpleadoDTO {
     private LocalDate fechaNacimiento;
     private LocalDate fechaIngreso;
     private EmpleadoRol rol;
-    private String contrato;
+    private EmpleadoContrato contrato;
     private Seniority seniority;
     private Boolean activo;
 
@@ -51,7 +52,7 @@ public class PerfilEmpleadoDTO {
         return rol;
     }
 
-    public String getContrato() {
+    public EmpleadoContrato getContrato() {
         return contrato;
     }
 
@@ -91,7 +92,7 @@ public class PerfilEmpleadoDTO {
         this.rol = rol;
     }
 
-    public void setContrato(String contrato) {
+    public void setContrato(EmpleadoContrato contrato) {
         this.contrato = contrato;
     }
 
@@ -124,7 +125,7 @@ public class PerfilEmpleadoDTO {
         private LocalDate fechaIngreso;
         private EmpleadoRol rol;
         private Seniority seniority;
-        private String contrato;
+        private EmpleadoContrato contrato;
         private Boolean activo;
 
         public PerfilEmpleadoDTO.Builder conNombre(String nombre) {
@@ -167,7 +168,7 @@ public class PerfilEmpleadoDTO {
             return this;
         }
 
-        public PerfilEmpleadoDTO.Builder conContrato(String contrato) {
+        public PerfilEmpleadoDTO.Builder conContrato(EmpleadoContrato contrato) {
             this.contrato = contrato;
             return this;
         }

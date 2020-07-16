@@ -2,6 +2,7 @@ package com.sistemaGestion.assets;
 
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.Empleado;
+import com.sistemaGestion.model.enums.EmpleadoContrato;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 
 import java.time.LocalDate;
@@ -65,7 +66,7 @@ public class EmpleadoFactory {
             LocalDate fechaDeNacimiento = LocalDate.parse(atributosEmpleado.get("fechaDeNacimiento"));
             empleadoData.conFechaNacimiento(fechaDeNacimiento);
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
-            empleadoData.conContrato(atributosEmpleado.get("contrato"));
+            empleadoData.conContrato(EmpleadoContrato.valueOf(atributosEmpleado.get("contrato")));
             Boolean activo = atributosEmpleado.get("activo").equals("true");
             empleadoData.conActivo(activo);
         }).build();
@@ -80,7 +81,7 @@ public class EmpleadoFactory {
             LocalDate fechaDeNacimiento = LocalDate.parse(atributosEmpleado.get("fechaDeNacimiento"));
             empleadoData.conFechaNacimiento(fechaDeNacimiento);
             empleadoData.conRol(EmpleadoRol.valueOf(atributosEmpleado.get("rol")));
-            empleadoData.conContrato(atributosEmpleado.get("contrato"));
+            empleadoData.conContrato(EmpleadoContrato.valueOf(atributosEmpleado.get("contrato")));
             Boolean activo = atributosEmpleado.get("activo").equals("true");
             empleadoData.conActivo(activo);
         }).build();
