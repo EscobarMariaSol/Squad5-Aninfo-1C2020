@@ -56,35 +56,21 @@ public class MostrarHorasPorTareaStepDefinitions {
     @Entonces("se me indica que el empleado con legajo {string} trabajo {int} horas en la tarea {string}, del proyecto {string}, para la fecha {string}")
     public void se_me_indica_que_el_empleado_con_legajo_trabajo_horas_en_la_tarea_del_proyecto_para_la_fecha(String legajo, Integer horas, String idTarea, String idProyecto, String fecha) {
         // Write code here that turns the phrase above into concrete actions
-        empleado = empleadoRepository.findByLegajo(legajo).orElseThrow( () ->
-                new EmpleadoException("Empleado with legajo " + legajo + " not found."));
         HorasCargadas horasTrabajadas = (HorasCargadas) response.getBody();
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assert.assertEquals(horas.intValue(), horasTrabajadas.getHoras());
     }
 
-    @Y("dicho empleado cargo horas en la tarea {string}, del proyecto {string}")
-    public void dicho_empleado_cargo_horas_en_la_tarea_del_proyecto(String string, String string2) {
+    @Y("no existe el empleado con legajo {string} cargo {int} horas en la tarea {string}, del proyecto {string}, el dia {string}")
+    public void no_existe_el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String string, Integer int1, String string2, String string3, String string4) {
         // Write code here that turns the phrase above into concrete actions
-
+        
     }
-
-    @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string} del proyecto {string}")
-    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto(String string, String string2, String string3) {
-        // Write code here that turns the phrase above into concrete actions
-
-    }
-
-    @Y("no hay empleados registrados")
-    public void no_hay_empleados_registrados() {
-        // Write code here that turns the phrase above into concrete actions
-    }
-
 
     @Entonces("se me informa que no puedo realizar dicha accion ya que el emplado con legajo {string} no existe.")
     public void se_me_informa_que_no_puedo_realizar_dicha_accion_ya_que_el_emplado_con_legajo_no_existe(String string) {
         // Write code here that turns the phrase above into concrete actions
-
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @After
