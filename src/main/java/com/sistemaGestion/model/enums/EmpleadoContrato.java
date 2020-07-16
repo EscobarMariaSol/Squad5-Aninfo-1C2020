@@ -11,6 +11,11 @@ public enum EmpleadoContrato {
     /**
      * Contrato Full-Time: 40hs semanales
      * */
-    FULL_TIME
+    FULL_TIME,
+
+    /**
+    * Indica que el contrato no fue seleccionado
+    * */
+    SIN_CONTRATO
 
 }
