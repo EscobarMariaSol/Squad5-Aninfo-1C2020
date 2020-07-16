@@ -39,14 +39,16 @@ public class AsignarSeniorityStepDefinitions extends SpringIntegrationTest{
     @Cuando("asigno la seniority {string} al empleado con legajo {string}")
     public void asignoLaSeniorityJuniorAlEmpleadoConLegajo(String seniority, String legajo) {
         legajoEmpleado = legajo;
-        response = empleadoController.actualizarParcialmenteEmpleado(legajo, seniority, null);
+        response = empleadoController.actualizarParcialmenteEmpleado(
+                legajo, Seniority.valueOf(seniority.toUpperCase()), null
+        );
     }
 
     @Entonces("al empleado con legajo {string} se le asigna la seniority {string}")
     public void al_empleado_con_legajo_se_le_asigna_la_seniority(String legajo, String seniority) {
         // Write code here that turns the phrase above into concrete actions
         empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
-        Assert.assertEquals(empleado.getSeniority(), seniority.toUpperCase());
+        Assert.assertEquals(empleado.getSeniority(), Seniority.valueOf(seniority.toUpperCase()));
     }
 
     @Entonces("obtengo un mensaje indicando que el empleado con legajo {string} no fue encontrado")

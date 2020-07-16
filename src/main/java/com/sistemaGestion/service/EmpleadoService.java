@@ -41,7 +41,7 @@ public class EmpleadoService {
         return empleadoRepository.save(empleado);
     }
 
-    public Empleado asignarSeniorityAEmpleado(String legajo, String seniority) {
+    public Empleado asignarSeniorityAEmpleado(String legajo, Seniority seniority) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
         empleado.setSeniority(seniority);
         empleadoRepository.save(empleado);
@@ -67,10 +67,9 @@ public class EmpleadoService {
         return empleadoRepository.save(empleado);
     }
 
-    public Empleado asignarRolAEmpleado(String legajo, String rol) {
+    public Empleado asignarRolAEmpleado(String legajo, EmpleadoRol rol) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        EmpleadoRol nuevoRol = EmpleadoRol.valueOf(rol.toUpperCase());
-        empleado.setRol(nuevoRol);
+        empleado.setRol(rol);
         empleadoRepository.save(empleado);
         return empleado;
     }

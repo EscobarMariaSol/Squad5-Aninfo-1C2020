@@ -135,22 +135,12 @@ public class Empleado {
         this.asignacionProyectos = asignacionProyectos;
     }
 
-    public void setSeniority(String seniority) {
-        if (seniority.equalsIgnoreCase("junior")) {
-            this.seniority = Seniority.JUNIOR;
-        }
-        else if (seniority.equalsIgnoreCase("senior")) {
-            this.seniority = Seniority.SENIOR;
-        }
-        else if (seniority.equalsIgnoreCase("senior")) {
-            this.seniority = Seniority.SEMI_SENIOR;
-        } else {
-            this.seniority = Seniority.SIN_SENIORITY;
-        }
+    public void setSeniority(Seniority seniority) {
+        this.seniority = seniority;
     }
 
-    public String getSeniority() {
-        return this.seniority.name();
+    public Seniority getSeniority() {
+        return this.seniority;
     }
 
     public void addProyecto(AsignacionProyecto asignacionProyecto) {
@@ -175,10 +165,6 @@ public class Empleado {
 
     public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
-    }
-
-    public void setSeniority(Seniority seniority) {
-        this.seniority = seniority;
     }
 
     public Empleado(Builder builder) {

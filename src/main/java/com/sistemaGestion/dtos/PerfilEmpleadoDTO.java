@@ -16,7 +16,7 @@ public class PerfilEmpleadoDTO {
     private LocalDate fechaIngreso;
     private EmpleadoRol rol;
     private String contrato;
-    private String seniority;
+    private Seniority seniority;
     private Boolean activo;
 
     public PerfilEmpleadoDTO() {
@@ -54,7 +54,7 @@ public class PerfilEmpleadoDTO {
         return contrato;
     }
 
-    public String getSeniority() {
+    public Seniority getSeniority() {
         return seniority;
     }
 
@@ -94,7 +94,7 @@ public class PerfilEmpleadoDTO {
         this.contrato = contrato;
     }
 
-    public void setSeniority(String seniority) {
+    public void setSeniority(Seniority seniority) {
         this.seniority = seniority;
     }
 
@@ -122,7 +122,7 @@ public class PerfilEmpleadoDTO {
         private LocalDate fechaNacimiento;
         private LocalDate fechaIngreso;
         private EmpleadoRol rol;
-        private String seniority;
+        private Seniority seniority;
         private String contrato;
         private Boolean activo;
 
@@ -161,7 +161,7 @@ public class PerfilEmpleadoDTO {
             return this;
         }
 
-        public PerfilEmpleadoDTO.Builder conSeniority(String seniority) {
+        public PerfilEmpleadoDTO.Builder conSeniority(Seniority seniority) {
             this.seniority = seniority;
             return this;
         }
