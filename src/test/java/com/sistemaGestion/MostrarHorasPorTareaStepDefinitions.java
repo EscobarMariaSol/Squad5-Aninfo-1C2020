@@ -20,6 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 public class MostrarHorasPorTareaStepDefinitions {
 
@@ -46,6 +48,11 @@ public class MostrarHorasPorTareaStepDefinitions {
         response = empleadoController.cargarHorasDeEmpleadoEnUnaTarea(legajo, idProyecto, idTarea, horasCargadas);
     }
 
+    @Y("el empleado con legajo {string} no cargo horas en la tarea {string}, del proyecto {string}, el dia {string}")
+    public void el_empleado_con_legajo_no_cargo_horas_en_la_tarea_del_proyecto_el_dia(String string, String string2, String string3, String string4) {
+        // Write code here that turns the phrase above into concrete actions
+    }
+
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string} del proyecto {string}, para la fecha {string}")
     public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto_para_la_fecha(String legajo, String idTarea, String idProyecto, String fecha) {
         // Write code here that turns the phrase above into concrete actions
@@ -56,15 +63,15 @@ public class MostrarHorasPorTareaStepDefinitions {
     @Entonces("se me indica que el empleado con legajo {string} trabajo {int} horas en la tarea {string}, del proyecto {string}, para la fecha {string}")
     public void se_me_indica_que_el_empleado_con_legajo_trabajo_horas_en_la_tarea_del_proyecto_para_la_fecha(String legajo, Integer horas, String idTarea, String idProyecto, String fecha) {
         // Write code here that turns the phrase above into concrete actions
-        HorasCargadas horasTrabajadas = (HorasCargadas) response.getBody();
+        List<HorasCargadas> horasTrabajadas = (List<HorasCargadas>) response.getBody();
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertEquals(horas.intValue(), horasTrabajadas.getHoras());
+        Assert.assertEquals(horas.intValue(), horasTrabajadas.get(0).getHoras());
     }
 
     @Y("no existe el empleado con legajo {string} cargo {int} horas en la tarea {string}, del proyecto {string}, el dia {string}")
     public void no_existe_el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String string, Integer int1, String string2, String string3, String string4) {
         // Write code here that turns the phrase above into concrete actions
-        
+
     }
 
     @Entonces("se me informa que no puedo realizar dicha accion ya que el emplado con legajo {string} no existe.")

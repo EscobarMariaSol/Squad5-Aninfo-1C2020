@@ -7,7 +7,10 @@ import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class EmpleadoService {
@@ -84,9 +87,15 @@ public class EmpleadoService {
         return empleado;
     }
 
-    public HorasCargadas consultarHorasTrabajadasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
+    public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        Integer horasCargadas = empleado.getHorasCargadas(idTarea, idProyecto, fecha);
-        return new HorasCargadas(fecha, horasCargadas);
+        List<HorasCargadas> totalHoras;
+        if (fecha == null) {
+            totalHoras = new ArrayList<HorasCargadas>();
+        } else {
+            totalHoras = new ArrayList<HorasCargadas>();
+            totalHoras.add(new HorasCargadas(fecha, empleado.getHorasCargadas(idTarea, idProyecto, fecha)));
+        }
+        return totalHoras;
     }
 }
