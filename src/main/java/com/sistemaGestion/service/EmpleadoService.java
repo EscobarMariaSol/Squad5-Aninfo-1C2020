@@ -1,23 +1,28 @@
 package com.sistemaGestion.service;
 
+import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
+import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
-import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-    private AsignacionProyectoRepository asignacionProyectoRepository;
+
+    private CargaDeHorasRepository cargaDeHorasRepository;
 
     @Autowired
-    public EmpleadoService(EmpleadoRepository empleadoRepository) {
+    public EmpleadoService(EmpleadoRepository empleadoRepository, CargaDeHorasRepository cargaDeHorasRepository) {
         this.empleadoRepository = empleadoRepository;
+        this.cargaDeHorasRepository = cargaDeHorasRepository;
     }
 
     public List<Empleado> consultarEmpleados() {
@@ -71,7 +76,7 @@ public class EmpleadoService {
 
     public Empleado cargarHorasDeEmpleadoEnUnaTarea(String legajo, String proyectoId, String tareaId, HorasCargadas horasCargadas) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras());
+        CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras(), legajo);
         empleado.cargarHoras(cargaDeHoras);
         return empleadoRepository.save(empleado);
     }
@@ -82,5 +87,29 @@ public class EmpleadoService {
         asignacionProyecto.setRolEmpleado(empleado.getRol().name());
         empleadoRepository.save(empleado);
         return empleado;
+    }
+
+    public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, String tareaId, String proyectoId, String fecha) {
+        List<CargaDeHoras> horasTrabajadas =  new ArrayList<CargaDeHoras>();
+        consultarEmpleadoPorLegajo(legajo);
+        if (fecha == null) {
+             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoId(legajo, tareaId, proyectoId);
+        } else {
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFecha(legajo, tareaId, proyectoId, LocalDate.parse(fecha));
+        }
+        if (horasTrabajadas.isEmpty()) throw new HorasCargadasException("CargaDeHoras with legajo " + legajo +
+                "with tareaId " + tareaId +
+                "with proyectoId " + proyectoId + "not found.");
+        return generarListadoDeHorasCargadas(horasTrabajadas);
+    }
+
+    private List<HorasCargadas> generarListadoDeHorasCargadas(List<CargaDeHoras> horasTrabajadas) {
+        List<HorasCargadas> horasCargadas =  new ArrayList<HorasCargadas>();
+        for (CargaDeHoras cargaDeHoras: horasTrabajadas) {
+            horasCargadas.add(
+                    new HorasCargadas(cargaDeHoras.getFecha().toString()
+                            , cargaDeHoras.getHorasTrabajadas()));
+        }
+        return horasCargadas;
     }
 }

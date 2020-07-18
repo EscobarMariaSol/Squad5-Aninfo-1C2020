@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -179,7 +180,6 @@ public class Empleado {
     public void cargarHoras(CargaDeHoras cargaDeHoras) {
         horasCargadas.add(cargaDeHoras);
     }
-
 
     public static class Builder {
 
