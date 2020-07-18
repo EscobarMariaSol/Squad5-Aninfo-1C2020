@@ -189,6 +189,23 @@ public class PerfilEmpleadoDTO {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        PerfilEmpleadoDTO empleadoDTO = (PerfilEmpleadoDTO) o;
+        return nombre.equals(empleadoDTO.nombre) &&
+                apellido.equals(empleadoDTO.apellido) &&
+                dni.equals(empleadoDTO.dni) &&
+                fechaNacimiento.equals(empleadoDTO.fechaNacimiento) &&
+                legajo.equals(empleadoDTO.legajo);
+    }
+
     public Empleado convertirAEmpleadoModelo(Empleado empleado) {
         return new Empleado.Builder().con(empleadoData -> {
             empleadoData.conNombre(this.nombre);
