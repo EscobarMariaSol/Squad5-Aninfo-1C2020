@@ -81,6 +81,19 @@ public class MostrarHorasPorTareaStepDefinitions {
         Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
+    @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string}, del proyecto {string}, el dia {string}")
+    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto_el_dia(String legajo, String tareaId, String proyectoId, String fecha) {
+        // Write code here that turns the phrase above into concrete actions
+        response = empleadoController.mostrarHorasEnUnaTarea(legajo, tareaId, proyectoId, fecha);
+    }
+
+    @Entonces("se me devuelve un listado con las horas trabajadas por el empleado con legajo {string}, en la tarea {string}, del proyecto {string}, el dia {string}.")
+    public void se_me_devuelve_un_listado_con_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto_el_dia(String string, String string2, String string3, String string4) {
+        // Write code here that turns the phrase above into concrete actions
+        List<HorasCargadas> horasCargadasList = (List<HorasCargadas>) response.getBody();
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertEquals(new HorasCargadas("2020-04-13", 8), horasCargadasList.get(0));
+    }
 
     @After
     public void tearDown() {

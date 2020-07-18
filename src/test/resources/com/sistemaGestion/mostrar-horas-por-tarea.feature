@@ -32,3 +32,12 @@ Característica: mostrar horas trabajadas por un empleado en una tarea
     Cuando consulto las horas trabajadas por el empleado con legajo '567',en la tarea '2' del proyecto '3'
     Entonces se me devuelve un mensaje indicando que no hay horas cargadas por el empleado con legajo '567', en la tares 2, del proyecto '3'.
 
+  Escenario: como lider de recursos humanos quiero consultar las horas trabajadas por un empleado en una tarea,
+  para poder liquidar su sueldo.
+    Dado que soy el lider de recursos humanos
+    Y existe el empleado con los atributos
+      | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
+      | Mabel       | Cruz       | 18508429 |1969-09-19         | 678    |  full-time    | DESARROLLADOR | true   |
+    Y el empleado con legajo '678' cargo 8 horas en la tarea '2', del proyecto '2', el dia '2020-04-13'
+    Cuando consulto las horas trabajadas por el empleado con legajo '678',en la tarea '2', del proyecto '2', el dia '2020-04-13'
+    Entonces se me devuelve un listado con las horas trabajadas por el empleado con legajo '678', en la tarea '2', del proyecto '2', el dia '2020-04-13'.
