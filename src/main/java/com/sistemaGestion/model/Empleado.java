@@ -181,30 +181,6 @@ public class Empleado {
         horasCargadas.add(cargaDeHoras);
     }
 
-    public Integer getHorasCargadas(String idTarea, String idProyecto, String fecha) {
-        int cont = 0;
-        for (CargaDeHoras cargaDeHoras : this.horasCargadas) {
-            if (cargaDeHoras.fecha.equals(LocalDate.parse(fecha)) &
-                    cargaDeHoras.tareaId.equals(idTarea) &
-                    cargaDeHoras.proyectoId.equals(idProyecto))
-                cont += cargaDeHoras.horasTrabajadas;
-        }
-        return cont;
-    }
-
-    public List<HorasCargadas> getHorasCargadas(String idTarea, String idProyecto) {
-        List<HorasCargadas> horasRegistradas = new ArrayList<HorasCargadas>();
-        for (CargaDeHoras cargaDeHoras : this.horasCargadas) {
-            if (cargaDeHoras.tareaId.equals(idTarea) &
-                    cargaDeHoras.proyectoId.equals(idProyecto))
-                horasRegistradas.add(
-                        new HorasCargadas(cargaDeHoras.getFecha().toString(),
-                                cargaDeHoras.getHorasTrabajadas()));
-        }
-        return horasRegistradas;
-    }
-
-
     public static class Builder {
 
         private String nombre;

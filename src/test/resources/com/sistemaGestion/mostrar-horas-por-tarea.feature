@@ -3,41 +3,32 @@
 Característica: mostrar horas trabajadas por un empleado en una tarea
 
   Escenario: como lider de recursos humanos quiero consultar las horas trabajadas por un empleado en una tarea,
-    para poder liquidar su sueldo.
+  para poder liquidar su sueldo.
     Dado que soy el lider de recursos humanos
     Y existe el empleado con los atributos
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-      | Felipe      | Codeo      | W3508429 |1979-09-19         | 123    |  full-time    | DESARROLLADOR | true   |
-    Y el empleado con legajo '123' cargo 6 horas en la tarea '1', del proyecto '1', el dia '2020-04-03'
-    Cuando consulto las horas trabajadas por el empleado con legajo '123',en la tarea '1' del proyecto '1', para la fecha '2020-04-03'
-    Entonces se me indica que el empleado con legajo '123' trabajo 6 horas en la tarea '1', del proyecto '1', para la fecha '2020-04-03'
+      | Julio       | Diaz       | 18508429 |1969-09-19         | 345    |  full-time    | DESARROLLADOR | true   |
+    Y el empleado con legajo '345' cargo 8 horas en la tarea '2', del proyecto '1', el dia '2020-04-06'
+    Y el empleado con legajo '345' cargo 3 horas en la tarea '2', del proyecto '1', el dia '2020-04-07'
+    Y el empleado con legajo '345' cargo 5 horas en la tarea '2', del proyecto '1', el dia '2020-04-08'
+    Cuando consulto las horas trabajadas por el empleado con legajo '345',en la tarea '2' del proyecto '1'
+    Entonces se me devuelve un listado con las horas trabajadas por el empleado con legajo '345', en la tarea '2', del proyecto '1'.
+
+
+  Escenario: como lider de recursos humanos quiero consultar las horas trabajadas por un empleado en una tarea,
+  para poder liquidar su sueldo.
+    Dado que soy el lider de recursos humanos
+    Y no existe el empleado con legajo '456'
+    Cuando consulto las horas trabajadas por el empleado con legajo '456',en la tarea '1' del proyecto '1'
+    Entonces se me informa que no puedo realizar dicha accion ya que el emplado con legajo '456' no existe.
 
   Escenario: como lider de recursos humanos quiero consultar las horas trabajadas por un empleado en una tarea,
   para poder liquidar su sueldo.
     Dado que soy el lider de recursos humanos
     Y existe el empleado con los atributos
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-      | Felipe      | Codeo      | W3508429 |1979-09-19         | 123    |  full-time    | DESARROLLADOR | true   |
-    Y el empleado con legajo '123' no cargo horas en la tarea '1', del proyecto '1', el dia '2020-04-03'
-    Cuando consulto las horas trabajadas por el empleado con legajo '123',en la tarea '1' del proyecto '1', para la fecha '2020-04-03'
-    Entonces se me indica que el empleado con legajo '123' trabajo 0 horas en la tarea '1', del proyecto '1', para la fecha '2020-04-03'
+      | Silvia      | Diaz       | 18508429 |1989-09-19         | 567    |  full-time    | UX            | true   |
+    Y el empleado con legajo '567' no cargo horas en la tarea '2', del proyecto '3'
+    Cuando consulto las horas trabajadas por el empleado con legajo '567',en la tarea '2' del proyecto '3'
+    Entonces se me devuelve un mensaje indicando que no hay horas cargadas por el empleado con legajo '567', en la tares 2, del proyecto '3'.
 
-  Escenario: como lider de recursos humanos quiero consultar las horas trabajadas por un empleado en una tarea,
-  para poder liquidar su sueldo.
-    Dado que soy el lider de recursos humanos
-    Y existe el empleado con los atributos
-      | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-      | Felipe      | Codeo      | W3508429 |1979-09-19         | 123    |  full-time    | DESARROLLADOR | true   |
-    Y el empleado con legajo '123' cargo 6 horas en la tarea '1', del proyecto '1', el dia '2020-04-03'
-    Y el empleado con legajo '123' cargo 3 horas en la tarea '1', del proyecto '1', el dia '2020-04-04'
-    Y el empleado con legajo '123' cargo 5 horas en la tarea '1', del proyecto '1', el dia '2020-04-05'
-    Cuando consulto las horas trabajadas por el empleado con legajo '123',en la tarea '1' del proyecto '1'
-    Entonces se me devuelve un listado con las horas trabajadas por el empleado con legajo '123', en la tarea '1', del proyecto '1'.
-
-
-  Escenario: como lider de recursos humanos quiero consultar las horas trabajadas por un empleado en una tarea,
-  para poder liquidar su sueldo.
-    Dado que soy el lider de recursos humanos
-    Y no existe el empleado con legajo '123' cargo 6 horas en la tarea '1', del proyecto '1', el dia '2020-04-03'
-    Cuando consulto las horas trabajadas por el empleado con legajo '123',en la tarea '1' del proyecto '1', para la fecha '2020-04-03'
-    Entonces se me informa que no puedo realizar dicha accion ya que el emplado con legajo '123' no existe.
