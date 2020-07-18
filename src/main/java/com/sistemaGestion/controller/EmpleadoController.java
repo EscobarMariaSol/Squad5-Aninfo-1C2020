@@ -116,15 +116,15 @@ public class EmpleadoController {
     }
 
     private ResponseEntity asignarSeniority(String legajo, Seniority seniority) {
+        empleadoService.asignarSeniorityAEmpleado(legajo, seniority);
         return new ResponseEntity(
-                empleadoService.asignarSeniorityAEmpleado(legajo, seniority),
                 HttpStatus.OK
         );
     }
 
     private ResponseEntity asignarRol(String legajo, EmpleadoRol rol) {
+        empleadoService.asignarRolAEmpleado(legajo, rol);
         return new ResponseEntity(
-                empleadoService.asignarRolAEmpleado(legajo, rol),
                 HttpStatus.OK
         );
     }
