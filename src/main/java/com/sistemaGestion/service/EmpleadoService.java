@@ -16,13 +16,12 @@ public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
     private AsignacionProyectoRepository asignacionProyectoRepository;
-
-    @Autowired
     private CargaDeHorasRepository cargaDeHorasRepository;
 
     @Autowired
-    public EmpleadoService(EmpleadoRepository empleadoRepository) {
+    public EmpleadoService(EmpleadoRepository empleadoRepository, CargaDeHorasRepository cargaDeHorasRepository) {
         this.empleadoRepository = empleadoRepository;
+        this.cargaDeHorasRepository = cargaDeHorasRepository;
     }
 
     public List<Empleado> consultarEmpleados() {
@@ -76,7 +75,7 @@ public class EmpleadoService {
 
     public Empleado cargarHorasDeEmpleadoEnUnaTarea(String legajo, String proyectoId, String tareaId, HorasCargadas horasCargadas) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras());
+        CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras(), legajo);
         empleado.cargarHoras(cargaDeHoras);
         return empleadoRepository.save(empleado);
     }
@@ -91,8 +90,7 @@ public class EmpleadoService {
 
     public HorasTrabajadas obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, String proyectoId) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        Integer cantidadDeHoras = empleado.getHorasCargadas().stream()
-                                        .filter(cargaDeHoras -> cargaDeHoras.getProyectoId().equals(proyectoId))
+        Integer cantidadDeHoras = cargaDeHorasRepository.findByProyectoIdAndLegajo(proyectoId, legajo).stream()
                                         .map(CargaDeHoras::getHorasTrabajadas)
                                         .reduce(Integer::sum).orElse(0);
         return new HorasTrabajadas(legajo, cantidadDeHoras, proyectoId, empleado.getContrato());

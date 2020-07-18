@@ -25,6 +25,9 @@ public class CargaDeHoras {
     @Column
     public Integer horasTrabajadas;
 
+    @Column
+    public String legajo;
+
     public String getId() {
         return id;
     }
@@ -65,16 +68,23 @@ public class CargaDeHoras {
         this.horasTrabajadas = horasTrabajadas;
     }
 
+    public String getLegajo() {
+        return legajo;
+    }
 
+    public void setLegajo(String legajo) {
+        this.legajo = legajo;
+    }
 
     public CargaDeHoras() {
 
     }
-    public CargaDeHoras(String tareaId, String proyectoId, LocalDate fecha, int horas) {
+    public CargaDeHoras(String tareaId, String proyectoId, LocalDate fecha, int horas, String legajo) {
         this.tareaId = tareaId;
         this.proyectoId = proyectoId;
         this.fecha =fecha;
         this.horasTrabajadas = horas;
+        this.legajo = legajo;
     }
 
     @Override
