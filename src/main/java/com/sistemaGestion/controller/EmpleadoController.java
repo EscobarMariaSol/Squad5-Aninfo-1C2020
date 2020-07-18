@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/empleados")
 public class EmpleadoController {
@@ -25,8 +28,13 @@ public class EmpleadoController {
 
     @GetMapping(value = "/")
     public ResponseEntity consultarEmpleados() {
+        List<PerfilEmpleadoDTO> empleadosADevolver = new ArrayList<>();
+        for (Empleado empleado : empleadoService.consultarEmpleados()) {
+            empleadosADevolver.add(PerfilEmpleadoDTO.convertirAEmpleadoDTO(empleado));
+        }
+
         return new ResponseEntity<>(
-                empleadoService.consultarEmpleados(),
+                empleadosADevolver,
                 HttpStatus.OK
         );
     }
