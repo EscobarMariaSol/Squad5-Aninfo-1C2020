@@ -57,22 +57,20 @@ public class EmpleadoController {
     }
 
     @GetMapping(value = "/{legajo}")
-    public ResponseEntity consultarEmpleado(@PathVariable("legajo") String legajo) {
+    public ResponseEntity consultarEmpleado(@PathVariable String legajo) {
         try {
-            return consultarEmpleadoPorLegajo(legajo);
+            return new ResponseEntity(
+                    PerfilEmpleadoDTO.convertirAEmpleadoDTO(
+                            empleadoService.consultarEmpleadoPorLegajo(legajo)
+                    ),
+                    HttpStatus.OK
+            );
         } catch(EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.NOT_FOUND
             );
         }
-    }
-
-    private ResponseEntity consultarEmpleadoPorLegajo(String legajo) {
-        return new ResponseEntity(
-                empleadoService.consultarEmpleadoPorLegajo(legajo),
-                HttpStatus.OK
-        );
     }
 
     @PutMapping(value = "/{legajo}")
