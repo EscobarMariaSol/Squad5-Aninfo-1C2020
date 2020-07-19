@@ -33,4 +33,16 @@ public class HorasCargadas {
         this.horas = horas;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        HorasCargadas horasCargadas = (HorasCargadas) o;
+        return (this.horas == horasCargadas.getHoras() &&
+                this.fecha.equals(horasCargadas.getFecha()));
+    }
 }

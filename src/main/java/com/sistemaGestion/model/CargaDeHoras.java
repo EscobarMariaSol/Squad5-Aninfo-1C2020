@@ -20,13 +20,14 @@ public class CargaDeHoras {
     public String proyectoId;
 
     @Column
+    public String legajo;
+
+    @Column
     public LocalDate fecha;
 
     @Column
     public Integer horasTrabajadas;
 
-    @Column
-    public String legajo;
 
     public String getId() {
         return id;
@@ -68,12 +69,12 @@ public class CargaDeHoras {
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public String getLegajo() {
-        return legajo;
-    }
-
     public void setLegajo(String legajo) {
         this.legajo = legajo;
+    }
+
+    public String getLegajo() {
+        return this.legajo;
     }
 
     public CargaDeHoras() {
@@ -93,7 +94,8 @@ public class CargaDeHoras {
                 "tareaId: " + tareaId +
                         ", proyectoId: " + proyectoId +
                         ", fecha: " + fecha.toString() +
-                        ", horasCargadas: " + horasTrabajadas
+                        ", horasCargadas: " + horasTrabajadas +
+                        ", legajo: " + legajo
         );
     }
 
@@ -110,7 +112,8 @@ public class CargaDeHoras {
         return proyectoId.equals(cargaDeHoras.getProyectoId()) &&
                 fecha.equals(cargaDeHoras.getFecha()) &&
                 horasTrabajadas.equals(cargaDeHoras.getHorasTrabajadas()) &&
-                tareaId.equals(cargaDeHoras.getTareaId());
+                tareaId.equals(cargaDeHoras.getTareaId()) &&
+                legajo.equals(cargaDeHoras.getLegajo());
     }
 
 

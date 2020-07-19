@@ -16,8 +16,13 @@ public class AsignacionProyecto {
     @Id
     private String codigo;
 
+    @Column
     private String fechaInicio;
+
+    @Column
     private String fechaFin;
+
+    @Column
     private String rolEmpleado;
 
     @OneToMany
