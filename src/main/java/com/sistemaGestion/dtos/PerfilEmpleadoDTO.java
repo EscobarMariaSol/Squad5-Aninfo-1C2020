@@ -109,9 +109,11 @@ public class PerfilEmpleadoDTO {
         this.apellido = builder.apellido;
         this.dni = builder.dni;
         this.fechaNacimiento = builder.fechaNacimiento;
+        this.fechaIngreso = builder.fechaIngreso;
         this.legajo = builder.legajo;
         this.rol = builder.rol;
         this.contrato = builder.contrato;
+        this.seniority = builder.seniority;
         this.activo = builder.activo;
     }
 
