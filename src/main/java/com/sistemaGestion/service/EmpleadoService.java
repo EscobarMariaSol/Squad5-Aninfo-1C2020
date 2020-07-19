@@ -3,6 +3,7 @@ package com.sistemaGestion.service;
 import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
+import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,13 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-
+    private AsignacionProyectoRepository asignacionProyectoRepository;
     private CargaDeHorasRepository cargaDeHorasRepository;
 
     @Autowired
@@ -87,6 +89,25 @@ public class EmpleadoService {
         asignacionProyecto.setRolEmpleado(empleado.getRol().name());
         empleadoRepository.save(empleado);
         return empleado;
+    }
+
+    public HorasTrabajadas obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, String proyectoId) {
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
+
+        if (empleadoPerteneceAlProyecto(empleado, proyectoId)){
+            Integer cantidadDeHoras = cargaDeHorasRepository.findByProyectoIdAndLegajo(proyectoId, legajo).stream()
+                    .map(CargaDeHoras::getHorasTrabajadas)
+                    .reduce(Integer::sum).orElse(0);
+            return new HorasTrabajadas(legajo, cantidadDeHoras, proyectoId, empleado.getContrato());
+        }else{
+            throw new HorasCargadasException("El empleado con legajo: " + legajo +
+                    "no pertenece al proyecto cuyo id es" + proyectoId);
+        }
+    }
+
+    private boolean empleadoPerteneceAlProyecto(Empleado empleado, String proyectoId) {
+        return empleado.getAsignacionProyectos().stream()
+                .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigo().equals(proyectoId));
     }
 
     public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, String tareaId, String proyectoId, String fecha) {
