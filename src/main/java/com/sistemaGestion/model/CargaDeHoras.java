@@ -8,7 +8,8 @@ import java.time.LocalDate;
 @Entity
 public class CargaDeHoras {
 
-    @Id @GeneratedValue(generator="system-uuid")
+    @Id
+    @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     public String id;
 
@@ -19,10 +20,14 @@ public class CargaDeHoras {
     public String proyectoId;
 
     @Column
+    public String legajo;
+
+    @Column
     public LocalDate fecha;
 
     @Column
     public Integer horasTrabajadas;
+
 
     public String getId() {
         return id;
@@ -64,16 +69,23 @@ public class CargaDeHoras {
         this.horasTrabajadas = horasTrabajadas;
     }
 
+    public void setLegajo(String legajo) {
+        this.legajo = legajo;
+    }
 
+    public String getLegajo() {
+        return this.legajo;
+    }
 
     public CargaDeHoras() {
 
     }
-    public CargaDeHoras(String tareaId, String proyectoId, LocalDate fecha, int horas) {
+    public CargaDeHoras(String tareaId, String proyectoId, LocalDate fecha, int horas, String legajo) {
         this.tareaId = tareaId;
         this.proyectoId = proyectoId;
         this.fecha =fecha;
         this.horasTrabajadas = horas;
+        this.legajo = legajo;
     }
 
     @Override
@@ -82,7 +94,8 @@ public class CargaDeHoras {
                 "tareaId: " + tareaId +
                         ", proyectoId: " + proyectoId +
                         ", fecha: " + fecha.toString() +
-                        ", horasCargadas: " + horasTrabajadas
+                        ", horasCargadas: " + horasTrabajadas +
+                        ", legajo: " + legajo
         );
     }
 
@@ -99,7 +112,8 @@ public class CargaDeHoras {
         return proyectoId.equals(cargaDeHoras.getProyectoId()) &&
                 fecha.equals(cargaDeHoras.getFecha()) &&
                 horasTrabajadas.equals(cargaDeHoras.getHorasTrabajadas()) &&
-                tareaId.equals(cargaDeHoras.getTareaId());
+                tareaId.equals(cargaDeHoras.getTareaId()) &&
+                legajo.equals(cargaDeHoras.getLegajo());
     }
 
 

@@ -1,6 +1,7 @@
 package com.sistemaGestion.controller;
 
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
+import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
@@ -151,6 +152,42 @@ public class EmpleadoController {
             return new ResponseEntity(
                     empleadoService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
             HttpStatus.OK
+            );
+        } catch (EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
+
+
+    @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/horas")
+    public ResponseEntity obtenerHorasDeUnEmpleadoEnUnProyecto(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.obtenerHorasDeUnEmpleadoEnUnProyecto(legajo, proyectoId),
+                    HttpStatus.OK
+            );
+        } catch (HorasCargadasException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @GetMapping(value = "/{legajo}/proyectos/{proyectoId/tareas/{tareaId}/horas")
+    public ResponseEntity mostrarHorasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, idProyecto, fecha),
+                    HttpStatus.OK
+            );
+        } catch (HorasCargadasException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
             );
         } catch (EmpleadoException e) {
             return new ResponseEntity(
