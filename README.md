@@ -12,3 +12,4 @@ Cada vez que se agregue un endpoint nuevo este se verá en la UI de Swagger.
 #### Levantar la base de datos
 
 Ejecutar `sudo docker-compose up` para levantar la base de datos, luego correr la aplicación.
+
