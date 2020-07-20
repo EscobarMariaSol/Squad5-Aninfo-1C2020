@@ -3,6 +3,8 @@ package com.sistemaGestion.service;
 import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
+import com.sistemaGestion.model.enums.EmpleadoRol;
+import com.sistemaGestion.model.enums.Seniority;
 import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmpleadoService {
@@ -38,11 +39,18 @@ public class EmpleadoService {
     public Empleado consultarEmpleadoPorLegajo(String legajo) {
         return empleadoRepository.findByLegajoAndActivoIsTrue(legajo)
                 .orElseThrow( () ->
-                        new EmpleadoException("Empleado with legajo " + legajo + " not found.")
+                        new EmpleadoException("El empleado con legajo " + legajo + " no existe.")
                 );
     }
 
-    public Empleado asignarSeniorityAEmpleado(String legajo, String seniority) {
+    public Empleado actualizarEmpleado(Empleado empleado) {
+        empleadoRepository.findByLegajo(empleado.getLegajo()).orElseThrow(() ->
+            new EmpleadoException("El empleado con legajo " + empleado.getLegajo() + " no existe.")
+        );
+        return empleadoRepository.save(empleado);
+    }
+
+    public Empleado asignarSeniorityAEmpleado(String legajo, Seniority seniority) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
         empleado.setSeniority(seniority);
         empleadoRepository.save(empleado);
@@ -68,10 +76,9 @@ public class EmpleadoService {
         return empleadoRepository.save(empleado);
     }
 
-    public Empleado asignarRolAEmpleado(String legajo, String rol) {
+    public Empleado asignarRolAEmpleado(String legajo, EmpleadoRol rol) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        EmpleadoRol nuevoRol = EmpleadoRol.valueOf(rol.toUpperCase());
-        empleado.setRol(nuevoRol);
+        empleado.setRol(rol);
         empleadoRepository.save(empleado);
         return empleado;
     }

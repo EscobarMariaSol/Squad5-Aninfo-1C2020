@@ -1,15 +1,20 @@
 package com.sistemaGestion.controller;
 
+import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.exceptions.EmpleadoException;
-import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.Seniority;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/empleados")
@@ -24,17 +29,24 @@ public class EmpleadoController {
 
     @GetMapping(value = "/")
     public ResponseEntity consultarEmpleados() {
+        List<PerfilEmpleadoDTO> empleadosADevolver = new ArrayList<>();
+        for (Empleado empleado : empleadoService.consultarEmpleados()) {
+            empleadosADevolver.add(PerfilEmpleadoDTO.convertirAEmpleadoDTO(empleado));
+        }
+
         return new ResponseEntity<>(
-                empleadoService.consultarEmpleados(),
+                empleadosADevolver,
                 HttpStatus.OK
         );
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity ingresarEmpleado(@RequestBody Empleado nuevoEmpleado) {
+    public ResponseEntity ingresarEmpleado(@RequestBody PerfilEmpleadoDTO perfilEmpleado) {
         try {
+            Empleado empleadoAIngresar = new Empleado();
+            empleadoAIngresar = perfilEmpleado.convertirAEmpleadoModelo(empleadoAIngresar);
             return new ResponseEntity<>(
-                    empleadoService.ingresarEmpleado(nuevoEmpleado),
+                    empleadoService.ingresarEmpleado(empleadoAIngresar),
                     HttpStatus.OK
             );
         } catch(Exception e) {
@@ -46,9 +58,14 @@ public class EmpleadoController {
     }
 
     @GetMapping(value = "/{legajo}")
-    public ResponseEntity consultarEmpleado(@PathVariable("legajo") String legajo) {
+    public ResponseEntity consultarEmpleado(@PathVariable String legajo) {
         try {
-            return consultarEmpleadoPorLegajo(legajo);
+            return new ResponseEntity(
+                    PerfilEmpleadoDTO.convertirAEmpleadoDTO(
+                            empleadoService.consultarEmpleadoPorLegajo(legajo)
+                    ),
+                    HttpStatus.OK
+            );
         } catch(EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
@@ -57,18 +74,28 @@ public class EmpleadoController {
         }
     }
 
-    private ResponseEntity consultarEmpleadoPorLegajo(String legajo) {
-        return new ResponseEntity(
-                empleadoService.consultarEmpleadoPorLegajo(legajo),
-                HttpStatus.OK
-        );
+    @PutMapping(value = "/{legajo}")
+    public ResponseEntity actualizarEmpleado(@RequestBody PerfilEmpleadoDTO perfilEmpleado){
+        try {
+            Empleado empleadoAActualizar = empleadoService.consultarEmpleadoPorLegajo(
+                    perfilEmpleado.getLegajo()
+            );
+            empleadoAActualizar = perfilEmpleado.convertirAEmpleadoModelo(empleadoAActualizar);
+            empleadoService.actualizarEmpleado(empleadoAActualizar);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch(EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 
-    @PutMapping(value = "/{legajo}")
-    public ResponseEntity actualizarEmpleado(
+    @PatchMapping(value = "/{legajo}")
+    public ResponseEntity actualizarParcialmenteEmpleado(
             @PathVariable("legajo") String legajo,
-            @RequestParam(required = false) String seniority,
-            @RequestParam(required = false) String rol
+            @RequestParam(required = false) Seniority seniority,
+            @RequestParam(required = false) EmpleadoRol rol
     ) {
         try {
             if ((seniority != null && rol != null) || (seniority == null && rol == null))
@@ -89,16 +116,16 @@ public class EmpleadoController {
         }
     }
 
-    private ResponseEntity asignarSeniority(String legajo, String seniority) {
+    private ResponseEntity asignarSeniority(String legajo, Seniority seniority) {
+        empleadoService.asignarSeniorityAEmpleado(legajo, seniority);
         return new ResponseEntity(
-                empleadoService.asignarSeniorityAEmpleado(legajo, seniority),
                 HttpStatus.OK
         );
     }
 
-    private ResponseEntity asignarRol(String legajo, String rol) {
+    private ResponseEntity asignarRol(String legajo, EmpleadoRol rol) {
+        empleadoService.asignarRolAEmpleado(legajo, rol);
         return new ResponseEntity(
-                empleadoService.asignarRolAEmpleado(legajo, rol),
                 HttpStatus.OK
         );
     }

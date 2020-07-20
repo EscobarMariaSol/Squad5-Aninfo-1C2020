@@ -1,13 +1,15 @@
 package com.sistemaGestion.model;
 
+import com.sistemaGestion.model.enums.EmpleadoContrato;
+
 public class HorasTrabajadas {
 
     public String legajo;
     public Integer cantidadDeHorasTrabajadas;
     public String nombreProyecto;
-    public String tipoContrato;
+    public EmpleadoContrato tipoContrato;
 
-    public HorasTrabajadas(String legajo, Integer cantidadDeHorasTrabajadas, String nombreProyecto, String tipoContrato) {
+    public HorasTrabajadas(String legajo, Integer cantidadDeHorasTrabajadas, String nombreProyecto, EmpleadoContrato tipoContrato) {
         this.legajo = legajo;
         this.cantidadDeHorasTrabajadas = cantidadDeHorasTrabajadas;
         this.nombreProyecto = nombreProyecto;

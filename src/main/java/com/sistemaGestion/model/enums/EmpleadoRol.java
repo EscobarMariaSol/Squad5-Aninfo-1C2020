@@ -1,4 +1,4 @@
-package com.sistemaGestion.model;
+package com.sistemaGestion.model.enums;
 
 public enum EmpleadoRol {
 
@@ -30,6 +30,11 @@ public enum EmpleadoRol {
     /**
      * Rol de Líder de Proyecto
      * */
-    LIDER_PROYECTO
+    LIDER_PROYECTO,
+
+    /**
+     * Indica que el rol no fue seleccionado
+     * */
+    SIN_ROL
 
 }

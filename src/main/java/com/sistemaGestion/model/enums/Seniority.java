@@ -1,4 +1,4 @@
-package com.sistemaGestion.model;
+package com.sistemaGestion.model.enums;
 
 public enum Seniority {
 

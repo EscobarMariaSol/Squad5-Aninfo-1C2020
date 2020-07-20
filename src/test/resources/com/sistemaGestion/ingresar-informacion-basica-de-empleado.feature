@@ -6,7 +6,7 @@ Característica: Cargar informacion basica de empleado
     Dado que soy un lider de recursos humanos
     Y quiero guardar un empledo con  los siguientes atributos
        | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
-       | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full-time    | DESARROLLADOR | true   |
+       | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Cuando guardo el nuevo empleado
     Entonces se guarda OK
 

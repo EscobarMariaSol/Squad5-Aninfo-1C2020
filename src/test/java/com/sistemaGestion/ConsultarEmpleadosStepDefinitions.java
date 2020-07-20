@@ -1,8 +1,8 @@
 package com.sistemaGestion;
 
-import com.sistemaGestion.SpringIntegrationTest;
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.datatable.DataTable;
@@ -30,6 +30,7 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
     private EmpleadoController empleadoController;
 
     private Empleado liderRecursosHumanos;
+    private List<PerfilEmpleadoDTO> colleccionEmpleadosDTO = new ArrayList<>();
     private List<Empleado> coleccionEmpleados = new ArrayList<>();
     private ResponseEntity response;
 
@@ -47,6 +48,9 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
             Empleado empleado = EmpleadoFactory.crearEmpleado(empleados.get(i));
             empleadoRepository.save(empleado);
             coleccionEmpleados.add(empleado);
+
+            PerfilEmpleadoDTO empleadoDTO = EmpleadoFactory.crearPerfilEmpleadoDTO(empleados.get(i));
+            colleccionEmpleadosDTO.add(empleadoDTO);
         }
     }
 
@@ -65,13 +69,13 @@ public class ConsultarEmpleadosStepDefinitions extends SpringIntegrationTest {
     @Entonces("obtengo un listado de los {int} empleados")
     public void obtengoUnListadoDeLosEmpleados(int arg0) {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-        Assert.assertEquals(coleccionEmpleados, response.getBody());
+        Assert.assertEquals(colleccionEmpleadosDTO, response.getBody());
     }
 
     @Entonces("obtengo un listado vacio")
     public void obtengoUnListadoVacio() {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-        Assert.assertEquals(coleccionEmpleados, response.getBody());
+        Assert.assertEquals(colleccionEmpleadosDTO, response.getBody());
     }
 
     @After

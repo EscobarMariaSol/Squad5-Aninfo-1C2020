@@ -3,7 +3,10 @@ package com.sistemaGestion;
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.AsignacionProyectoController;
 import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.*;
+import com.sistemaGestion.model.enums.EmpleadoContrato;
+import com.sistemaGestion.model.enums.Seniority;
 import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.es.Cuando;
@@ -20,15 +23,16 @@ import java.util.Map;
 
 public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
 
-    private Empleado liderRRHH;
-    private Empleado empleado;
     @Autowired
     private EmpleadoController empleadoController;
-    private ResponseEntity response;
-    @Autowired
-    private AsignacionProyectoRepository asignacionProyectoRepository;
+
     @Autowired
     private com.sistemaGestion.controller.AsignacionProyectoController AsignacionProyectoController;
+
+    private Empleado liderRRHH;
+    private Empleado empleado;
+    private PerfilEmpleadoDTO perfilEmpleadoDTO;
+    private ResponseEntity response;
     private AsignacionProyecto asignacionProyecto;
 
 
@@ -40,7 +44,8 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void tengo_un_empleado_con_los_siguientes_datos(DataTable empleadoTable) {
         List<Map<String, String>> empleados = empleadoTable.asMaps(String.class, String.class);
         empleado = EmpleadoFactory.crearEmpleado(empleados.get(0));
-        empleadoController.ingresarEmpleado(empleado);
+        perfilEmpleadoDTO = EmpleadoFactory.crearPerfilEmpleadoDTO(empleados.get(0));
+        empleadoController.ingresarEmpleado(perfilEmpleadoDTO);
     }
 
     @Y("este empleado carga las horas trabajadas en las siguientes tareas")
@@ -68,7 +73,12 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     @Entonces("obtengo la siguiente informacion")
     public void obtengo_la_siguiente_informacion(DataTable horasTrabajadasTable) {
         List<Map<String, String>> horasTrabajadas =  horasTrabajadasTable.asMaps(String.class, String.class);
-        HorasTrabajadas horasEsperadasTrabajadas = new HorasTrabajadas(horasTrabajadas.get(0).get("legajo"),Integer.parseInt(horasTrabajadas.get(0).get("cantidadDeHorasTrabajadas")), horasTrabajadas.get(0).get("nombreDeProyecto"), horasTrabajadas.get(0).get("tipoDeContrato"));
+        HorasTrabajadas horasEsperadasTrabajadas = new HorasTrabajadas(
+                horasTrabajadas.get(0).get("legajo"),
+                Integer.parseInt(horasTrabajadas.get(0).get("cantidadDeHorasTrabajadas")),
+                horasTrabajadas.get(0).get("nombreDeProyecto"),
+                EmpleadoContrato.valueOf(horasTrabajadas.get(0).get("tipoDeContrato").toUpperCase())
+        );
         HorasTrabajadas horasObtenidas = (HorasTrabajadas) response.getBody();
         Assert.assertEquals(horasEsperadasTrabajadas, horasObtenidas);
     }
