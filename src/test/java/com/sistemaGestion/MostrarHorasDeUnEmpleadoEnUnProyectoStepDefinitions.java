@@ -27,7 +27,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     private EmpleadoController empleadoController;
 
     @Autowired
-    private com.sistemaGestion.controller.AsignacionProyectoController AsignacionProyectoController;
+    private com.sistemaGestion.controller.AsignacionProyectoController asignacionProyectoController;
 
     private Empleado liderRRHH;
     private Empleado empleado;
@@ -40,6 +40,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void dado_que_soy_jefe_de_recursos_humanos() {
         liderRRHH = EmpleadoFactory.crearLiderDeRecursosHumanos();
     }
+
     @Y("tengo un empleado con los siguientes datos")
     public void tengo_un_empleado_con_los_siguientes_datos(DataTable empleadoTable) {
         List<Map<String, String>> empleados = empleadoTable.asMaps(String.class, String.class);
@@ -62,7 +63,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
         String fechaFin = "2020-06-16";
         String rol = "DESARROLLADOR";
         asignacionProyecto = new AsignacionProyecto(idProyecto, fechaInicio, fechaFin, rol);
-        response = AsignacionProyectoController.asignarEmpleadoAProyecto(empleado.getLegajo(), asignacionProyecto);
+        response = asignacionProyectoController.asignarEmpleadoAProyecto(empleado.getLegajo(), asignacionProyecto);
     }
 
     @Cuando("consulto las horas trabajadas por el empleado en el proyecto cuyo id es {string}")
