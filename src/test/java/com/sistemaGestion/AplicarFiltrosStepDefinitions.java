@@ -140,6 +140,28 @@ public class AplicarFiltrosStepDefinitions {
         Assert.assertEquals(reporteDeHoras.getHorasTotales().intValue(), horas.intValue());
     }
 
+    @Cuando("consulto las horas trabajadas por el empleado con legajo {string} en el proyecto {string} aplicando los filtros")
+    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_el_proyecto_aplicando_los_filtros(
+            String legajo, String proyectoId, io.cucumber.datatable.DataTable dataTable) {
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        //
+        // For other transformations you can register a DataTableType.
+        List<Map<String, String>> filtros = dataTable.asMaps(String.class, String.class);
+        filtros.stream().forEach(filtro -> {
+            response = empleadoController.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
+                    legajo,
+                    null ,
+                    filtro.get("proyectoId"),
+                    filtro.get("fechaInicio"),
+                    filtro.get("fechaFin"));
+        });
+
+    }
+
     @After
     public void tearDown() {
         empleadoRepository.deleteAll();

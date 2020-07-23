@@ -145,10 +145,15 @@ public class EmpleadoService {
         ReporteDeHorasDTO reporteDeHoras = new ReporteDeHorasDTO(empleado.getContrato());
         //List<HorasCargadas> horasFiltradas;
         List<CargaDeHoras> horasTrabajadas;
-        //if(tareaId == null && proyectoId == null && fechaInicio == null && fechaFin == null){
-        horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-                legajo, tareaId, proyectoId, LocalDate.parse(fechaInicio), LocalDate.parse(fechaFin));
-        rellenarReporte(reporteDeHoras, generarListadoDeHorasCargadas(horasTrabajadas), tareaId, proyectoId);
+        if(tareaId == null && proyectoId != null && fechaInicio != null && fechaFin != null){
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
+                    legajo, proyectoId, LocalDate.parse(fechaInicio), LocalDate.parse(fechaFin));
+            rellenarReporte(reporteDeHoras, generarListadoDeHorasCargadas(horasTrabajadas), tareaId, proyectoId);
+        } else {
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
+                    legajo, tareaId, proyectoId, LocalDate.parse(fechaInicio), LocalDate.parse(fechaFin));
+            rellenarReporte(reporteDeHoras, generarListadoDeHorasCargadas(horasTrabajadas), tareaId, proyectoId);
+        }
         return reporteDeHoras;
     }
 
