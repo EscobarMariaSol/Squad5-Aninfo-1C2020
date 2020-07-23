@@ -182,6 +182,11 @@ public class AplicarFiltrosStepDefinitions {
         });
     }
 
+    @Entonces("recibo un mensaje indicandome que no existe dicho empleado")
+    public void recibo_un_mensaje_indicandome_que_no_existe_dicho_empleado() {
+        // Write code here that turns the phrase above into concrete actions
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
+    }
 
     @After
     public void tearDown() {

@@ -124,3 +124,12 @@ Característica: aplicar filtros para generar reportes
       | 2020-09-18      | 6                         |
       | 2012-09-18      | 6                         |
     Y se me indica que la cantidad de horas totales es 19
+
+  Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
+  para generar reportes de la información asociada a los filtros aplicados
+    Dado que soy lider de recursos humanos
+    Y no existe el empleado con legajo '33'
+    Cuando consulto las horas trabajadas por el empleado con legajo '5' aplicando los siguientes filtros
+      | tareaId     | proyectoId   | fechaCargaDeHoras      | horasTrabajadas |
+      |             |              |                        |                 |
+    Entonces recibo un mensaje indicandome que no existe dicho empleado
