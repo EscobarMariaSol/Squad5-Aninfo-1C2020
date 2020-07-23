@@ -77,7 +77,7 @@ public class ReporteDeHorasDTO {
                 ", Horas Totales: " + horasTotales +
                 ", Contrato: " + contrato +
                 ", Tarea: '" + tareaId + '\'' +
-                ", Proyectoid: '" + proyectoid + '\'' +
+                ", Proyecto: '" + proyectoid + '\'' +
                 '}';
     }
 }

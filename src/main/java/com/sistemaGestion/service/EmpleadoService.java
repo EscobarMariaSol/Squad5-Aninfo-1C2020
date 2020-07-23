@@ -151,7 +151,10 @@ public class EmpleadoService {
         } else if(tareaId != null && proyectoId == null && fechaInicio != null && fechaFin != null){
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo, tareaId, LocalDate.parse(fechaInicio), LocalDate.parse(fechaFin));
-        } else {
+        } else if(tareaId == null && proyectoId == null && fechaInicio != null && fechaFin != null){
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
+                    legajo, LocalDate.parse(fechaInicio), LocalDate.parse(fechaFin));
+        }else {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo, tareaId, proyectoId, LocalDate.parse(fechaInicio), LocalDate.parse(fechaFin));
         }

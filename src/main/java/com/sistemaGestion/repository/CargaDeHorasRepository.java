@@ -23,4 +23,6 @@ public interface CargaDeHorasRepository extends JpaRepository<CargaDeHoras, Long
 
     List<CargaDeHoras> findByLegajoAndTareaIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
             String legajo, String tareaId, LocalDate fecha1, LocalDate fecha2);
+
+    List<CargaDeHoras> findByLegajoAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(String legajo, LocalDate fecha1, LocalDate fecha2);
 }
