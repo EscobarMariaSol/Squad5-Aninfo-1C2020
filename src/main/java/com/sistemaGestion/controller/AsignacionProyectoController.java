@@ -21,23 +21,39 @@ public class AsignacionProyectoController {
 
     @PostMapping(value = "/{legajo}/proyectos")
     public ResponseEntity asignarEmpleadoAProyecto(
-            @PathVariable("legajo")  String legajo,
+            @PathVariable("legajo") String legajo,
             @RequestBody AsignacionProyecto asignacionProyecto) {
         try {
             asignacionProyectoService.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
             return new ResponseEntity(
                     HttpStatus.OK
             );
-        } catch(EmpleadoException e) {
+        } catch (EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST
             );
-        } catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST
             );
         }
     }
+
+    @GetMapping(value = "/{legajo}/proyectos/")
+    public ResponseEntity obtenerProyectosAsignados(@PathVariable("legajo") String legajo) {
+        try{
+            return new ResponseEntity(
+                    asignacionProyectoService.obtenerProyectosDeEmpleado(legajo),
+                    HttpStatus.OK
+            );
+        } catch (EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
+
 }
