@@ -121,7 +121,9 @@ public class AplicarFiltrosStepDefinitions {
         reporteDeHoras = (ReporteDeHorasDTO) response.getBody();
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
         List<Map<String, String>> datosEsperados = dataTable.asMaps(String.class, String.class);
+        System.out.println(reporteDeHoras);
         for (Map<String, String> datoEsperado : datosEsperados) {
+            System.out.println(datoEsperado.get("fecha"));
             Assert.assertTrue(reporteDeHoras.getHoras().containsKey(LocalDate.parse(datoEsperado.get("fecha"))));
             Assert.assertEquals(datoEsperado.get("proyectoId"), reporteDeHoras.getProyectoid());
             Assert.assertEquals(datoEsperado.get("tareaId"), reporteDeHoras.getTareaId());
