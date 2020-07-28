@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface AsignacionProyectoRepository extends JpaRepository<AsignacionProyecto, String> {
 
-    Optional<AsignacionProyecto> findByCodigo(String codigo);
+    Optional<AsignacionProyecto> findByCodigoProyecto(String codigoProyecto);
 }

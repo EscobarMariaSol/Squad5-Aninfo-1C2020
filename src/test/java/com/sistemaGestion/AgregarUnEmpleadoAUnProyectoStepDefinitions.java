@@ -66,7 +66,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     public void el_empleado_queda_asignado_al_proyecto(String legajo, String codigo) {
         // Write code here that turns the phrase above into concrete actions
         empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
-        asignacionProyecto = asignacionProyectoRepository.findByCodigo(codigo).orElse(null);
+        asignacionProyecto = asignacionProyectoRepository.findByCodigoProyecto(codigo).orElse(null);
         Assert.assertTrue(empleado.perteneceAProyecto(asignacionProyecto));
     }
 

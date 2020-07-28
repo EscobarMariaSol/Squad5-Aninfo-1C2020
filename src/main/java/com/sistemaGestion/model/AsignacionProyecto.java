@@ -1,10 +1,6 @@
 package com.sistemaGestion.model;
 
-import com.sun.org.apache.bcel.internal.generic.DADD;
-
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -14,7 +10,11 @@ public class AsignacionProyecto {
      * Código identificador del proyecto que viene del Módulo de Proyectos.
      * */
     @Id
-    private String codigo;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long idAsignacion;
+
+    @Column
+    private String codigoProyecto;
 
     @Column
     private String fechaInicio;
@@ -25,32 +25,22 @@ public class AsignacionProyecto {
     @Column
     private String rolEmpleado;
 
-    @OneToMany
-    private Set<Tarea> tareas;
 
     public AsignacionProyecto(){}
 
     public AsignacionProyecto(String codigo, String fechaInicio, String fechaFin, String rol) {
-        this.codigo = codigo;
+        this.codigoProyecto = codigo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.rolEmpleado = rol;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getCodigoProyecto() {
+        return codigoProyecto;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public Set<Tarea> getTareas() {
-        return tareas;
-    }
-
-    public void setTareas(Set<Tarea> tareas) {
-        this.tareas = tareas;
+    public void setCodigoProyecto(String codigo) {
+        this.codigoProyecto = codigo;
     }
 
     public void setFechaInicio(String fecha) {
@@ -86,6 +76,6 @@ public class AsignacionProyecto {
             return false;
         }
         AsignacionProyecto asignacionProyecto = (AsignacionProyecto) o;
-        return codigo.equals(asignacionProyecto.codigo);
+        return codigoProyecto.equals(asignacionProyecto.codigoProyecto);
     }
 }

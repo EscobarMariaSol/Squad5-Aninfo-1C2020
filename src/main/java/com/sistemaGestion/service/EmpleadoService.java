@@ -115,7 +115,7 @@ public class EmpleadoService {
 
     private boolean empleadoPerteneceAlProyecto(Empleado empleado, String proyectoId) {
         return empleado.getAsignacionProyectos().stream()
-                .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigo().equals(proyectoId));
+                .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigoProyecto().equals(proyectoId));
     }
 
     public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, String tareaId, String proyectoId, String fecha) {
