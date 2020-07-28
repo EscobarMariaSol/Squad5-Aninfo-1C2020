@@ -177,17 +177,35 @@ public class EmpleadoController {
         }
     }
 
-    @GetMapping(value = "/{legajo}/proyectos/{proyectoId/tareas/{tareaId}/horas")
-    public ResponseEntity mostrarHorasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
+    @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
+    public ResponseEntity mostrarHorasEnUnaTarea(
+            @PathVariable("legajo") String legajo,
+            @PathVariable("tareaId") String idTarea,
+            @PathVariable("proyectoId") String idProyecto, String fecha) {
         try {
             return new ResponseEntity(
                     empleadoService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, idProyecto, fecha),
                     HttpStatus.OK
             );
-        } catch (HorasCargadasException e) {
+        } catch (EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
-                    HttpStatus.BAD_REQUEST
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
+
+    @GetMapping(value = "/{legajo}/horas" )
+    public ResponseEntity obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
+            @PathVariable("legajo") String legajo,
+            @RequestParam(required = false) String tareaId,
+            @RequestParam(required = false) String proyectoId,
+            @RequestParam(required = false) String fechaInicio,
+            @RequestParam(required = false) String fechaFin) {
+        try {
+            return new ResponseEntity(
+                    empleadoService.obtenerHorasDeUnEmpleadoConFiltros(legajo, tareaId, proyectoId, fechaInicio, fechaFin),
+                    HttpStatus.OK
             );
         } catch (EmpleadoException e) {
             return new ResponseEntity(

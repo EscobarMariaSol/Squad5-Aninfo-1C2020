@@ -78,7 +78,9 @@ public class MostrarHorasPorTareaStepDefinitions {
     @Entonces("se me devuelve un mensaje indicando que no hay horas cargadas por el empleado con legajo {string}, en la tares {int}, del proyecto {string}.")
     public void se_me_devuelve_un_mensaje_indicando_que_no_hay_horas_cargadas_por_el_empleado_con_legajo_en_la_tares_del_proyecto(String string, Integer int1, String string2) {
         // Write code here that turns the phrase above into concrete actions
-        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        List<HorasCargadas> horasCargadasList = (List<HorasCargadas>) response.getBody();
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertTrue(horasCargadasList.isEmpty());
     }
 
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string}, del proyecto {string}, el dia {string}")

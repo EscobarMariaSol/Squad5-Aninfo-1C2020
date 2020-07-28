@@ -1,5 +1,6 @@
 package com.sistemaGestion.service;
 
+import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
@@ -125,9 +126,6 @@ public class EmpleadoService {
         } else {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFecha(legajo, tareaId, proyectoId, LocalDate.parse(fecha));
         }
-        if (horasTrabajadas.isEmpty()) throw new HorasCargadasException("CargaDeHoras with legajo " + legajo +
-                "with tareaId " + tareaId +
-                "with proyectoId " + proyectoId + "not found.");
         return generarListadoDeHorasCargadas(horasTrabajadas);
     }
 
@@ -140,4 +138,38 @@ public class EmpleadoService {
         }
         return horasCargadas;
     }
+
+    public ReporteDeHorasDTO obtenerHorasDeUnEmpleadoConFiltros(
+            String legajo, String tareaId, String proyectoId, String fechaInicio, String fechaFin) {
+        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
+        ReporteDeHorasDTO reporteDeHoras = new ReporteDeHorasDTO(empleado.getContrato());
+        List<CargaDeHoras> horasTrabajadas;
+        LocalDate fecha1 = (fechaInicio == null) ? LocalDate.parse("2000-01-01") : LocalDate.parse(fechaInicio);
+        LocalDate fecha2 = (fechaFin == null) ? LocalDate.now() : LocalDate.parse(fechaFin);
+        if(tareaId == null && proyectoId != null){
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
+                    legajo, proyectoId, fecha1, fecha2);
+        } else if(tareaId != null && proyectoId == null){
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
+                    legajo, tareaId, fecha1, fecha2);
+        } else if(tareaId != null){
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
+                    legajo, tareaId, proyectoId, fecha1, fecha2);
+        } else {
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
+                    legajo,fecha1, fecha2);
+        }
+        rellenarReporte(reporteDeHoras, generarListadoDeHorasCargadas(horasTrabajadas), tareaId, proyectoId);
+        return reporteDeHoras;
+    }
+
+    private void rellenarReporte(ReporteDeHorasDTO reporteDeHoras, List<HorasCargadas> listadoDeHorasCargadas, String tareaId, String proyectoId) {
+        reporteDeHoras.setProyectoid(proyectoId);
+        reporteDeHoras.setTareaId(tareaId);
+        for (HorasCargadas horas: listadoDeHorasCargadas) {
+            reporteDeHoras.addHoras(horas.getFecha(), horas.getHoras());
+        }
+    }
+
+
 }
