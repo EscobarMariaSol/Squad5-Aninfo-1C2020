@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -59,8 +60,8 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
 
     @Y("el empleado es asignado a ese proyecto cuyo id es {string}")
     public void el_empleado_es_asignado_a_ese_proyecto_cuyo_id_es_pero_no_ha_cargado_horas_aun(String idProyecto) {
-        String fechaInicio = "2020-06-07";
-        String fechaFin = "2020-06-16";
+        LocalDate fechaInicio = LocalDate.parse("2020-06-07");
+        LocalDate fechaFin = LocalDate.parse("2020-06-16");
         String rol = "DESARROLLADOR";
         asignacionProyecto = new AsignacionProyecto(idProyecto, fechaInicio, fechaFin, rol);
         response = asignacionProyectoController.asignarEmpleadoAProyecto(empleado.getLegajo(), asignacionProyecto);

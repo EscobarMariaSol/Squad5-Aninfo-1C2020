@@ -1,6 +1,7 @@
 package com.sistemaGestion.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -17,10 +18,10 @@ public class AsignacionProyecto {
     private String codigoProyecto;
 
     @Column
-    private String fechaInicio;
+    private LocalDate fechaInicio;
 
     @Column
-    private String fechaFin;
+    private LocalDate fechaFin;
 
     @Column
     private String rolEmpleado;
@@ -28,7 +29,7 @@ public class AsignacionProyecto {
 
     public AsignacionProyecto(){}
 
-    public AsignacionProyecto(String codigo, String fechaInicio, String fechaFin, String rol) {
+    public AsignacionProyecto(String codigo, LocalDate fechaInicio, LocalDate fechaFin, String rol) {
         this.codigoProyecto = codigo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -43,19 +44,19 @@ public class AsignacionProyecto {
         this.codigoProyecto = codigo;
     }
 
-    public void setFechaInicio(String fecha) {
+    public void setFechaInicio(LocalDate fecha) {
         this.fechaInicio = fecha;
     }
 
-    public String getFechaInicio(){
+    public LocalDate getFechaInicio(){
         return this.fechaInicio;
     }
 
-    public void setFechaFin(String fechaFin) {
+    public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public String getFechaFin(){
+    public LocalDate getFechaFin(){
         return this.fechaFin;
     }
 

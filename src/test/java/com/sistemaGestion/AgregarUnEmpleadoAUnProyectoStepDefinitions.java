@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 
 public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
@@ -55,8 +56,8 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     @Cuando("agrego al empleado, con lejago {string}, al proyecto {string}")
     public void agrego_al_empleado_con_lejago_al_proyecto(String legajo, String codigo) {
         // Write code here that turns the phrase above into concrete actions
-        String fechaInicio = "2020-06-07";
-        String fechaFin = "2020-06-16";
+        LocalDate fechaInicio = LocalDate.parse("2020-06-07");
+        LocalDate fechaFin = LocalDate.parse("2020-06-16");
         String rol = "DESARROLLADOR";
         asignacionProyecto = new AsignacionProyecto(codigo, fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);

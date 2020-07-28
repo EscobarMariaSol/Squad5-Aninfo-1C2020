@@ -56,9 +56,10 @@ public class AplicarFiltrosStepDefinitions {
     @Y("el empleado con legajo {string} es asignado al proyecto {string}")
     public void el_empleado_con_legajo_es_asignado_al_proyecto(String legajo, String idProyecto) {
         // Write code here that turns the phrase above into concrete actions
-        String fechaInicio = "2020-06-07";
-        String fechaFin = "2020-06-16";
+        LocalDate fechaInicio = LocalDate.parse("2020-06-07");
+        LocalDate fechaFin = LocalDate.parse("2020-06-16");
         String rol = "DESARROLLADOR";
+
         asignacionProyecto = new AsignacionProyecto(idProyecto, fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
 
