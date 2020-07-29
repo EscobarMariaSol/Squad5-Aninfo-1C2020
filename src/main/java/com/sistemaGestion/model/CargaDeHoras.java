@@ -34,6 +34,15 @@ public class CargaDeHoras {
 
     }
 
+    public CargaDeHoras(Long codigoTarea, Long codigoProyecto, String legajo, LocalDate fecha, Float cantidadhoras, Actividad actividad) {
+        this.codigoTarea = codigoTarea;
+        this.codigoProyecto = codigoProyecto;
+        this.legajo = legajo;
+        this.fecha = fecha;
+        this.cantidadhoras = cantidadhoras;
+        this.actividad = actividad;
+    }
+
     public CargaDeHoras(Long id, Long codigoTarea, Long codigoProyecto, String legajo, LocalDate fecha, Float cantidadhoras, Actividad actividad) {
         this.id = id;
         this.codigoTarea = codigoTarea;
