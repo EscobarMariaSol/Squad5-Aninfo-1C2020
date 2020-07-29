@@ -13,10 +13,10 @@ public class CargaDeHoras {
     private Long id;
 
     @Column
-    private String tareaId;
+    private Long codigoTarea;
 
     @Column
-    private String proyectoId;
+    private Long codigoProyecto;
 
     @Column
     private String legajo;
@@ -25,7 +25,7 @@ public class CargaDeHoras {
     private LocalDate fecha;
 
     @Column
-    private Float horasTrabajadas;
+    private Float cantidadhoras;
 
     @Column
     private Actividad actividad;
@@ -34,13 +34,13 @@ public class CargaDeHoras {
 
     }
 
-    public CargaDeHoras(Long id, String tareaId, String proyectoId, String legajo, LocalDate fecha, Float horasTrabajadas, Actividad actividad) {
+    public CargaDeHoras(Long id, Long codigoTarea, Long codigoProyecto, String legajo, LocalDate fecha, Float cantidadhoras, Actividad actividad) {
         this.id = id;
-        this.tareaId = tareaId;
-        this.proyectoId = proyectoId;
+        this.codigoTarea = codigoTarea;
+        this.codigoProyecto = codigoProyecto;
         this.legajo = legajo;
         this.fecha = fecha;
-        this.horasTrabajadas = horasTrabajadas;
+        this.cantidadhoras = cantidadhoras;
         this.actividad = actividad;
     }
 
@@ -52,20 +52,20 @@ public class CargaDeHoras {
         this.id = id;
     }
 
-    public String getTareaId() {
-        return tareaId;
+    public Long getCodigoTarea() {
+        return codigoTarea;
     }
 
-    public void setTareaId(String tareaId) {
-        this.tareaId = tareaId;
+    public void setCodigoTarea(Long tareaId) {
+        this.codigoTarea = tareaId;
     }
 
-    public String getProyectoId() {
-        return proyectoId;
+    public Long getCodigoProyecto() {
+        return codigoProyecto;
     }
 
-    public void setProyectoId(String proyectoId) {
-        this.proyectoId = proyectoId;
+    public void setCodigoProyecto(Long proyectoId) {
+        this.codigoProyecto = proyectoId;
     }
 
     public String getLegajo() {
@@ -84,12 +84,12 @@ public class CargaDeHoras {
         this.fecha = fecha;
     }
 
-    public Float getHorasTrabajadas() {
-        return horasTrabajadas;
+    public Float getCantidadhoras() {
+        return cantidadhoras;
     }
 
-    public void setHorasTrabajadas(Float horasTrabajadas) {
-        this.horasTrabajadas = horasTrabajadas;
+    public void setCantidadhoras(Float horasTrabajadas) {
+        this.cantidadhoras = horasTrabajadas;
     }
 
     public Actividad getActividad() {
@@ -103,10 +103,10 @@ public class CargaDeHoras {
     @Override
     public String toString() {
         return String.format(
-                "tareaId: " + tareaId +
-                        ", proyectoId: " + proyectoId +
+                "tareaId: " + codigoTarea +
+                        ", proyectoId: " + codigoProyecto +
                         ", fecha: " + fecha.toString() +
-                        ", horasCargadas: " + horasTrabajadas +
+                        ", horasCargadas: " + cantidadhoras +
                         ", legajo: " + legajo
         );
     }
@@ -121,10 +121,10 @@ public class CargaDeHoras {
         }
 
         CargaDeHoras cargaDeHoras = (CargaDeHoras) o;
-        return proyectoId.equals(cargaDeHoras.getProyectoId()) &&
+        return codigoProyecto.equals(cargaDeHoras.getCodigoProyecto()) &&
                 fecha.equals(cargaDeHoras.getFecha()) &&
-                horasTrabajadas.equals(cargaDeHoras.getHorasTrabajadas()) &&
-                tareaId.equals(cargaDeHoras.getTareaId()) &&
+                cantidadhoras.equals(cargaDeHoras.getCantidadhoras()) &&
+                codigoTarea.equals(cargaDeHoras.getCodigoTarea()) &&
                 legajo.equals(cargaDeHoras.getLegajo());
     }
 
