@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -41,7 +42,7 @@ public class MostrarHorasPorTareaStepDefinitions {
         liderDeRecursosHumanos = EmpleadoFactory.crearLiderDeRecursosHumanos();
     }
 
-    @Dado("el empleado con legajo {string} cargo {int} horas en la tarea {string}, del proyecto {string}, el dia {string}")
+    @Dado("el empleado con legajo {string} cargo {float} horas en la tarea {string}, del proyecto {string}, el dia {string}")
     public void el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String legajo, Float horas, String tareaId, String proyectoId, String fecha) {
         // Write code here that turns the phrase above into concrete actions
         HorasCargadas horasTrabjadas = new HorasCargadas(fecha, horas);
@@ -60,9 +61,9 @@ public class MostrarHorasPorTareaStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         List<HorasCargadas> horasCargadasList = (List<HorasCargadas>) response.getBody();
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertEquals(new HorasCargadas("2020-04-06", 8f), horasCargadasList.get(0));
-        Assert.assertEquals(new HorasCargadas("2020-04-07", 3f), horasCargadasList.get(1));
-        Assert.assertEquals(new HorasCargadas("2020-04-08", 5f), horasCargadasList.get(2));
+        Assert.assertEquals(new HorasCargadas("2020-04-06", Float.valueOf(8)), horasCargadasList.get(0));
+        Assert.assertEquals(new HorasCargadas("2020-04-07", Float.valueOf(3)), horasCargadasList.get(1));
+        Assert.assertEquals(new HorasCargadas("2020-04-08", Float.valueOf(5)), horasCargadasList.get(2));
     }
 
     @Entonces("se me informa que no puedo realizar dicha accion ya que el emplado con legajo {string} no existe.")
@@ -80,7 +81,9 @@ public class MostrarHorasPorTareaStepDefinitions {
     @Entonces("se me devuelve un mensaje indicando que no hay horas cargadas por el empleado con legajo {string}, en la tares {int}, del proyecto {string}.")
     public void se_me_devuelve_un_mensaje_indicando_que_no_hay_horas_cargadas_por_el_empleado_con_legajo_en_la_tares_del_proyecto(String string, Integer int1, String string2) {
         // Write code here that turns the phrase above into concrete actions
-        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        List<HorasCargadas> horasCargadasList = (List<HorasCargadas>) response.getBody();
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        Assert.assertTrue(horasCargadasList.isEmpty());
     }
 
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string}, del proyecto {string}, el dia {string}")
@@ -103,4 +106,5 @@ public class MostrarHorasPorTareaStepDefinitions {
         empleadoRepository.deleteAll();
         cargaDeHorasRepository.deleteAll();
     }
+
 }

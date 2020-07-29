@@ -1,7 +1,7 @@
 package com.sistemaGestion.service;
 
-import com.sistemaGestion.dtos.CargaDeHorasDTO;
-import com.sistemaGestion.exceptions.HorasCargadasException;
+
+import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoRol;
@@ -93,27 +93,4 @@ public class EmpleadoService {
         return empleado;
     }
 
-    public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, String tareaId, String proyectoId, String fecha) {
-        List<CargaDeHoras> horasTrabajadas =  new ArrayList<CargaDeHoras>();
-        consultarEmpleadoPorLegajo(legajo);
-        if (fecha == null) {
-             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoId(legajo, tareaId, proyectoId);
-        } else {
-            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFecha(legajo, tareaId, proyectoId, LocalDate.parse(fecha));
-        }
-        if (horasTrabajadas.isEmpty()) throw new HorasCargadasException("CargaDeHoras with legajo " + legajo +
-                "with tareaId " + tareaId +
-                "with proyectoId " + proyectoId + "not found.");
-        return generarListadoDeHorasCargadas(horasTrabajadas);
-    }
-
-    private List<HorasCargadas> generarListadoDeHorasCargadas(List<CargaDeHoras> horasTrabajadas) {
-        List<HorasCargadas> horasCargadas =  new ArrayList<HorasCargadas>();
-        for (CargaDeHoras cargaDeHoras: horasTrabajadas) {
-            horasCargadas.add(
-                    new HorasCargadas(cargaDeHoras.getFecha().toString()
-                            , cargaDeHoras.getHorasTrabajadas()));
-        }
-        return horasCargadas;
-    }
 }

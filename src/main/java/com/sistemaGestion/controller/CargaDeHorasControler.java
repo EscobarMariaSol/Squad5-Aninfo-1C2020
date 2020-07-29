@@ -4,7 +4,7 @@ import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.model.HorasCargadas;
 import com.sistemaGestion.service.CargaDeHorasService;
-import com.sistemaGestion.service.EmpleadoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,11 @@ public class CargaDeHorasControler {
 
 
     private CargaDeHorasService cargaDeHorasService;
-    private EmpleadoService empleadoService;
+
+    @Autowired
+    private CargaDeHorasControler(CargaDeHorasService cargaDeHorasService){
+        this.cargaDeHorasService = cargaDeHorasService;
+    }
 
     @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
     public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId, @PathVariable("tareaId") String tareaId, HorasCargadas horasCargadas) {
@@ -52,7 +56,7 @@ public class CargaDeHorasControler {
     public ResponseEntity mostrarHorasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
         try {
             return new ResponseEntity(
-                    empleadoService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, idProyecto, fecha),
+                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, idProyecto, fecha),
                     HttpStatus.OK
             );
         } catch (HorasCargadasException e) {
@@ -67,4 +71,24 @@ public class CargaDeHorasControler {
             );
         }
     }
+    @GetMapping(value = "/{legajo}/horas" )
+    public ResponseEntity obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
+            @PathVariable("legajo") String legajo,
+            @RequestParam(required = false) String tareaId,
+            @RequestParam(required = false) String proyectoId,
+            @RequestParam(required = false) String fechaInicio,
+            @RequestParam(required = false) String fechaFin) {
+        try {
+            return new ResponseEntity(
+                    cargaDeHorasService.obtenerHorasDeUnEmpleadoConFiltros(legajo, tareaId, proyectoId, fechaInicio, fechaFin),
+                    HttpStatus.OK
+            );
+        } catch (EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+    }
+
 }

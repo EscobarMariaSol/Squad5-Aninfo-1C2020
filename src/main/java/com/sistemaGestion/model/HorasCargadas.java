@@ -42,7 +42,7 @@ public class HorasCargadas {
             return false;
         }
         HorasCargadas horasCargadas = (HorasCargadas) o;
-        return (this.horas == horasCargadas.getHoras() &&
+        return (this.horas.equals(horasCargadas.getHoras())  &&
                 this.fecha.equals(horasCargadas.getFecha()));
     }
 }
