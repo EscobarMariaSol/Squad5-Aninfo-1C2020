@@ -18,7 +18,6 @@ public class AsignacionProyecto {
 
     @Column
     private String fechaInicio;
-
     @Column
     private String fechaFin;
 
