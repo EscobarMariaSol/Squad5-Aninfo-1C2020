@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AsignacionProyectoRepository extends JpaRepository<AsignacionProyecto, String> {
-
-    Optional<AsignacionProyecto> findByCodigo(String codigo);
+public interface AsignacionProyectoRepository extends JpaRepository<AsignacionProyecto, Long> {
+    Optional<AsignacionProyecto> findByCodigoProyecto(Long codigoProyecto);
 }

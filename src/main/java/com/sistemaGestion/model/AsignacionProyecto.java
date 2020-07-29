@@ -1,11 +1,9 @@
 package com.sistemaGestion.model;
 
-import com.sun.org.apache.bcel.internal.generic.DADD;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
+import java.time.LocalDate;
 
 @Entity
 public class AsignacionProyecto {
@@ -14,66 +12,60 @@ public class AsignacionProyecto {
      * Código identificador del proyecto que viene del Módulo de Proyectos.
      * */
     @Id
-    private String codigo;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long idAsignacion;
 
     @Column
-    private String fechaInicio;
+    private Long codigoProyecto;
 
     @Column
-    private String fechaFin;
+    private LocalDate fechaInicio;
 
     @Column
-    private String rolEmpleado;
+    private LocalDate fechaFin;
 
-    @OneToMany
-    private Set<Tarea> tareas;
+    @Column
+    private EmpleadoRol rolEmpleado;
+
 
     public AsignacionProyecto(){}
 
-    public AsignacionProyecto(String codigo, String fechaInicio, String fechaFin, String rol) {
-        this.codigo = codigo;
+    public AsignacionProyecto(Long codigo, LocalDate fechaInicio, LocalDate fechaFin, EmpleadoRol rol) {
+        this.codigoProyecto = codigo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.rolEmpleado = rol;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public Long getCodigoProyecto() {
+        return codigoProyecto;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setCodigoProyecto(Long codigo) {
+        this.codigoProyecto = codigo;
     }
 
-    public Set<Tarea> getTareas() {
-        return tareas;
-    }
-
-    public void setTareas(Set<Tarea> tareas) {
-        this.tareas = tareas;
-    }
-
-    public void setFechaInicio(String fecha) {
+    public void setFechaInicio(LocalDate fecha) {
         this.fechaInicio = fecha;
     }
 
-    public String getFechaInicio(){
+    public LocalDate getFechaInicio(){
         return this.fechaInicio;
     }
 
-    public void setFechaFin(String fechaFin) {
+    public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public String getFechaFin(){
+    public LocalDate getFechaFin(){
         return this.fechaFin;
     }
 
-    public void setRolEmpleado(String rol) {
+    public void setRolEmpleado(EmpleadoRol rol) {
         this.rolEmpleado = rol;
     }
 
-    public String getRolEmpleado() {
+    public EmpleadoRol getRolEmpleado() {
         return this.rolEmpleado;
     }
 
@@ -86,6 +78,6 @@ public class AsignacionProyecto {
             return false;
         }
         AsignacionProyecto asignacionProyecto = (AsignacionProyecto) o;
-        return codigo.equals(asignacionProyecto.codigo);
+        return codigoProyecto.equals(asignacionProyecto.codigoProyecto);
     }
 }

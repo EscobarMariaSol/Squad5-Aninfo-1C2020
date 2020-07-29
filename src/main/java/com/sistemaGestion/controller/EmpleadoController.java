@@ -163,7 +163,7 @@ public class EmpleadoController {
 
 
     @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/horas")
-    public ResponseEntity obtenerHorasDeUnEmpleadoEnUnProyecto(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId) {
+    public ResponseEntity obtenerHorasDeUnEmpleadoEnUnProyecto(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId) {
         try {
             return new ResponseEntity(
                     empleadoService.obtenerHorasDeUnEmpleadoEnUnProyecto(legajo, proyectoId),
