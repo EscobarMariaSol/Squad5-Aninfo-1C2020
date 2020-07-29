@@ -61,7 +61,7 @@ public class AplicarFiltrosStepDefinitions {
         LocalDate fechaFin = LocalDate.parse("2020-06-16");
         EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
 
-        asignacionProyecto = new AsignacionProyecto(idProyecto, fechaInicio, fechaFin, rol);
+        asignacionProyecto = new AsignacionProyecto(Long.parseLong(idProyecto), fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
 
     }

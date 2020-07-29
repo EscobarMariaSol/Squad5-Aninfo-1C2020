@@ -98,21 +98,21 @@ public class EmpleadoService {
         return empleado;
     }
 
-    public HorasTrabajadas obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, String proyectoId) {
+    public HorasTrabajadas obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, Long proyectoId) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
 
         if (empleadoPerteneceAlProyecto(empleado, proyectoId)){
             Integer cantidadDeHoras = cargaDeHorasRepository.findByProyectoIdAndLegajo(proyectoId, legajo).stream()
                     .map(CargaDeHoras::getHorasTrabajadas)
                     .reduce(Integer::sum).orElse(0);
-            return new HorasTrabajadas(legajo, cantidadDeHoras, proyectoId, empleado.getContrato());
+            return new HorasTrabajadas(legajo, cantidadDeHoras, proyectoId.toString(), empleado.getContrato());
         }else{
             throw new HorasCargadasException("El empleado con legajo: " + legajo +
                     "no pertenece al proyecto cuyo id es" + proyectoId);
         }
     }
 
-    private boolean empleadoPerteneceAlProyecto(Empleado empleado, String proyectoId) {
+    private boolean empleadoPerteneceAlProyecto(Empleado empleado, Long proyectoId) {
         return empleado.getAsignacionProyectos().stream()
                 .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigoProyecto().equals(proyectoId));
     }

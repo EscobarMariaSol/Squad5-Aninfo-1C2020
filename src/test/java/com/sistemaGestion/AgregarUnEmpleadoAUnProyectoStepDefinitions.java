@@ -16,6 +16,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import sun.awt.X11.XSystemTrayPeer;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -60,7 +61,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
         LocalDate fechaInicio = LocalDate.parse("2020-06-07");
         LocalDate fechaFin = LocalDate.parse("2020-06-16");
         EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
-        asignacionProyecto = new AsignacionProyecto(codigo, fechaInicio, fechaFin, rol);
+        asignacionProyecto = new AsignacionProyecto(Long.parseLong(codigo), fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
     }
 
@@ -68,7 +69,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     public void el_empleado_queda_asignado_al_proyecto(String legajo, String codigo) {
         // Write code here that turns the phrase above into concrete actions
         empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
-        asignacionProyecto = asignacionProyectoRepository.findByCodigoProyecto(codigo).orElse(null);
+        asignacionProyecto = asignacionProyectoRepository.findByCodigoProyecto(Long.parseLong(codigo)).orElse(null);
         Assert.assertTrue(empleado.perteneceAProyecto(asignacionProyecto));
     }
 

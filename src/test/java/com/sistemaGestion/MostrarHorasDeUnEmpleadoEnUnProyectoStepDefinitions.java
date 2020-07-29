@@ -1,14 +1,11 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
-import com.sistemaGestion.controller.AsignacionProyectoController;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoContrato;
 import com.sistemaGestion.model.enums.EmpleadoRol;
-import com.sistemaGestion.model.enums.Seniority;
-import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
@@ -64,12 +61,12 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
         LocalDate fechaInicio = LocalDate.parse("2020-06-07");
         LocalDate fechaFin = LocalDate.parse("2020-06-16");
         EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
-        asignacionProyecto = new AsignacionProyecto(idProyecto, fechaInicio, fechaFin, rol);
+        asignacionProyecto = new AsignacionProyecto(Long.parseLong(idProyecto), fechaInicio, fechaFin, rol);
         response = asignacionProyectoController.asignarEmpleadoAProyecto(empleado.getLegajo(), asignacionProyecto);
     }
 
     @Cuando("consulto las horas trabajadas por el empleado en el proyecto cuyo id es {string}")
-    public void consulto_las_horas_trabajadas_por_el_empleado_en_el_proyecto_cuyo_id_es(String proyectoId) {
+    public void consulto_las_horas_trabajadas_por_el_empleado_en_el_proyecto_cuyo_id_es(Long proyectoId) {
         response = empleadoController.obtenerHorasDeUnEmpleadoEnUnProyecto(empleado.getLegajo(), proyectoId);
     }
 

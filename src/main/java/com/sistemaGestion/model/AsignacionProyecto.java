@@ -4,7 +4,6 @@ import com.sistemaGestion.model.enums.EmpleadoRol;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 public class AsignacionProyecto {
@@ -17,7 +16,7 @@ public class AsignacionProyecto {
     private Long idAsignacion;
 
     @Column
-    private String codigoProyecto;
+    private Long codigoProyecto;
 
     @Column
     private LocalDate fechaInicio;
@@ -31,18 +30,18 @@ public class AsignacionProyecto {
 
     public AsignacionProyecto(){}
 
-    public AsignacionProyecto(String codigo, LocalDate fechaInicio, LocalDate fechaFin, EmpleadoRol rol) {
+    public AsignacionProyecto(Long codigo, LocalDate fechaInicio, LocalDate fechaFin, EmpleadoRol rol) {
         this.codigoProyecto = codigo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.rolEmpleado = rol;
     }
 
-    public String getCodigoProyecto() {
+    public Long getCodigoProyecto() {
         return codigoProyecto;
     }
 
-    public void setCodigoProyecto(String codigo) {
+    public void setCodigoProyecto(Long codigo) {
         this.codigoProyecto = codigo;
     }
 
