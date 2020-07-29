@@ -1,5 +1,7 @@
 package com.sistemaGestion.model;
 
+import com.sistemaGestion.model.enums.EmpleadoRol;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
@@ -24,12 +26,12 @@ public class AsignacionProyecto {
     private LocalDate fechaFin;
 
     @Column
-    private String rolEmpleado;
+    private EmpleadoRol rolEmpleado;
 
 
     public AsignacionProyecto(){}
 
-    public AsignacionProyecto(String codigo, LocalDate fechaInicio, LocalDate fechaFin, String rol) {
+    public AsignacionProyecto(String codigo, LocalDate fechaInicio, LocalDate fechaFin, EmpleadoRol rol) {
         this.codigoProyecto = codigo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -60,11 +62,11 @@ public class AsignacionProyecto {
         return this.fechaFin;
     }
 
-    public void setRolEmpleado(String rol) {
+    public void setRolEmpleado(EmpleadoRol rol) {
         this.rolEmpleado = rol;
     }
 
-    public String getRolEmpleado() {
+    public EmpleadoRol getRolEmpleado() {
         return this.rolEmpleado;
     }
 

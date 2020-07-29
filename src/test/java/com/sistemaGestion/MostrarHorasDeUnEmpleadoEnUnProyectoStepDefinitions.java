@@ -6,6 +6,7 @@ import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoContrato;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.model.enums.Seniority;
 import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import io.cucumber.datatable.DataTable;
@@ -62,7 +63,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void el_empleado_es_asignado_a_ese_proyecto_cuyo_id_es_pero_no_ha_cargado_horas_aun(String idProyecto) {
         LocalDate fechaInicio = LocalDate.parse("2020-06-07");
         LocalDate fechaFin = LocalDate.parse("2020-06-16");
-        String rol = "DESARROLLADOR";
+        EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
         asignacionProyecto = new AsignacionProyecto(idProyecto, fechaInicio, fechaFin, rol);
         response = asignacionProyectoController.asignarEmpleadoAProyecto(empleado.getLegajo(), asignacionProyecto);
     }

@@ -4,6 +4,7 @@ import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.AsignacionProyectoController;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.AsignacionProyecto;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import io.cucumber.java.After;
@@ -58,7 +59,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         LocalDate fechaInicio = LocalDate.parse("2020-06-07");
         LocalDate fechaFin = LocalDate.parse("2020-06-16");
-        String rol = "DESARROLLADOR";
+        EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
         asignacionProyecto = new AsignacionProyecto(codigo, fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
     }

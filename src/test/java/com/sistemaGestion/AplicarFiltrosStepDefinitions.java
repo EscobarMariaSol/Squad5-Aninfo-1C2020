@@ -7,6 +7,7 @@ import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.java.After;
 import io.cucumber.java.es.Cuando;
@@ -58,7 +59,7 @@ public class AplicarFiltrosStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         LocalDate fechaInicio = LocalDate.parse("2020-06-07");
         LocalDate fechaFin = LocalDate.parse("2020-06-16");
-        String rol = "DESARROLLADOR";
+        EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
 
         asignacionProyecto = new AsignacionProyecto(idProyecto, fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
