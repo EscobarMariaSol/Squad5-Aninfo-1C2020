@@ -1,6 +1,6 @@
 package com.sistemaGestion.model;
 
-import org.hibernate.annotations.GenericGenerator;
+import com.sistemaGestion.model.enums.Actividad;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,31 +9,46 @@ import java.time.LocalDate;
 public class CargaDeHoras {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    public String id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 
     @Column
-    public  String tareaId;
+    private String tareaId;
 
     @Column
-    public String proyectoId;
+    private String proyectoId;
 
     @Column
-    public String legajo;
+    private String legajo;
 
     @Column
-    public LocalDate fecha;
+    private LocalDate fecha;
 
     @Column
-    public Integer horasTrabajadas;
+    private Float horasTrabajadas;
 
+    @Column
+    private Actividad actividad;
 
-    public String getId() {
+    public CargaDeHoras() {
+
+    }
+
+    public CargaDeHoras(Long id, String tareaId, String proyectoId, String legajo, LocalDate fecha, Float horasTrabajadas, Actividad actividad) {
+        this.id = id;
+        this.tareaId = tareaId;
+        this.proyectoId = proyectoId;
+        this.legajo = legajo;
+        this.fecha = fecha;
+        this.horasTrabajadas = horasTrabajadas;
+        this.actividad = actividad;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,6 +68,14 @@ public class CargaDeHoras {
         this.proyectoId = proyectoId;
     }
 
+    public String getLegajo() {
+        return legajo;
+    }
+
+    public void setLegajo(String legajo) {
+        this.legajo = legajo;
+    }
+
     public LocalDate getFecha() {
         return fecha;
     }
@@ -61,31 +84,20 @@ public class CargaDeHoras {
         this.fecha = fecha;
     }
 
-    public Integer getHorasTrabajadas() {
+    public Float getHorasTrabajadas() {
         return horasTrabajadas;
     }
 
-    public void setHorasTrabajadas(Integer horasTrabajadas) {
+    public void setHorasTrabajadas(Float horasTrabajadas) {
         this.horasTrabajadas = horasTrabajadas;
     }
 
-    public void setLegajo(String legajo) {
-        this.legajo = legajo;
+    public Actividad getActividad() {
+        return actividad;
     }
 
-    public String getLegajo() {
-        return this.legajo;
-    }
-
-    public CargaDeHoras() {
-
-    }
-    public CargaDeHoras(String tareaId, String proyectoId, LocalDate fecha, int horas, String legajo) {
-        this.tareaId = tareaId;
-        this.proyectoId = proyectoId;
-        this.fecha =fecha;
-        this.horasTrabajadas = horas;
-        this.legajo = legajo;
+    public void setActividad(Actividad actividad) {
+        this.actividad = actividad;
     }
 
     @Override
@@ -115,7 +127,5 @@ public class CargaDeHoras {
                 tareaId.equals(cargaDeHoras.getTareaId()) &&
                 legajo.equals(cargaDeHoras.getLegajo());
     }
-
-
 
 }
