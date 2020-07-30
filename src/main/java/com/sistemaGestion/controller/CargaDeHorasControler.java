@@ -52,7 +52,7 @@ public class CargaDeHorasControler {
         }
     }
 
-    @GetMapping(value = "/{legajo}/proyectos/{proyectoId/tareas/{tareaId}/horas")
+    @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
     public ResponseEntity mostrarHorasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
         try {
             return new ResponseEntity(
