@@ -1,7 +1,7 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
-import com.sistemaGestion.controller.CargaDeHorasControler;
+import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
@@ -29,7 +29,7 @@ public class AplicarFiltrosStepDefinitions {
     private EmpleadoController empleadoController;
 
     @Autowired
-    private CargaDeHorasControler cargaDeHorasControler;
+    private CargaDeHorasController cargaDeHorasController;
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
@@ -81,9 +81,9 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         List<Map<String, String>> horasCargadas = dataTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora -> {
-            cargaDeHorasControler.cargarHorasDeEmpleadoEnUnaTarea(
+            cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(
                     legajo,
-                    datosHora.get("proyectoId"),
+                    Long.parseLong(datosHora.get("proyectoId")),
                     datosHora.get("tareaId"),
                     new HorasCargadas(
                             datosHora.get("fechaCargaDeHoras"),
@@ -105,7 +105,7 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         List<Map<String, String>> filtros = dataTable.asMaps(String.class, String.class);
         filtros.stream().forEach(filtro -> {
-            response = cargaDeHorasControler.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
+            response = cargaDeHorasController.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
                     legajo,
                     filtro.get("tareaId"),
                     filtro.get("proyectoId"),
@@ -129,7 +129,7 @@ public class AplicarFiltrosStepDefinitions {
         List<Map<String, String>> datosEsperados = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> datoEsperado : datosEsperados) {
             Assert.assertTrue(reporteDeHoras.getHoras().containsKey(LocalDate.parse(datoEsperado.get("fecha"))));
-            Assert.assertEquals(datoEsperado.get("proyectoId"), reporteDeHoras.getProyectoid());
+            Assert.assertEquals(String.valueOf(datoEsperado.get("proyectoId")), reporteDeHoras.getProyectoid());
             Assert.assertEquals(datoEsperado.get("tareaId"), reporteDeHoras.getTareaId());
             Integer horas = new Integer(datoEsperado.get("cantidadDeHorasTrabajadas"));
             Assert.assertEquals(
@@ -157,7 +157,7 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         List<Map<String, String>> filtros = dataTable.asMaps(String.class, String.class);
         filtros.stream().forEach(filtro -> {
-            response = cargaDeHorasControler.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
+            response = cargaDeHorasController.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
                     legajo,
                     null ,
                     filtro.get("proyectoId"),
@@ -179,7 +179,7 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         List<Map<String, String>> filtros = dataTable.asMaps(String.class, String.class);
         filtros.stream().forEach(filtro -> {
-            response = cargaDeHorasControler.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
+            response = cargaDeHorasController.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
                     legajo,
                     filtro.get("tareaId"),
                     null,

@@ -31,14 +31,14 @@ public class EmpleadoService {
 
     public Empleado consultarEmpleadoPorLegajo(String legajo) {
         return empleadoRepository.findByLegajoAndActivoIsTrue(legajo)
-                .orElseThrow( () ->
+                .orElseThrow(() ->
                         new EmpleadoException("El empleado con legajo " + legajo + " no existe.")
                 );
     }
 
     public Empleado actualizarEmpleado(Empleado empleado) {
         empleadoRepository.findByLegajo(empleado.getLegajo()).orElseThrow(() ->
-            new EmpleadoException("El empleado con legajo " + empleado.getLegajo() + " no existe.")
+                new EmpleadoException("El empleado con legajo " + empleado.getLegajo() + " no existe.")
         );
         return empleadoRepository.save(empleado);
     }
@@ -54,8 +54,8 @@ public class EmpleadoService {
         if (empleado.getAsignacionProyectos().size() > 0)
             throw new EmpleadoException(
                     "No se puede dar de baja al empleado con legajo: " +
-                    empleado.getLegajo() +
-                    " porque forma parte de algún proyecto."
+                            empleado.getLegajo() +
+                            " porque forma parte de algún proyecto."
             );
     }
 

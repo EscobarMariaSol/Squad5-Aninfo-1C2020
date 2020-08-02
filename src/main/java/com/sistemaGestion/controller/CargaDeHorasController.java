@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/empleados")
-public class CargaDeHorasControler {
+public class CargaDeHorasController {
 
 
     private CargaDeHorasService cargaDeHorasService;
 
     @Autowired
-    private CargaDeHorasControler(CargaDeHorasService cargaDeHorasService){
+    private CargaDeHorasController(CargaDeHorasService cargaDeHorasService){
         this.cargaDeHorasService = cargaDeHorasService;
     }
 
     @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId, @PathVariable("tareaId") String tareaId,@RequestBody HorasCargadas horasCargadas) {
+    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId,@RequestBody  HorasCargadas horasCargadas) {
         try {
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
@@ -38,7 +38,7 @@ public class CargaDeHorasControler {
 
 
     @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/horas")
-    public ResponseEntity obtenerHorasDeUnEmpleadoEnUnProyecto(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId) {
+    public ResponseEntity obtenerHorasDeUnEmpleadoEnUnProyecto(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId) {
         try {
             return new ResponseEntity(
                     cargaDeHorasService.obtenerHorasDeUnEmpleadoEnUnProyecto(legajo, proyectoId),
@@ -56,7 +56,7 @@ public class CargaDeHorasControler {
     public ResponseEntity mostrarHorasEnUnaTarea(@PathVariable("legajo")String legajo,@PathVariable("tareaId") String tareaId,@PathVariable("proyectoId") String proyectoId, String fecha) {
         try {
             return new ResponseEntity(
-                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, tareaId, proyectoId, fecha),
+                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, tareaId, Long.parseLong(proyectoId), fecha),
                     HttpStatus.OK
             );
         } catch (HorasCargadasException e) {

@@ -1,7 +1,7 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
-import com.sistemaGestion.controller.CargaDeHorasControler;
+import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
@@ -20,7 +20,7 @@ public class CargarHorasAUnaTareaStepDefinitions {
     private EmpleadoRepository empleadoRepository;
 
     @Autowired
-    private CargaDeHorasControler cargaDeHorasController;
+    private CargaDeHorasController cargaDeHorasController;
 
     private Empleado  empleado;
     private ResponseEntity response;
@@ -36,7 +36,7 @@ public class CargarHorasAUnaTareaStepDefinitions {
     @Cuando("cargo {float} horas trabajadas en el dia {string} a una tarea cuyo id es {string} del proyecto con id {string}")
     public void cargo_horas_a_una_tarea(Float horas, String fecha, String idTarea, String idProyecto) {
         horasCargadas = new HorasCargadas(fecha, horas);
-        response = cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(), idProyecto, idTarea, horasCargadas);
+        response = cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(), Long.parseLong(idProyecto), idTarea, horasCargadas);
     }
 
     @Entonces("las horas son registradas correctamente")
