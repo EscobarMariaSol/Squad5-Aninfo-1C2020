@@ -15,6 +15,9 @@ public class ReporteDeHorasDTO {
     private LocalDate fecha;
     private Float cantidadHoras;
 
+    public ReporteDeHorasDTO() {
+    }
+
     public ReporteDeHorasDTO(Actividad actividad, String tareaId, String proyectoId, LocalDate fecha, Float cantidadHoras){
         this.tareaId = tareaId;
         this.actividad = actividad;
@@ -23,7 +26,7 @@ public class ReporteDeHorasDTO {
         this.proyectoId = proyectoId;
     }
 
-  public void setActividad(Actividad actividad) {
+    public void setActividad(Actividad actividad) {
         this.actividad = actividad;
     }
 
