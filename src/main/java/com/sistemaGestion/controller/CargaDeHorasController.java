@@ -1,5 +1,6 @@
 package com.sistemaGestion.controller;
 
+import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.model.HorasCargadas;
@@ -22,11 +23,11 @@ public class CargaDeHorasController {
         this.cargaDeHorasService = cargaDeHorasService;
     }
 
-    @PostMapping(value = "/{legajo}/{actividad}/horas")
-    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @PathVariable("actividad") Actividad actividad, Long proyectoId, String tareaId, @RequestBody HorasCargadas horasCargadas) {
+    @PostMapping(value = "/{legajo}/horas")
+    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @RequestBody(required = true)ReporteDeHorasDTO reporte) {
     try {
             return new ResponseEntity(
-                    cargaDeHorasService.cargarHorasDeEmpleado(legajo, actividad, proyectoId, tareaId, horasCargadas),
+                    cargaDeHorasService.cargarHorasDeEmpleado(legajo, reporte),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {

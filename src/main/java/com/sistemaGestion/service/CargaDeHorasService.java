@@ -30,12 +30,12 @@ public class CargaDeHorasService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public Empleado cargarHorasDeEmpleado(String legajo, Actividad actividad, Long proyectoId, String tareaId, HorasCargadas horasCargadas) {
+    public Empleado cargarHorasDeEmpleado(String legajo, ReporteDeHorasDTO reporte) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
-        if (laCargaNoCorrespondeAlMesVigente(horasCargadas.getFecha())) {
+        if (laCargaNoCorrespondeAlMesVigente(reporte.getFecha())) {
             throw new HorasCargadasException("Solo se puede cargar horas en el mes vigente.");
         }
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(actividad, tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras(), legajo);
+        CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), Long.parseLong(reporte.getProyectoid()), reporte.getFecha(), reporte.getCantidadHoras(), legajo);
         empleado.cargarHoras(cargaDeHoras);
         return empleadoRepository.save(empleado);
     }

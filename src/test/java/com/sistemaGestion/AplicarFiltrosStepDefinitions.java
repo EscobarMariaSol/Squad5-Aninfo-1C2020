@@ -82,15 +82,15 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         List<Map<String, String>> horasCargadas = dataTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora -> {
+            ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
+            reporte.setActividad(Actividad.TAREA);
+            reporte.setProyectoid(datosHora.get("proyectoId"));
+            reporte.setTareaId(datosHora.get("tareaId"));
+            reporte.setFecha(LocalDate.parse(datosHora.get("fechaCargaDeHoras")));
+            reporte.setCantidadHoras(Float.valueOf(datosHora.get("horasTrabajadas")));
             cargaDeHorasController.cargarHorasDeEmpleado(
                     legajo,
-                    Actividad.PROYECTO,
-                    Long.parseLong(datosHora.get("proyectoId")),
-                    datosHora.get("tareaId"),
-                    new HorasCargadas(
-                            datosHora.get("fechaCargaDeHoras"),
-                            Float.valueOf(datosHora.get("horasTrabajadas"))
-                    ));
+                    reporte);
         });
     }
 

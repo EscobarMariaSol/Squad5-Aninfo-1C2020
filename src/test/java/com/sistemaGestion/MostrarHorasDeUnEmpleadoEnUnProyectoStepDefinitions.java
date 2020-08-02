@@ -5,6 +5,7 @@ import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
+import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.model.enums.EmpleadoRol;
@@ -57,14 +58,14 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void este_empleado_ha_cargado_las_horas_trabajadas_en_las_siguientes_tareas(DataTable horasTable) {
         List<Map<String, String>> horasCargadas = horasTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora ->{
+            ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
+            reporte.setActividad(Actividad.TAREA);
+            reporte.setProyectoid(datosHora.get("proyectoId"));
+            reporte.setTareaId(datosHora.get("tareaId"));
+            reporte.setFecha(LocalDate.parse(datosHora.get("fechaCargaDeHoras")));
+            reporte.setCantidadHoras(Float.valueOf(datosHora.get("horasTrabajadas")));
             cargaDeHorasController.cargarHorasDeEmpleado(
-                    empleado.getLegajo(),
-                    Actividad.valueOf(datosHora.get("actividad")),
-                    Long.parseLong(datosHora.get("proyectoId")),
-                    datosHora.get("tareaId"),
-                    new HorasCargadas(
-                            datosHora.get("fechaCargaDeHoras"),
-                            Float.valueOf(datosHora.get("horasTrabajadas"))));
+                    empleado.getLegajo(), reporte);
         });
     }
 

@@ -2,6 +2,7 @@ package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.CargaDeHorasController;
+import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
 import com.sistemaGestion.model.enums.Actividad;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class MostrarHorasPorTareaStepDefinitions {
@@ -41,8 +43,14 @@ public class MostrarHorasPorTareaStepDefinitions {
     @Dado("el empleado con legajo {string} cargo {float} horas en la tarea {string}, del proyecto {string}, el dia {string}")
     public void el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String legajo, Float horas, String tareaId, String proyectoId, String fecha) {
         // Write code here that turns the phrase above into concrete actions
-        HorasCargadas horasTrabjadas = new HorasCargadas(fecha, horas);
-        response = cargaDeHorasController.cargarHorasDeEmpleado(legajo, Actividad.PROYECTO, Long.parseLong(proyectoId), tareaId, horasTrabjadas);
+        Empleado empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
+        ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
+        reporte.setActividad(Actividad.TAREA);
+        reporte.setFecha(LocalDate.parse(fecha));
+        reporte.setTareaId(tareaId);
+        reporte.setProyectoid(proyectoId);
+        reporte.setCantidadHoras(horas);
+        response = cargaDeHorasController.cargarHorasDeEmpleado(legajo, reporte);
 
     }
 
