@@ -44,12 +44,8 @@ public class MostrarHorasPorTareaStepDefinitions {
     public void el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String legajo, Float horas, String tareaId, String proyectoId, String fecha) {
         // Write code here that turns the phrase above into concrete actions
         Empleado empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
-        ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
-        reporte.setActividad(Actividad.TAREA);
-        reporte.setFecha(LocalDate.parse(fecha));
-        reporte.setTareaId(tareaId);
-        reporte.setProyectoid(proyectoId);
-        reporte.setCantidadHoras(horas);
+        ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(
+                Actividad.TAREA, tareaId, proyectoId, LocalDate.parse(fecha), horas);
         response = cargaDeHorasController.cargarHorasDeEmpleado(legajo, reporte);
 
     }

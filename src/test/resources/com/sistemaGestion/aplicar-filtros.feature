@@ -17,13 +17,12 @@ Característica: aplicar filtros para generar reportes
       | TAREA     | 789         | 123          | 2020-08-01             | 2               |
 
     Cuando consulto las horas trabajadas por el empleado con legajo '5' en el proyecto '456' aplicando los siguientes filtros
-      | tareaId     | proyectoId   | fechaInicio     | fechaFin        |
-      | 123         | 456          | 2020-08-01      | 2020-09-19      |
+      | actividad | tareaId     | proyectoId   | fechaInicio     | fechaFin        |
+      | TAREA     | 123         | 456          | 2020-08-01      | 2020-09-19      |
     Entonces se me devuelve la siguiente informacion
-      |  fecha          | cantidadDeHorasTrabajadas | tareaId | proyectoId        |
-      | 2020-08-01      | 3                         | 123     | 456               |
-      | 2020-08-02      | 4                         | 123     | 456               |
-    Y se me indica que la cantidad de horas totales es 7
+      |  fecha          | cantidadDeHorasTrabajadas | tareaId | proyectoId | actividad |
+      | 2020-08-01      | 3                         | 123     | 456        |   TAREA   |
+      | 2020-08-02      | 4                         | 123     | 456        |   TAREA   |
 
   Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
   para generar reportes de la información asociada a los filtros aplicados
@@ -45,7 +44,6 @@ Característica: aplicar filtros para generar reportes
     Entonces se me devuelve la siguiente informacion
       |  fecha          | cantidadDeHorasTrabajadas | proyectoId        |
       | 2020-08-01      | 6                         | 456               |
-    Y se me indica que la cantidad de horas totales es 6
 
   Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
   para generar reportes de la información asociada a los filtros aplicados
@@ -66,7 +64,6 @@ Característica: aplicar filtros para generar reportes
     Entonces se me devuelve la siguiente informacion
       |  fecha          | cantidadDeHorasTrabajadas | tareaId        |
       | 2020-08-02      | 3                         | 123            |
-    Y se me indica que la cantidad de horas totales es 3
 
   Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
   para generar reportes de la información asociada a los filtros aplicados
@@ -88,7 +85,7 @@ Característica: aplicar filtros para generar reportes
       |             |              | 2020-08-01      | 2020-08-01      |
     Entonces se me devuelve la siguiente informacion
       |  fecha          | cantidadDeHorasTrabajadas |
-      | 2020-08-01      | 10                         |
+      | 2020-08-01      | 10                        |
 
   Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
   para generar reportes de la información asociada a los filtros aplicados
@@ -109,7 +106,6 @@ Característica: aplicar filtros para generar reportes
       |  fecha          | cantidadDeHorasTrabajadas |
       | 2020-08-02      | 3                         |
       | 2020-08-01      | 6                         |
-    Y se me indica que la cantidad de horas totales es 9
 
   Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
   para generar reportes de la información asociada a los filtros aplicados

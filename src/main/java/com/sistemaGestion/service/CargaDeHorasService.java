@@ -35,7 +35,7 @@ public class CargaDeHorasService {
         if (laCargaNoCorrespondeAlMesVigente(reporte.getFecha())) {
             throw new HorasCargadasException("Solo se puede cargar horas en el mes vigente.");
         }
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), Long.parseLong(reporte.getProyectoid()), reporte.getFecha(), reporte.getCantidadHoras(), legajo);
+        CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), Long.parseLong(reporte.getProyectoId()), reporte.getFecha(), reporte.getCantidadHoras(), legajo);
         empleado.cargarHoras(cargaDeHoras);
         return empleadoRepository.save(empleado);
     }
@@ -84,10 +84,10 @@ public class CargaDeHorasService {
     }
 
 
-    public ReporteDeHorasDTO obtenerHorasDeUnEmpleadoConFiltros(
+    public List<ReporteDeHorasDTO> obtenerHorasDeUnEmpleadoConFiltros(
             String legajo, String tareaId, String proyectoId, String fechaInicio, String fechaFin) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
-        ReporteDeHorasDTO reporteDeHoras = new ReporteDeHorasDTO(empleado.getContrato());
+        List<ReporteDeHorasDTO> reporteDeHoras = new ArrayList<ReporteDeHorasDTO>();
         List<CargaDeHoras> horasTrabajadas;
         LocalDate fecha1 = (fechaInicio == null) ? LocalDate.parse("2000-01-01") : LocalDate.parse(fechaInicio);
         LocalDate fecha2 = (fechaFin == null) ? LocalDate.now() : LocalDate.parse(fechaFin);
@@ -108,11 +108,15 @@ public class CargaDeHorasService {
         return reporteDeHoras;
     }
 
-    private void rellenarReporte(ReporteDeHorasDTO reporteDeHoras, List<HorasCargadas> listadoDeHorasCargadas, String tareaId, String proyectoId) {
-        reporteDeHoras.setProyectoid(proyectoId);
-        reporteDeHoras.setTareaId(tareaId);
-        for (HorasCargadas horas: listadoDeHorasCargadas) {
-            reporteDeHoras.addHoras(horas.getFecha(), horas.getHoras());
+    private void rellenarReporte(List<ReporteDeHorasDTO> reporteDeHoras, List<HorasCargadas> listadoDeHorasCargadas, String tareaId, String proyectoId) {
+        for (HorasCargadas cargaDeHoras: listadoDeHorasCargadas) {
+            reporteDeHoras.add(new ReporteDeHorasDTO(
+                    Actividad.TAREA,
+                    tareaId,
+                    proyectoId,
+                    cargaDeHoras.getFecha(),
+                    cargaDeHoras.getHoras()
+            ));
         }
     }
 }

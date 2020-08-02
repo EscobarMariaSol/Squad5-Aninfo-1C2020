@@ -38,7 +38,7 @@ public class AplicarFiltrosStepDefinitions {
     @Autowired
     private com.sistemaGestion.controller.AsignacionProyectoController AsignacionProyectoController;
 
-    private ReporteDeHorasDTO reporteDeHoras;
+    private List<ReporteDeHorasDTO> reporteDeHoras;
     private Empleado empleado;
     private PerfilEmpleadoDTO perfilEmpleadoDTO;
     private ResponseEntity response;
@@ -82,12 +82,13 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         List<Map<String, String>> horasCargadas = dataTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora -> {
-            ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
-            reporte.setActividad(Actividad.TAREA);
-            reporte.setProyectoid(datosHora.get("proyectoId"));
-            reporte.setTareaId(datosHora.get("tareaId"));
-            reporte.setFecha(LocalDate.parse(datosHora.get("fechaCargaDeHoras")));
-            reporte.setCantidadHoras(Float.valueOf(datosHora.get("horasTrabajadas")));
+            ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(
+                    Actividad.TAREA,
+                    datosHora.get("tareaId"),
+                    datosHora.get("proyectoId"),
+                    LocalDate.parse(datosHora.get("fechaCargaDeHoras")),
+                    Float.valueOf(datosHora.get("horasTrabajadas"))
+            );
             cargaDeHorasController.cargarHorasDeEmpleado(
                     legajo,
                     reporte);
@@ -126,25 +127,8 @@ public class AplicarFiltrosStepDefinitions {
         // Double, Byte, Short, Long, BigInteger or BigDecimal.
         //
         // For other transformations you can register a DataTableType.
-        reporteDeHoras = (ReporteDeHorasDTO) response.getBody();
+        reporteDeHoras = (List<ReporteDeHorasDTO>) response.getBody();
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-        List<Map<String, String>> datosEsperados = dataTable.asMaps(String.class, String.class);
-        for (Map<String, String> datoEsperado : datosEsperados) {
-            Assert.assertTrue(reporteDeHoras.getHoras().containsKey(LocalDate.parse(datoEsperado.get("fecha"))));
-            Assert.assertEquals(String.valueOf(datoEsperado.get("proyectoId")), reporteDeHoras.getProyectoid());
-            Assert.assertEquals(datoEsperado.get("tareaId"), reporteDeHoras.getTareaId());
-            Integer horas = new Integer(datoEsperado.get("cantidadDeHorasTrabajadas"));
-            Assert.assertEquals(
-                    horas.intValue(),
-                    reporteDeHoras.getHoras().get(LocalDate.parse(datoEsperado.get("fecha"))).intValue()
-            );
-        }
-    }
-
-    @Y("se me indica que la cantidad de horas totales es {int}")
-    public void se_me_indica_que_la_cantidad_de_horas_totales_es(Integer horas) {
-        // Write code here that turns the phrase above into concrete actions
-        Assert.assertEquals(reporteDeHoras.getHorasTotales().intValue(), horas.intValue());
     }
 
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string} en el proyecto {string} aplicando los filtros")

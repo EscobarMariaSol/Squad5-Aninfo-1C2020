@@ -9,47 +9,26 @@ import java.util.Map;
 
 public class ReporteDeHorasDTO {
 
-    private Map<LocalDate, Float> horas;
-    private Float horasTotales;
-    private EmpleadoContrato contrato;
-    private String tareaId;
-    private String proyectoid;
     private Actividad actividad;
+    private String tareaId;
+    private String proyectoId;
     private LocalDate fecha;
     private Float cantidadHoras;
 
-    public ReporteDeHorasDTO(EmpleadoContrato contrato){
-        this.horas = new HashMap<LocalDate, Float>();
-        this.horasTotales = 0F;
-        this.contrato = contrato;
+    public ReporteDeHorasDTO(Actividad actividad, String tareaId, String proyectoId, LocalDate fecha, Float cantidadHoras){
+        this.tareaId = tareaId;
+        this.actividad = actividad;
+        this.fecha = fecha;
+        this.cantidadHoras = cantidadHoras;
+        this.proyectoId = proyectoId;
     }
 
-    public void setHorasTotales(Float horasTotales) {
-        this.horasTotales = horasTotales;
-    }
-
-    public EmpleadoContrato getContrato() {
-        return contrato;
-    }
-
-    public void setContrato(EmpleadoContrato contrato) {
-        this.contrato = contrato;
-    }
-
-    public String getProyectoid() {
-        return proyectoid;
-    }
-
-    public void setActividad(Actividad actividad) {
+  public void setActividad(Actividad actividad) {
         this.actividad = actividad;
     }
 
     public Actividad getActividad() {
         return actividad;
-    }
-
-    public void setProyectoid(String proyectoid) {
-        this.proyectoid = proyectoid;
     }
 
     public LocalDate getFecha() {
@@ -76,36 +55,21 @@ public class ReporteDeHorasDTO {
         return tareaId;
     }
 
-    public Float getHorasTotales() {
-        return horasTotales;
+    public String getProyectoId() {
+        return proyectoId;
     }
 
-    public Map<LocalDate, Float> getHoras() {
-        return horas;
-    }
-
-    public void setHoras(Map<LocalDate, Float> horas) {
-        this.horas = horas;
-    }
-
-    public void addHoras(LocalDate fecha, Float horas) {
-        if (this.horas.containsKey(fecha)) {
-            Float horasIniciales = this.horas.get(fecha);
-            this.horas.replace(fecha, (horasIniciales + horas));
-        } else {
-            this.horas.put(fecha, horas);
-        }
-        this.horasTotales += horas;
+    public void setProyectoId(String proyectoId) {
+        this.proyectoId = proyectoId;
     }
 
     @Override
     public String toString() {
         return "ReporteDeHorasDTO{" +
-                "Horas: " + horas.toString() +
-                ", Horas Totales: " + horasTotales +
-                ", Contrato: " + contrato +
+                "Fecha: " + fecha +
+                ", Horas: " + cantidadHoras +
+                ", Activida: '" + actividad + '\'' +
                 ", Tarea: '" + tareaId + '\'' +
-                ", Proyecto: '" + proyectoid + '\'' +
                 '}';
     }
 }
