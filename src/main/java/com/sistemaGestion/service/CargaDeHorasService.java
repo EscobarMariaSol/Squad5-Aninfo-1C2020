@@ -49,7 +49,7 @@ public class CargaDeHorasService {
             Float cantidadDeHoras = cargaDeHorasRepository.findByProyectoIdAndLegajo(Long.parseLong(proyectoId), legajo).stream()
                     .map(CargaDeHoras::getHorasTrabajadas)
                     .reduce(Float::sum).orElse((float) 0);
-            return new CargaDeHorasDTO(legajo, cantidadDeHoras, proyectoId, empleado.getContrato());
+            return new CargaDeHorasDTO(legajo, cantidadDeHoras);
         }else{
             throw new HorasCargadasException("El empleado con legajo: " + legajo +
                     "no pertenece al proyecto cuyo id es" + proyectoId);
@@ -84,7 +84,7 @@ public class CargaDeHorasService {
 
 
     public ReporteDeHorasDTO obtenerHorasDeUnEmpleadoConFiltros(
-            String legajo, String tareaId, Long proyectoId, String fechaInicio, String fechaFin) {
+            String legajo, String tareaId, String proyectoId, String fechaInicio, String fechaFin) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
         ReporteDeHorasDTO reporteDeHoras = new ReporteDeHorasDTO(empleado.getContrato());
         List<CargaDeHoras> horasTrabajadas;
@@ -92,13 +92,13 @@ public class CargaDeHorasService {
         LocalDate fecha2 = (fechaFin == null) ? LocalDate.now() : LocalDate.parse(fechaFin);
         if(tareaId == null && proyectoId != null){
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-                    legajo, proyectoId, fecha1, fecha2);
+                    legajo, Long.parseLong(proyectoId), fecha1, fecha2);
         } else if(tareaId != null && proyectoId == null){
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo, tareaId, fecha1, fecha2);
         } else if(tareaId != null){
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-                    legajo, tareaId, proyectoId, fecha1, fecha2);
+                    legajo, tareaId, Long.parseLong(proyectoId), fecha1, fecha2);
         } else {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo,fecha1, fecha2);

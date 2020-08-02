@@ -1,7 +1,7 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
-import com.sistemaGestion.controller.CargaDeHorasControler;
+import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
@@ -28,7 +28,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     private EmpleadoController empleadoController;
 
     @Autowired
-    private CargaDeHorasControler cargaDeHorasControler;
+    private CargaDeHorasController cargaDeHorasController;
 
     @Autowired
     private com.sistemaGestion.controller.AsignacionProyectoController asignacionProyectoController;
@@ -57,7 +57,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void este_empleado_ha_cargado_las_horas_trabajadas_en_las_siguientes_tareas(DataTable horasTable) {
         List<Map<String, String>> horasCargadas = horasTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora ->{
-            cargaDeHorasControler.cargarHorasDeEmpleadoEnUnaTarea(
+            cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(
                     empleado.getLegajo(),
                     Long.parseLong(datosHora.get("proyectoId")),
                     datosHora.get("tareaId"),
@@ -78,7 +78,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
 
     @Cuando("consulto las horas trabajadas por el empleado en el proyecto cuyo id es {string}")
     public void consulto_las_horas_trabajadas_por_el_empleado_en_el_proyecto_cuyo_id_es(String proyectoId) {
-        response = cargaDeHorasControler.obtenerHorasDeUnEmpleadoEnUnProyecto(empleado.getLegajo(), proyectoId);
+        response = cargaDeHorasController.obtenerHorasDeUnEmpleadoEnUnProyecto(empleado.getLegajo(), proyectoId);
 
     }
 
@@ -87,10 +87,8 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
         List<Map<String, String>> horasTrabajadas =  horasTrabajadasTable.asMaps(String.class, String.class);
         CargaDeHorasDTO horasEsperadasTrabajadas = new CargaDeHorasDTO(
                 horasTrabajadas.get(0).get("legajo"),
-                Float.valueOf(horasTrabajadas.get(0).get("cantidadDeHorasTrabajadas")),
-                horasTrabajadas.get(0).get("nombreDeProyecto"),
-                EmpleadoContrato.valueOf(horasTrabajadas.get(0).get("tipoDeContrato").toUpperCase())
-        );
+                Float.valueOf(horasTrabajadas.get(0).get("cantidadDeHorasTrabajadas"))
+                );
         CargaDeHorasDTO horasObtenidas = (CargaDeHorasDTO) response.getBody();
         Assert.assertEquals(horasEsperadasTrabajadas, horasObtenidas);
     }

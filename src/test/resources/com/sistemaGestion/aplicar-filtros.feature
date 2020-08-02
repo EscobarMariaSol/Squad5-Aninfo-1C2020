@@ -64,8 +64,8 @@ Característica: aplicar filtros para generar reportes
       | 123         | 123          | 2020-06-19             | 4               |
 
     Cuando consulto las horas trabajadas por el empleado con legajo '5' aplicando los siguientes filtros
-      | tareaId   | fechaInicio     | fechaFin        |
-      | 123       | 2020-06-17      | 2020-06-19      |
+      | tareaId   | proyectoId   | fechaInicio     | fechaFin        |
+      | 123       |              | 2020-06-17      | 2020-06-19      |
     Entonces se me devuelve la siguiente informacion
       |  fecha          | cantidadDeHorasTrabajadas | tareaId        |
       | 2020-06-17      | 3                         | 123               |
@@ -89,8 +89,8 @@ Característica: aplicar filtros para generar reportes
       | 123         | 123          | 2020-06-19             | 4               |
 
     Cuando consulto las horas trabajadas por el empleado con legajo '5' aplicando los siguientes filtros
-      | fechaInicio     | fechaFin        |
-      | 2020-06-17      | 2020-09-19      |
+      | tareaId     | proyectoId   | fechaInicio     | fechaFin        |
+      |             |              | 2020-06-17      | 2020-09-19      |
     Entonces se me devuelve la siguiente informacion
       |  fecha          | cantidadDeHorasTrabajadas |
       | 2020-06-17      | 3                         |

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/empleados")
-public class CargaDeHorasControler {
+public class CargaDeHorasController {
 
 
     private CargaDeHorasService cargaDeHorasService;
 
     @Autowired
-    private CargaDeHorasControler(CargaDeHorasService cargaDeHorasService){
+    private CargaDeHorasController(CargaDeHorasService cargaDeHorasService){
         this.cargaDeHorasService = cargaDeHorasService;
     }
 
@@ -80,7 +80,7 @@ public class CargaDeHorasControler {
             @RequestParam(required = false) String fechaFin) {
         try {
             return new ResponseEntity(
-                    cargaDeHorasService.obtenerHorasDeUnEmpleadoConFiltros(legajo, tareaId, Long.parseLong(proyectoId), fechaInicio, fechaFin),
+                    cargaDeHorasService.obtenerHorasDeUnEmpleadoConFiltros(legajo, tareaId, proyectoId, fechaInicio, fechaFin),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {

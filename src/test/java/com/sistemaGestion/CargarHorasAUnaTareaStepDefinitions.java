@@ -1,7 +1,7 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
-import com.sistemaGestion.controller.CargaDeHorasControler;
+import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
@@ -20,7 +20,7 @@ public class CargarHorasAUnaTareaStepDefinitions {
     private EmpleadoRepository empleadoRepository;
 
     @Autowired
-    private CargaDeHorasControler cargaDeHorasController;
+    private CargaDeHorasController cargaDeHorasController;
 
     private Empleado  empleado;
     private ResponseEntity response;
