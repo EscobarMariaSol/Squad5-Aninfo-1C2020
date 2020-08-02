@@ -6,13 +6,13 @@ public class CargaDeHorasDTO {
 
     public String legajo;
     public Float horasTrabajadas;
-    public String nombreProyecto;
+    public Long codigoProyecto;
     public EmpleadoContrato tipoContrato;
 
-    public CargaDeHorasDTO(String legajo, Float horasTrabajadas, String nombreProyecto, EmpleadoContrato tipoContrato) {
+    public CargaDeHorasDTO(String legajo, Float horasTrabajadas, Long codigoProyecto, EmpleadoContrato tipoContrato) {
         this.legajo = legajo;
         this.horasTrabajadas = horasTrabajadas;
-        this.nombreProyecto = nombreProyecto;
+        this.codigoProyecto = codigoProyecto;
         this.tipoContrato = tipoContrato;
     }
 
@@ -29,7 +29,7 @@ public class CargaDeHorasDTO {
         CargaDeHorasDTO cargaDeHorasDTO = (CargaDeHorasDTO) o;
         return this.legajo.equals(cargaDeHorasDTO.legajo) &&
                 this.horasTrabajadas.equals(cargaDeHorasDTO.horasTrabajadas) &&
-                this.nombreProyecto.equals(cargaDeHorasDTO.nombreProyecto) &&
+                this.codigoProyecto.equals(cargaDeHorasDTO.codigoProyecto) &&
                 this.tipoContrato.equals(cargaDeHorasDTO.tipoContrato);
     }
 

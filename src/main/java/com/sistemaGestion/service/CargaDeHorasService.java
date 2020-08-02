@@ -24,7 +24,7 @@ public class CargaDeHorasService {
 
     @Autowired
     private void CargaDeHorasService(CargaDeHorasRepository cargaDeHorasRepository, EmpleadoService empleadoService, EmpleadoRepository empleadoRepository) {
-        this.empleadoService = new EmpleadoService(empleadoRepository, cargaDeHorasRepository);
+        this.empleadoService = new EmpleadoService(empleadoRepository);
         this.cargaDeHorasRepository = cargaDeHorasRepository;
         this.empleadoRepository = empleadoRepository;
     }
@@ -40,10 +40,10 @@ public class CargaDeHorasService {
     }
 
     private boolean laCargaNoCorrespondeAlMesVigente(LocalDate fecha) {
-        return fecha.getMonth().equals(LocalDate.now().getMonth());
+        return ! fecha.getMonth().equals(LocalDate.now().getMonth());
     }
 
-    public CargaDeHorasDTO obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, String proyectoId) {
+    public CargaDeHorasDTO obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, Long proyectoId) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
 
         if (empleadoPerteneceAlProyecto(empleado, proyectoId)){
@@ -57,9 +57,9 @@ public class CargaDeHorasService {
         }
     }
 
-    private boolean empleadoPerteneceAlProyecto(Empleado empleado, String proyectoId) {
+    private boolean empleadoPerteneceAlProyecto(Empleado empleado, Long proyectoId) {
         return empleado.getAsignacionProyectos().stream()
-                .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigo().equals(proyectoId));
+                .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigoProyecto().equals(proyectoId));
     }
 
     public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, String tareaId, String proyectoId, String fecha) {

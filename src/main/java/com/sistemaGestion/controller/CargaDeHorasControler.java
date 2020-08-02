@@ -22,7 +22,7 @@ public class CargaDeHorasControler {
     }
 
     @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId, @PathVariable("tareaId") String tareaId, HorasCargadas horasCargadas) {
+    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId, @PathVariable("tareaId") String tareaId,@RequestBody HorasCargadas horasCargadas) {
         try {
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
@@ -38,7 +38,7 @@ public class CargaDeHorasControler {
 
 
     @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/horas")
-    public ResponseEntity obtenerHorasDeUnEmpleadoEnUnProyecto(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId) {
+    public ResponseEntity obtenerHorasDeUnEmpleadoEnUnProyecto(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId) {
         try {
             return new ResponseEntity(
                     cargaDeHorasService.obtenerHorasDeUnEmpleadoEnUnProyecto(legajo, proyectoId),
@@ -53,10 +53,10 @@ public class CargaDeHorasControler {
     }
 
     @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity mostrarHorasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
+    public ResponseEntity mostrarHorasEnUnaTarea(@PathVariable("legajo")String legajo,@PathVariable("tareaId") String tareaId,@PathVariable("proyectoId") String proyectoId, String fecha) {
         try {
             return new ResponseEntity(
-                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, idProyecto, fecha),
+                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, tareaId, proyectoId, fecha),
                     HttpStatus.OK
             );
         } catch (HorasCargadasException e) {
