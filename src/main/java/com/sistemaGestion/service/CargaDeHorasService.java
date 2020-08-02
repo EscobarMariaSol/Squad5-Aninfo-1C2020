@@ -30,7 +30,7 @@ public class CargaDeHorasService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public Empleado cargarHorasDeEmpleadoEnUnaTarea(String legajo, Actividad actividad, Long proyectoId, String tareaId, HorasCargadas horasCargadas) {
+    public Empleado cargarHorasDeEmpleado(String legajo, Actividad actividad, Long proyectoId, String tareaId, HorasCargadas horasCargadas) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
         if (laCargaNoCorrespondeAlMesVigente(horasCargadas.getFecha())) {
             throw new HorasCargadasException("Solo se puede cargar horas en el mes vigente.");

@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class CargarHorasAUnaTareaStepDefinitions {
+public class CargarHorasDeUnEmpleadoStepDefinitions {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
@@ -37,7 +37,7 @@ public class CargarHorasAUnaTareaStepDefinitions {
     @Cuando("cargo {float} horas trabajadas en el dia {string} a una tarea cuyo id es {string} del proyecto con id {string}")
     public void cargo_horas_a_una_tarea(Float horas, String fecha, String idTarea, String idProyecto) {
         horasCargadas = new HorasCargadas(fecha, horas);
-        response = cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(), Actividad.PROYECTO, Long.parseLong(idProyecto), idTarea, horasCargadas);
+        response = cargaDeHorasController.cargarHorasDeEmpleado(empleado.getLegajo(), Actividad.PROYECTO, Long.parseLong(idProyecto), idTarea, horasCargadas);
     }
 
     @Entonces("las horas son registradas correctamente")

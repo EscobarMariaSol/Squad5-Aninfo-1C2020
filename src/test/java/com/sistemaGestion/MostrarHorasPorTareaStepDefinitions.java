@@ -42,7 +42,7 @@ public class MostrarHorasPorTareaStepDefinitions {
     public void el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String legajo, Float horas, String tareaId, String proyectoId, String fecha) {
         // Write code here that turns the phrase above into concrete actions
         HorasCargadas horasTrabjadas = new HorasCargadas(fecha, horas);
-        response = cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(legajo, Actividad.PROYECTO, Long.parseLong(proyectoId), tareaId, horasTrabjadas);
+        response = cargaDeHorasController.cargarHorasDeEmpleado(legajo, Actividad.PROYECTO, Long.parseLong(proyectoId), tareaId, horasTrabjadas);
 
     }
 

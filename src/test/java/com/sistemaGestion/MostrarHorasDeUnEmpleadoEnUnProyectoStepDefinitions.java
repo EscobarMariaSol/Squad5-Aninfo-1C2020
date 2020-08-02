@@ -57,7 +57,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void este_empleado_ha_cargado_las_horas_trabajadas_en_las_siguientes_tareas(DataTable horasTable) {
         List<Map<String, String>> horasCargadas = horasTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora ->{
-            cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(
+            cargaDeHorasController.cargarHorasDeEmpleado(
                     empleado.getLegajo(),
                     Actividad.valueOf(datosHora.get("actividad")),
                     Long.parseLong(datosHora.get("proyectoId")),

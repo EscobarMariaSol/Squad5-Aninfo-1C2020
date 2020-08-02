@@ -82,7 +82,7 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         List<Map<String, String>> horasCargadas = dataTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora -> {
-            cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(
+            cargaDeHorasController.cargarHorasDeEmpleado(
                     legajo,
                     Actividad.PROYECTO,
                     Long.parseLong(datosHora.get("proyectoId")),

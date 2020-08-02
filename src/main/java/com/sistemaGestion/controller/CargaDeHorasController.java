@@ -23,10 +23,10 @@ public class CargaDeHorasController {
     }
 
     @PostMapping(value = "/{legajo}/{actividad}/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("actividad") Actividad actividad, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
+    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @PathVariable("actividad") Actividad actividad, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
     try {
             return new ResponseEntity(
-                    cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, actividad, proyectoId, tareaId, horasCargadas),
+                    cargaDeHorasService.cargarHorasDeEmpleado(legajo, actividad, proyectoId, tareaId, horasCargadas),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {
