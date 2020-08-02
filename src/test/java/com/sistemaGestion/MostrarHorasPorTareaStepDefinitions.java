@@ -56,9 +56,9 @@ public class MostrarHorasPorTareaStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         List<HorasCargadas> horasCargadasList = (List<HorasCargadas>) response.getBody();
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertEquals(new HorasCargadas("2020-04-06", Float.valueOf(8)), horasCargadasList.get(0));
-        Assert.assertEquals(new HorasCargadas("2020-04-07", Float.valueOf(3)), horasCargadasList.get(1));
-        Assert.assertEquals(new HorasCargadas("2020-04-08", Float.valueOf(5)), horasCargadasList.get(2));
+        Assert.assertEquals(Float.valueOf(8), horasCargadasList.get(0).getHoras());
+        Assert.assertEquals(Float.valueOf(3), horasCargadasList.get(1).getHoras());
+        Assert.assertEquals(Float.valueOf(5), horasCargadasList.get(2).getHoras());
     }
 
     @Entonces("se me informa que no puedo realizar dicha accion ya que el emplado con legajo {string} no existe.")
@@ -92,7 +92,7 @@ public class MostrarHorasPorTareaStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         List<HorasCargadas> horasCargadasList = (List<HorasCargadas>) response.getBody();
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertEquals(new HorasCargadas("2020-04-13", 8f), horasCargadasList.get(0));
+        Assert.assertEquals(Float.valueOf(8), horasCargadasList.get(0).getHoras());
     }
 
     @After
