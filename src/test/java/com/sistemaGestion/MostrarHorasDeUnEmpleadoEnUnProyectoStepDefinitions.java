@@ -7,6 +7,7 @@ import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoContrato;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -55,22 +57,29 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void este_empleado_ha_cargado_las_horas_trabajadas_en_las_siguientes_tareas(DataTable horasTable) {
         List<Map<String, String>> horasCargadas = horasTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora ->{
-            cargaDeHorasControler.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(),datosHora.get("proyectoId"),datosHora.get("tareaId"), new HorasCargadas(datosHora.get("fechaCargaDeHoras"), Float.valueOf(datosHora.get("horasTrabajadas"))));
+            cargaDeHorasControler.cargarHorasDeEmpleadoEnUnaTarea(
+                    empleado.getLegajo(),
+                    Long.parseLong(datosHora.get("proyectoId")),
+                    datosHora.get("tareaId"),
+                    new HorasCargadas(
+                            datosHora.get("fechaCargaDeHoras"),
+                            Float.valueOf(datosHora.get("horasTrabajadas"))));
         });
     }
 
     @Y("el empleado es asignado a ese proyecto cuyo id es {string}")
     public void el_empleado_es_asignado_a_ese_proyecto_cuyo_id_es_pero_no_ha_cargado_horas_aun(String idProyecto) {
-        String fechaInicio = "2020-06-07";
-        String fechaFin = "2020-06-16";
-        String rol = "DESARROLLADOR";
-        asignacionProyecto = new AsignacionProyecto(idProyecto, fechaInicio, fechaFin, rol);
+        LocalDate fechaInicio = LocalDate.parse("2020-06-07");
+        LocalDate fechaFin = LocalDate.parse("2020-06-16");
+        EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
+        asignacionProyecto = new AsignacionProyecto(Long.parseLong(idProyecto), fechaInicio, fechaFin, rol);
         response = asignacionProyectoController.asignarEmpleadoAProyecto(empleado.getLegajo(), asignacionProyecto);
     }
 
     @Cuando("consulto las horas trabajadas por el empleado en el proyecto cuyo id es {string}")
     public void consulto_las_horas_trabajadas_por_el_empleado_en_el_proyecto_cuyo_id_es(String proyectoId) {
         response = cargaDeHorasControler.obtenerHorasDeUnEmpleadoEnUnProyecto(empleado.getLegajo(), proyectoId);
+
     }
 
     @Entonces("obtengo la siguiente informacion")

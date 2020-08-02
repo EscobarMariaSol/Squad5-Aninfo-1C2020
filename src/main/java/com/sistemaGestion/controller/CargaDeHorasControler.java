@@ -22,7 +22,7 @@ public class CargaDeHorasControler {
     }
 
     @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") String proyectoId, @PathVariable("tareaId") String tareaId, HorasCargadas horasCargadas) {
+    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, HorasCargadas horasCargadas) {
         try {
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
@@ -56,7 +56,7 @@ public class CargaDeHorasControler {
     public ResponseEntity mostrarHorasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
         try {
             return new ResponseEntity(
-                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, idProyecto, fecha),
+                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, Long.parseLong(idProyecto), fecha),
                     HttpStatus.OK
             );
         } catch (HorasCargadasException e) {
@@ -80,7 +80,7 @@ public class CargaDeHorasControler {
             @RequestParam(required = false) String fechaFin) {
         try {
             return new ResponseEntity(
-                    cargaDeHorasService.obtenerHorasDeUnEmpleadoConFiltros(legajo, tareaId, proyectoId, fechaInicio, fechaFin),
+                    cargaDeHorasService.obtenerHorasDeUnEmpleadoConFiltros(legajo, tareaId, Long.parseLong(proyectoId), fechaInicio, fechaFin),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {

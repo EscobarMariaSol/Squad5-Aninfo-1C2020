@@ -17,7 +17,7 @@ public class CargaDeHoras {
     public  String tareaId;
 
     @Column
-    public String proyectoId;
+    public Long proyectoId;
 
     @Column
     public String legajo;
@@ -45,11 +45,11 @@ public class CargaDeHoras {
         this.tareaId = tareaId;
     }
 
-    public String getProyectoId() {
+    public Long getProyectoId() {
         return proyectoId;
     }
 
-    public void setProyectoId(String proyectoId) {
+    public void setProyectoId(Long proyectoId) {
         this.proyectoId = proyectoId;
     }
 
@@ -80,7 +80,7 @@ public class CargaDeHoras {
     public CargaDeHoras() {
 
     }
-    public CargaDeHoras(String tareaId, String proyectoId, LocalDate fecha, Float horas, String legajo) {
+    public CargaDeHoras(String tareaId, Long proyectoId, LocalDate fecha, Float horas, String legajo) {
         this.tareaId = tareaId;
         this.proyectoId = proyectoId;
         this.fecha =fecha;

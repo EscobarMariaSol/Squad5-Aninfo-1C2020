@@ -88,7 +88,6 @@ public class EmpleadoService {
     public Empleado asignarAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
         empleado.addProyecto(asignacionProyecto);
-        asignacionProyecto.setRolEmpleado(empleado.getRol().name());
         empleadoRepository.save(empleado);
         return empleado;
     }

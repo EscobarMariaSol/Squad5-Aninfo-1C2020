@@ -9,17 +9,17 @@ import java.util.List;
 @Repository
 public interface CargaDeHorasRepository extends JpaRepository<CargaDeHoras, Long> {
 
-    List<CargaDeHoras> findByLegajoAndTareaIdAndProyectoId(String legajo, String tareaId, String proyectoId);
+    List<CargaDeHoras> findByLegajoAndTareaIdAndProyectoId(String legajo, String tareaId, Long proyectoId);
 
-    List<CargaDeHoras> findByLegajoAndTareaIdAndProyectoIdAndFecha(String legajo, String tareaId, String proyectoId, LocalDate parse);
+    List<CargaDeHoras> findByLegajoAndTareaIdAndProyectoIdAndFecha(String legajo, String tareaId, Long proyectoId, LocalDate parse);
 
-    List<CargaDeHoras> findByProyectoIdAndLegajo(String proyectoId, String legajo);
+    List<CargaDeHoras> findByProyectoIdAndLegajo(Long proyectoId, String legajo);
 
     List<CargaDeHoras> findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-            String legajo, String tareaId, String proyectoId, LocalDate fecha1, LocalDate fecha2);
+            String legajo, String tareaId, Long proyectoId, LocalDate fecha1, LocalDate fecha2);
 
     List<CargaDeHoras> findByLegajoAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-            String legajo, String proyectoId, LocalDate fecha1, LocalDate fecha2);
+            String legajo, Long proyectoId, LocalDate fecha1, LocalDate fecha2);
 
     List<CargaDeHoras> findByLegajoAndTareaIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
             String legajo, String tareaId, LocalDate fecha1, LocalDate fecha2);
