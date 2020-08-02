@@ -22,8 +22,8 @@ public class CargaDeHorasController {
         this.cargaDeHorasService = cargaDeHorasService;
     }
 
-    @PostMapping(value = "/{legajo}/{actividad}/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @PathVariable("actividad") Actividad actividad, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
+    @PostMapping(value = "/{legajo}/{actividad}/horas")
+    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @PathVariable("actividad") Actividad actividad, Long proyectoId, String tareaId, @RequestBody HorasCargadas horasCargadas) {
     try {
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleado(legajo, actividad, proyectoId, tareaId, horasCargadas),
@@ -72,6 +72,7 @@ public class CargaDeHorasController {
             );
         }
     }
+
     @GetMapping(value = "/{legajo}/horas" )
     public ResponseEntity obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
             @PathVariable("legajo") String legajo,

@@ -69,7 +69,7 @@ public class CargaDeHoras {
     public void setActividad(Actividad actividad) {
         this.actividad = actividad;
     }
-    
+
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
