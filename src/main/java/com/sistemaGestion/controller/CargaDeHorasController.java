@@ -22,7 +22,7 @@ public class CargaDeHorasController {
     }
 
     @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, HorasCargadas horasCargadas) {
+    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
         try {
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
