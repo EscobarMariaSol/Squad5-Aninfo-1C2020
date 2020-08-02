@@ -8,6 +8,7 @@ import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.java.After;
@@ -83,6 +84,7 @@ public class AplicarFiltrosStepDefinitions {
         horasCargadas.stream().forEach(datosHora -> {
             cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(
                     legajo,
+                    Actividad.PROYECTO,
                     Long.parseLong(datosHora.get("proyectoId")),
                     datosHora.get("tareaId"),
                     new HorasCargadas(

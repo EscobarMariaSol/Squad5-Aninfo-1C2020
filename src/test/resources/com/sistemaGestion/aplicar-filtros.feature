@@ -11,10 +11,10 @@ Característica: aplicar filtros para generar reportes
 
     Y el empleado con legajo '5' es asignado al proyecto '456'
     Y el empleado con legajo '5' realizo la siguiente carga de horas
-      | tareaId     | proyectoId   | fechaCargaDeHoras      | horasTrabajadas |
-      | 123         | 456          | 2020-08-01             | 3               |
-      | 123         | 456          | 2020-08-02             | 4               |
-      | 789         | 123          | 2020-08-01             | 2               |
+      | actividad | tareaId     | proyectoId   | fechaCargaDeHoras      | horasTrabajadas |
+      | PROYECTO  | 123         | 456          | 2020-08-01             | 3               |
+      | PROYECTO  | 123         | 456          | 2020-08-02             | 4               |
+      | PROYECTO  | 789         | 123          | 2020-08-01             | 2               |
 
     Cuando consulto las horas trabajadas por el empleado con legajo '5' en el proyecto '456' aplicando los siguientes filtros
       | tareaId     | proyectoId   | fechaInicio     | fechaFin        |

@@ -6,6 +6,7 @@ import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.*;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.es.Cuando;
@@ -58,6 +59,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
         horasCargadas.stream().forEach(datosHora ->{
             cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(
                     empleado.getLegajo(),
+                    Actividad.valueOf(datosHora.get("actividad")),
                     Long.parseLong(datosHora.get("proyectoId")),
                     datosHora.get("tareaId"),
                     new HorasCargadas(

@@ -3,6 +3,7 @@ package com.sistemaGestion.controller;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.service.CargaDeHorasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +22,11 @@ public class CargaDeHorasController {
         this.cargaDeHorasService = cargaDeHorasService;
     }
 
-    @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
+    @PostMapping(value = "/{legajo}/{actividad}/{proyectoId}/tareas/{tareaId}/horas")
+    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("actividad") Actividad actividad, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
     try {
             return new ResponseEntity(
-                    cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
+                    cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, actividad, proyectoId, tareaId, horasCargadas),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {

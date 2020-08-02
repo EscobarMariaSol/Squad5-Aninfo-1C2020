@@ -13,10 +13,10 @@ Característica: mostrar horas trabajadas por un empleado en un proyecto
     Y el empleado es asignado a ese proyecto cuyo id es '456'
 
     Y este empleado carga las horas trabajadas en las siguientes tareas
-      | tareaId     | proyectoId   | fechaCargaDeHoras      | horasTrabajadas |
-      | 123         | 456          | 2020-08-01             | 3               |
-      | 456         | 456          | 2020-08-02             | 4               |
-      | 789         | 123          | 2020-08-02             | 2               |
+      | tareaId     | actividad |proyectoId   | fechaCargaDeHoras      | horasTrabajadas |
+      | 123         | PROYECTO  |456          | 2020-08-01             | 3               |
+      | 456         | PROYECTO  |456          | 2020-08-02             | 4               |
+      | 789         | PROYECTO  |123          | 2020-08-02             | 2               |
 
     Cuando consulto las horas trabajadas por el empleado en el proyecto cuyo id es '456'
 
