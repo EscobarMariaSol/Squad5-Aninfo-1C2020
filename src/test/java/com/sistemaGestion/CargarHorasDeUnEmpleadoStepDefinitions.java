@@ -2,9 +2,11 @@ package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.CargaDeHorasController;
+import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
@@ -14,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-public class CargarHorasAUnaTareaStepDefinitions {
+import java.time.LocalDate;
+
+public class CargarHorasDeUnEmpleadoStepDefinitions {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
@@ -35,8 +39,13 @@ public class CargarHorasAUnaTareaStepDefinitions {
 
     @Cuando("cargo {float} horas trabajadas en el dia {string} a una tarea cuyo id es {string} del proyecto con id {string}")
     public void cargo_horas_a_una_tarea(Float horas, String fecha, String idTarea, String idProyecto) {
-        horasCargadas = new HorasCargadas(fecha, horas);
-        response = cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(), Long.parseLong(idProyecto), idTarea, horasCargadas);
+        ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
+        reporte.setActividad(Actividad.TAREA);
+        reporte.setFecha(LocalDate.parse(fecha));
+        reporte.setTareaId(idTarea);
+        reporte.setProyectoid(idProyecto);
+        reporte.setCantidadHoras(horas);
+        response = cargaDeHorasController.cargarHorasDeEmpleado(empleado.getLegajo(), reporte);
     }
 
     @Entonces("las horas son registradas correctamente")

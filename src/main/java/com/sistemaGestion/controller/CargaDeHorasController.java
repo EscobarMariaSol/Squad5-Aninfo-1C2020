@@ -1,8 +1,10 @@
 package com.sistemaGestion.controller;
 
+import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.service.CargaDeHorasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +23,11 @@ public class CargaDeHorasController {
         this.cargaDeHorasService = cargaDeHorasService;
     }
 
-    @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
+    @PostMapping(value = "/{legajo}/horas")
+    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @RequestBody(required = true)ReporteDeHorasDTO reporte) {
     try {
             return new ResponseEntity(
-                    cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
+                    cargaDeHorasService.cargarHorasDeEmpleado(legajo, reporte),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {
@@ -71,6 +73,7 @@ public class CargaDeHorasController {
             );
         }
     }
+
     @GetMapping(value = "/{legajo}/horas" )
     public ResponseEntity obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
             @PathVariable("legajo") String legajo,

@@ -1,5 +1,6 @@
 package com.sistemaGestion.dtos;
 
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.model.enums.EmpleadoContrato;
 
 import java.time.LocalDate;
@@ -13,6 +14,9 @@ public class ReporteDeHorasDTO {
     private EmpleadoContrato contrato;
     private String tareaId;
     private String proyectoid;
+    private Actividad actividad;
+    private LocalDate fecha;
+    private Float cantidadHoras;
 
     public ReporteDeHorasDTO(EmpleadoContrato contrato){
         this.horas = new HashMap<LocalDate, Float>();
@@ -36,8 +40,32 @@ public class ReporteDeHorasDTO {
         return proyectoid;
     }
 
+    public void setActividad(Actividad actividad) {
+        this.actividad = actividad;
+    }
+
+    public Actividad getActividad() {
+        return actividad;
+    }
+
     public void setProyectoid(String proyectoid) {
         this.proyectoid = proyectoid;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public Float getCantidadHoras() {
+        return cantidadHoras;
+    }
+
+    public void setCantidadHoras(Float cantidadHoras) {
+        this.cantidadHoras = cantidadHoras;
     }
 
     public void setTareaId(String tareaId) {

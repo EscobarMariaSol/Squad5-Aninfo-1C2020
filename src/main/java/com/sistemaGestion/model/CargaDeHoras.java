@@ -1,5 +1,6 @@
 package com.sistemaGestion.model;
 
+import com.sistemaGestion.model.enums.Actividad;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,6 +13,9 @@ public class CargaDeHoras {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     public String id;
+
+    @Column
+    public Actividad actividad;
 
     @Column
     public  String tareaId;
@@ -27,6 +31,7 @@ public class CargaDeHoras {
 
     @Column
     public Float horasTrabajadas;
+
 
 
     public String getId() {
@@ -57,6 +62,14 @@ public class CargaDeHoras {
         return fecha;
     }
 
+    public Actividad getActividad() {
+        return actividad;
+    }
+
+    public void setActividad(Actividad actividad) {
+        this.actividad = actividad;
+    }
+
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
@@ -80,7 +93,8 @@ public class CargaDeHoras {
     public CargaDeHoras() {
 
     }
-    public CargaDeHoras(String tareaId, Long proyectoId, LocalDate fecha, Float horas, String legajo) {
+    public CargaDeHoras(Actividad actividad, String tareaId, Long proyectoId, LocalDate fecha, Float horas, String legajo) {
+        this.actividad = actividad;
         this.tareaId = tareaId;
         this.proyectoId = proyectoId;
         this.fecha =fecha;

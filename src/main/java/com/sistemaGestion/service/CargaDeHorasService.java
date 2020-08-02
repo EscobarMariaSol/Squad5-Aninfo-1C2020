@@ -6,6 +6,7 @@ import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,12 @@ public class CargaDeHorasService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public Empleado cargarHorasDeEmpleadoEnUnaTarea(String legajo, Long proyectoId, String tareaId, HorasCargadas horasCargadas) {
+    public Empleado cargarHorasDeEmpleado(String legajo, ReporteDeHorasDTO reporte) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
-        if (laCargaNoCorrespondeAlMesVigente(horasCargadas.getFecha())) {
+        if (laCargaNoCorrespondeAlMesVigente(reporte.getFecha())) {
             throw new HorasCargadasException("Solo se puede cargar horas en el mes vigente.");
         }
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras(), legajo);
+        CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), Long.parseLong(reporte.getProyectoid()), reporte.getFecha(), reporte.getCantidadHoras(), legajo);
         empleado.cargarHoras(cargaDeHoras);
         return empleadoRepository.save(empleado);
     }
