@@ -8,19 +8,19 @@ import java.util.Map;
 
 public class ReporteDeHorasDTO {
 
-    private Map<LocalDate, Integer> horas;
-    private Integer horasTotales;
+    private Map<LocalDate, Float> horas;
+    private Float horasTotales;
     private EmpleadoContrato contrato;
     private String tareaId;
     private String proyectoid;
 
     public ReporteDeHorasDTO(EmpleadoContrato contrato){
-        this.horas = new HashMap<LocalDate, Integer>();
-        this.horasTotales = 0;
+        this.horas = new HashMap<LocalDate, Float>();
+        this.horasTotales = 0F;
         this.contrato = contrato;
     }
 
-    public void setHorasTotales(Integer horasTotales) {
+    public void setHorasTotales(Float horasTotales) {
         this.horasTotales = horasTotales;
     }
 
@@ -48,21 +48,21 @@ public class ReporteDeHorasDTO {
         return tareaId;
     }
 
-    public Integer getHorasTotales() {
+    public Float getHorasTotales() {
         return horasTotales;
     }
 
-    public Map<LocalDate, Integer> getHoras() {
+    public Map<LocalDate, Float> getHoras() {
         return horas;
     }
 
-    public void setHoras(Map<LocalDate, Integer> horas) {
+    public void setHoras(Map<LocalDate, Float> horas) {
         this.horas = horas;
     }
 
-    public void addHoras(LocalDate fecha, Integer horas) {
+    public void addHoras(LocalDate fecha, Float horas) {
         if (this.horas.containsKey(fecha)) {
-            Integer horasIniciales = this.horas.get(fecha);
+            Float horasIniciales = this.horas.get(fecha);
             this.horas.replace(fecha, (horasIniciales + horas));
         } else {
             this.horas.put(fecha, horas);

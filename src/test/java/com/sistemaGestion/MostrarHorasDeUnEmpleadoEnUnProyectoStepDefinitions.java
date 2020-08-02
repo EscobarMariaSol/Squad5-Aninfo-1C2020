@@ -1,10 +1,11 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
+import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.*;
-import com.sistemaGestion.model.enums.EmpleadoContrato;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.es.Cuando;
@@ -24,6 +25,9 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
 
     @Autowired
     private EmpleadoController empleadoController;
+
+    @Autowired
+    private CargaDeHorasController cargaDeHorasController;
 
     @Autowired
     private com.sistemaGestion.controller.AsignacionProyectoController asignacionProyectoController;
@@ -52,7 +56,13 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void este_empleado_ha_cargado_las_horas_trabajadas_en_las_siguientes_tareas(DataTable horasTable) {
         List<Map<String, String>> horasCargadas = horasTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora ->{
-            empleadoController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(),datosHora.get("proyectoId"),datosHora.get("tareaId"), new HorasCargadas(datosHora.get("fechaCargaDeHoras"), Integer.parseInt(datosHora.get("horasTrabajadas"))));
+            cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(
+                    empleado.getLegajo(),
+                    Long.parseLong(datosHora.get("proyectoId")),
+                    datosHora.get("tareaId"),
+                    new HorasCargadas(
+                            datosHora.get("fechaCargaDeHoras"),
+                            Float.valueOf(datosHora.get("horasTrabajadas"))));
         });
     }
 
@@ -66,20 +76,18 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     }
 
     @Cuando("consulto las horas trabajadas por el empleado en el proyecto cuyo id es {string}")
-    public void consulto_las_horas_trabajadas_por_el_empleado_en_el_proyecto_cuyo_id_es(Long proyectoId) {
-        response = empleadoController.obtenerHorasDeUnEmpleadoEnUnProyecto(empleado.getLegajo(), proyectoId);
+    public void consulto_las_horas_trabajadas_por_el_empleado_en_el_proyecto_cuyo_id_es(String proyectoId) {
+        response = cargaDeHorasController.obtenerHorasDeUnEmpleadoEnUnProyecto(empleado.getLegajo(), proyectoId);
     }
 
     @Entonces("obtengo la siguiente informacion")
     public void obtengo_la_siguiente_informacion(DataTable horasTrabajadasTable) {
         List<Map<String, String>> horasTrabajadas =  horasTrabajadasTable.asMaps(String.class, String.class);
-        HorasTrabajadas horasEsperadasTrabajadas = new HorasTrabajadas(
+        CargaDeHorasDTO horasEsperadasTrabajadas = new CargaDeHorasDTO(
                 horasTrabajadas.get(0).get("legajo"),
-                Integer.parseInt(horasTrabajadas.get(0).get("cantidadDeHorasTrabajadas")),
-                horasTrabajadas.get(0).get("nombreDeProyecto"),
-                EmpleadoContrato.valueOf(horasTrabajadas.get(0).get("tipoDeContrato").toUpperCase())
-        );
-        HorasTrabajadas horasObtenidas = (HorasTrabajadas) response.getBody();
+                Float.valueOf(horasTrabajadas.get(0).get("cantidadDeHorasTrabajadas"))
+                );
+        CargaDeHorasDTO horasObtenidas = (CargaDeHorasDTO) response.getBody();
         Assert.assertEquals(horasEsperadasTrabajadas, horasObtenidas);
     }
 

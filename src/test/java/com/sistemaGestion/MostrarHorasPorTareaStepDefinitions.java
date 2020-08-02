@@ -1,7 +1,7 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
-import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
 import com.sistemaGestion.repository.CargaDeHorasRepository;
@@ -11,25 +11,23 @@ import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
-import org.apache.coyote.http2.Http2Error;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class MostrarHorasPorTareaStepDefinitions {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
+
     @Autowired
     private CargaDeHorasRepository cargaDeHorasRepository;
 
-    @Autowired
-    private EmpleadoController empleadoController;
+     @Autowired
+     private CargaDeHorasController cargaDeHorasController;
 
     private Empleado liderDeRecursosHumanos, empleado;
     private ResponseEntity response;
@@ -39,18 +37,18 @@ public class MostrarHorasPorTareaStepDefinitions {
         liderDeRecursosHumanos = EmpleadoFactory.crearLiderDeRecursosHumanos();
     }
 
-    @Dado("el empleado con legajo {string} cargo {int} horas en la tarea {string}, del proyecto {string}, el dia {string}")
-    public void el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String legajo, Integer horas, String tareaId, String proyectoId, String fecha) {
+    @Dado("el empleado con legajo {string} cargo {float} horas en la tarea {string}, del proyecto {string}, el dia {string}")
+    public void el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String legajo, Float horas, String tareaId, String proyectoId, String fecha) {
         // Write code here that turns the phrase above into concrete actions
         HorasCargadas horasTrabjadas = new HorasCargadas(fecha, horas);
-        response = empleadoController.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasTrabjadas);
+        response = cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(legajo, Long.parseLong(proyectoId), tareaId, horasTrabjadas);
 
     }
 
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string} del proyecto {string}")
     public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto(String legajo, String tareaId, String proyectoId) {
         // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.mostrarHorasEnUnaTarea(legajo, tareaId, proyectoId, null);
+        response = cargaDeHorasController.mostrarHorasEnUnaTarea(legajo, tareaId, proyectoId, null);
     }
 
     @Entonces("se me devuelve un listado con las horas trabajadas por el empleado con legajo {string}, en la tarea {string}, del proyecto {string}.")
@@ -58,9 +56,9 @@ public class MostrarHorasPorTareaStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         List<HorasCargadas> horasCargadasList = (List<HorasCargadas>) response.getBody();
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertEquals(new HorasCargadas("2020-04-06", 8), horasCargadasList.get(0));
-        Assert.assertEquals(new HorasCargadas("2020-04-07", 3), horasCargadasList.get(1));
-        Assert.assertEquals(new HorasCargadas("2020-04-08", 5), horasCargadasList.get(2));
+        Assert.assertEquals(Float.valueOf(8), horasCargadasList.get(0).getHoras());
+        Assert.assertEquals(Float.valueOf(3), horasCargadasList.get(1).getHoras());
+        Assert.assertEquals(Float.valueOf(5), horasCargadasList.get(2).getHoras());
     }
 
     @Entonces("se me informa que no puedo realizar dicha accion ya que el emplado con legajo {string} no existe.")
@@ -86,7 +84,7 @@ public class MostrarHorasPorTareaStepDefinitions {
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string}, del proyecto {string}, el dia {string}")
     public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto_el_dia(String legajo, String tareaId, String proyectoId, String fecha) {
         // Write code here that turns the phrase above into concrete actions
-        response = empleadoController.mostrarHorasEnUnaTarea(legajo, tareaId, proyectoId, fecha);
+        response = cargaDeHorasController.mostrarHorasEnUnaTarea(legajo, tareaId, proyectoId, fecha);
     }
 
     @Entonces("se me devuelve un listado con las horas trabajadas por el empleado con legajo {string}, en la tarea {string}, del proyecto {string}, el dia {string}.")
@@ -94,7 +92,7 @@ public class MostrarHorasPorTareaStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
         List<HorasCargadas> horasCargadasList = (List<HorasCargadas>) response.getBody();
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assert.assertEquals(new HorasCargadas("2020-04-13", 8), horasCargadasList.get(0));
+        Assert.assertEquals(Float.valueOf(8), horasCargadasList.get(0).getHoras());
     }
 
     @After
@@ -103,4 +101,5 @@ public class MostrarHorasPorTareaStepDefinitions {
         empleadoRepository.deleteAll();
         cargaDeHorasRepository.deleteAll();
     }
+
 }

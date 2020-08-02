@@ -8,9 +8,9 @@ Característica: mostrar horas trabajadas por un empleado en una tarea
     Y existe el empleado con los atributos
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
       | Julio       | Diaz       | 18508429 |1969-09-19         | 345    |  full_time    | DESARROLLADOR | true   |
-    Y el empleado con legajo '345' cargo 8 horas en la tarea '2', del proyecto '1', el dia '2020-04-06'
-    Y el empleado con legajo '345' cargo 3 horas en la tarea '2', del proyecto '1', el dia '2020-04-07'
-    Y el empleado con legajo '345' cargo 5 horas en la tarea '2', del proyecto '1', el dia '2020-04-08'
+    Y el empleado con legajo '345' cargo 8 horas en la tarea '2', del proyecto '1', el dia '2020-08-01'
+    Y el empleado con legajo '345' cargo 3 horas en la tarea '2', del proyecto '1', el dia '2020-08-01'
+    Y el empleado con legajo '345' cargo 5 horas en la tarea '2', del proyecto '1', el dia '2020-08-01'
     Cuando consulto las horas trabajadas por el empleado con legajo '345',en la tarea '2' del proyecto '1'
     Entonces se me devuelve un listado con las horas trabajadas por el empleado con legajo '345', en la tarea '2', del proyecto '1'.
 
@@ -38,6 +38,6 @@ Característica: mostrar horas trabajadas por un empleado en una tarea
     Y existe el empleado con los atributos
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
       | Mabel       | Cruz       | 18508429 |1969-09-19         | 678    |  full_time    | DESARROLLADOR | true   |
-    Y el empleado con legajo '678' cargo 8 horas en la tarea '2', del proyecto '2', el dia '2020-04-13'
-    Cuando consulto las horas trabajadas por el empleado con legajo '678',en la tarea '2', del proyecto '2', el dia '2020-04-13'
-    Entonces se me devuelve un listado con las horas trabajadas por el empleado con legajo '678', en la tarea '2', del proyecto '2', el dia '2020-04-13'.
+    Y el empleado con legajo '678' cargo 8 horas en la tarea '2', del proyecto '2', el dia '2020-08-01'
+    Cuando consulto las horas trabajadas por el empleado con legajo '678',en la tarea '2', del proyecto '2', el dia '2020-08-01'
+    Entonces se me devuelve un listado con las horas trabajadas por el empleado con legajo '678', en la tarea '2', del proyecto '2', el dia '2020-08-01'.

@@ -1,13 +1,11 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
-import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
-import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
-import io.cucumber.java.After;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
@@ -22,7 +20,7 @@ public class CargarHorasAUnaTareaStepDefinitions {
     private EmpleadoRepository empleadoRepository;
 
     @Autowired
-    private EmpleadoController empleadoController;
+    private CargaDeHorasController cargaDeHorasController;
 
     private Empleado  empleado;
     private ResponseEntity response;
@@ -35,10 +33,10 @@ public class CargarHorasAUnaTareaStepDefinitions {
         empleadoRepository.save(empleado);
     }
 
-    @Cuando("cargo {int} horas trabajadas en el dia {string} a una tarea cuyo id es {string} del proyecto con id {string}")
-    public void cargo_horas_a_una_tarea(int horas, String fecha, String idTarea, String idProyecto) {
+    @Cuando("cargo {float} horas trabajadas en el dia {string} a una tarea cuyo id es {string} del proyecto con id {string}")
+    public void cargo_horas_a_una_tarea(Float horas, String fecha, String idTarea, String idProyecto) {
         horasCargadas = new HorasCargadas(fecha, horas);
-        response = empleadoController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(), idProyecto, idTarea, horasCargadas);
+        response = cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(empleado.getLegajo(), Long.parseLong(idProyecto), idTarea, horasCargadas);
     }
 
     @Entonces("las horas son registradas correctamente")

@@ -6,7 +6,7 @@ public class HorasCargadas {
 
     LocalDate fecha;
 
-    int horas;
+    Float horas;
 
     public LocalDate getFecha() {
         return fecha;
@@ -16,11 +16,11 @@ public class HorasCargadas {
         this.fecha = LocalDate.parse(fecha);
     }
 
-    public int getHoras() {
+    public Float getHoras() {
         return horas;
     }
 
-    public void setHoras(int horas) {
+    public void setHoras(Float horas) {
         this.horas = horas;
     }
 
@@ -28,7 +28,7 @@ public class HorasCargadas {
 
     }
 
-    public HorasCargadas(String fecha, int horas) {
+    public HorasCargadas(String fecha, Float horas) {
         this.fecha = LocalDate.parse(fecha);
         this.horas = horas;
     }
@@ -42,7 +42,7 @@ public class HorasCargadas {
             return false;
         }
         HorasCargadas horasCargadas = (HorasCargadas) o;
-        return (this.horas == horasCargadas.getHoras() &&
+        return (this.horas.equals(horasCargadas.getHoras())  &&
                 this.fecha.equals(horasCargadas.getFecha()));
     }
 }

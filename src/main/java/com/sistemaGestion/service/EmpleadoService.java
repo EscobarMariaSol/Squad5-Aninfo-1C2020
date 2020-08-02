@@ -1,7 +1,5 @@
 package com.sistemaGestion.service;
 
-import com.sistemaGestion.dtos.ReporteDeHorasDTO;
-import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoRol;
@@ -11,22 +9,16 @@ import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-    private AsignacionProyectoRepository asignacionProyectoRepository;
-    private CargaDeHorasRepository cargaDeHorasRepository;
 
     @Autowired
-    public EmpleadoService(EmpleadoRepository empleadoRepository, CargaDeHorasRepository cargaDeHorasRepository) {
+    public EmpleadoService(EmpleadoRepository empleadoRepository) {
         this.empleadoRepository = empleadoRepository;
-        this.cargaDeHorasRepository = cargaDeHorasRepository;
     }
 
     public List<Empleado> consultarEmpleados() {
@@ -39,14 +31,14 @@ public class EmpleadoService {
 
     public Empleado consultarEmpleadoPorLegajo(String legajo) {
         return empleadoRepository.findByLegajoAndActivoIsTrue(legajo)
-                .orElseThrow( () ->
+                .orElseThrow(() ->
                         new EmpleadoException("El empleado con legajo " + legajo + " no existe.")
                 );
     }
 
     public Empleado actualizarEmpleado(Empleado empleado) {
         empleadoRepository.findByLegajo(empleado.getLegajo()).orElseThrow(() ->
-            new EmpleadoException("El empleado con legajo " + empleado.getLegajo() + " no existe.")
+                new EmpleadoException("El empleado con legajo " + empleado.getLegajo() + " no existe.")
         );
         return empleadoRepository.save(empleado);
     }
@@ -62,8 +54,8 @@ public class EmpleadoService {
         if (empleado.getAsignacionProyectos().size() > 0)
             throw new EmpleadoException(
                     "No se puede dar de baja al empleado con legajo: " +
-                    empleado.getLegajo() +
-                    " porque forma parte de algún proyecto."
+                            empleado.getLegajo() +
+                            " porque forma parte de algún proyecto."
             );
     }
 
@@ -84,12 +76,6 @@ public class EmpleadoService {
         return empleado;
     }
 
-    public Empleado cargarHorasDeEmpleadoEnUnaTarea(String legajo, String proyectoId, String tareaId, HorasCargadas horasCargadas) {
-        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras(), legajo);
-        empleado.cargarHoras(cargaDeHoras);
-        return empleadoRepository.save(empleado);
-    }
 
     public Empleado asignarAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
         Empleado empleado = consultarEmpleadoPorLegajo(legajo);
@@ -97,78 +83,4 @@ public class EmpleadoService {
         empleadoRepository.save(empleado);
         return empleado;
     }
-
-    public HorasTrabajadas obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, Long proyectoId) {
-        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-
-        if (empleadoPerteneceAlProyecto(empleado, proyectoId)){
-            Integer cantidadDeHoras = cargaDeHorasRepository.findByProyectoIdAndLegajo(proyectoId, legajo).stream()
-                    .map(CargaDeHoras::getHorasTrabajadas)
-                    .reduce(Integer::sum).orElse(0);
-            return new HorasTrabajadas(legajo, cantidadDeHoras, proyectoId.toString(), empleado.getContrato());
-        }else{
-            throw new HorasCargadasException("El empleado con legajo: " + legajo +
-                    "no pertenece al proyecto cuyo id es" + proyectoId);
-        }
-    }
-
-    private boolean empleadoPerteneceAlProyecto(Empleado empleado, Long proyectoId) {
-        return empleado.getAsignacionProyectos().stream()
-                .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigoProyecto().equals(proyectoId));
-    }
-
-    public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, String tareaId, String proyectoId, String fecha) {
-        List<CargaDeHoras> horasTrabajadas =  new ArrayList<CargaDeHoras>();
-        consultarEmpleadoPorLegajo(legajo);
-        if (fecha == null) {
-             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoId(legajo, tareaId, proyectoId);
-        } else {
-            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFecha(legajo, tareaId, proyectoId, LocalDate.parse(fecha));
-        }
-        return generarListadoDeHorasCargadas(horasTrabajadas);
-    }
-
-    private List<HorasCargadas> generarListadoDeHorasCargadas(List<CargaDeHoras> horasTrabajadas) {
-        List<HorasCargadas> horasCargadas =  new ArrayList<HorasCargadas>();
-        for (CargaDeHoras cargaDeHoras: horasTrabajadas) {
-            horasCargadas.add(
-                    new HorasCargadas(cargaDeHoras.getFecha().toString()
-                            , cargaDeHoras.getHorasTrabajadas()));
-        }
-        return horasCargadas;
-    }
-
-    public ReporteDeHorasDTO obtenerHorasDeUnEmpleadoConFiltros(
-            String legajo, String tareaId, String proyectoId, String fechaInicio, String fechaFin) {
-        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        ReporteDeHorasDTO reporteDeHoras = new ReporteDeHorasDTO(empleado.getContrato());
-        List<CargaDeHoras> horasTrabajadas;
-        LocalDate fecha1 = (fechaInicio == null) ? LocalDate.parse("2000-01-01") : LocalDate.parse(fechaInicio);
-        LocalDate fecha2 = (fechaFin == null) ? LocalDate.now() : LocalDate.parse(fechaFin);
-        if(tareaId == null && proyectoId != null){
-            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-                    legajo, proyectoId, fecha1, fecha2);
-        } else if(tareaId != null && proyectoId == null){
-            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-                    legajo, tareaId, fecha1, fecha2);
-        } else if(tareaId != null){
-            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-                    legajo, tareaId, proyectoId, fecha1, fecha2);
-        } else {
-            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-                    legajo,fecha1, fecha2);
-        }
-        rellenarReporte(reporteDeHoras, generarListadoDeHorasCargadas(horasTrabajadas), tareaId, proyectoId);
-        return reporteDeHoras;
-    }
-
-    private void rellenarReporte(ReporteDeHorasDTO reporteDeHoras, List<HorasCargadas> listadoDeHorasCargadas, String tareaId, String proyectoId) {
-        reporteDeHoras.setProyectoid(proyectoId);
-        reporteDeHoras.setTareaId(tareaId);
-        for (HorasCargadas horas: listadoDeHorasCargadas) {
-            reporteDeHoras.addHoras(horas.getFecha(), horas.getHoras());
-        }
-    }
-
-
 }
