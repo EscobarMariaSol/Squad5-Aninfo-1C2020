@@ -62,6 +62,14 @@ public class CargaDeHoras {
         return fecha;
     }
 
+    public Actividad getActividad() {
+        return actividad;
+    }
+
+    public void setActividad(Actividad actividad) {
+        this.actividad = actividad;
+    }
+    
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
