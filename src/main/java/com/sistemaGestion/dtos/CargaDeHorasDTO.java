@@ -1,16 +1,14 @@
 package com.sistemaGestion.dtos;
 
-import com.sistemaGestion.model.enums.EmpleadoContrato;
-
 public class CargaDeHorasDTO {
 
     public String legajo;
-    public Float cantidadDeHoras;
+
+    public Float horasTrabajadas;
 
     public CargaDeHorasDTO(String legajo, Float horasTrabajadas) {
         this.legajo = legajo;
-        this.cantidadDeHoras = horasTrabajadas;
-
+        this.horasTrabajadas = horasTrabajadas;
     }
 
     @Override
@@ -24,7 +22,7 @@ public class CargaDeHorasDTO {
 
         CargaDeHorasDTO cargaDeHorasDTO = (CargaDeHorasDTO) o;
         return this.legajo.equals(cargaDeHorasDTO.legajo) &&
-                this.cantidadDeHoras.equals(cargaDeHorasDTO.cantidadDeHoras);
+                this.horasTrabajadas.equals(cargaDeHorasDTO.horasTrabajadas);
     }
 
 }

@@ -24,7 +24,7 @@ public class CargaDeHorasService {
 
     @Autowired
     private void CargaDeHorasService(CargaDeHorasRepository cargaDeHorasRepository, EmpleadoService empleadoService, EmpleadoRepository empleadoRepository) {
-        this.empleadoService = new EmpleadoService(empleadoRepository, cargaDeHorasRepository);
+        this.empleadoService = new EmpleadoService(empleadoRepository);
         this.cargaDeHorasRepository = cargaDeHorasRepository;
         this.empleadoRepository = empleadoRepository;
     }
@@ -40,7 +40,7 @@ public class CargaDeHorasService {
     }
 
     private boolean laCargaNoCorrespondeAlMesVigente(LocalDate fecha) {
-        return fecha.getMonth().equals(LocalDate.now().getMonth());
+        return ! fecha.getMonth().equals(LocalDate.now().getMonth());
     }
 
     public CargaDeHorasDTO obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, String proyectoId) {

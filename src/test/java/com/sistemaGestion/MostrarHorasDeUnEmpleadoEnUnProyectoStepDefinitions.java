@@ -6,7 +6,6 @@ import com.sistemaGestion.controller.EmpleadoController;
 import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.*;
-import com.sistemaGestion.model.enums.EmpleadoContrato;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.es.Cuando;
@@ -79,7 +78,6 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     @Cuando("consulto las horas trabajadas por el empleado en el proyecto cuyo id es {string}")
     public void consulto_las_horas_trabajadas_por_el_empleado_en_el_proyecto_cuyo_id_es(String proyectoId) {
         response = cargaDeHorasController.obtenerHorasDeUnEmpleadoEnUnProyecto(empleado.getLegajo(), proyectoId);
-
     }
 
     @Entonces("obtengo la siguiente informacion")

@@ -1,7 +1,5 @@
 package com.sistemaGestion.service;
 
-
-import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoRol;
@@ -11,22 +9,16 @@ import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EmpleadoService {
 
     private EmpleadoRepository empleadoRepository;
-    private AsignacionProyectoRepository asignacionProyectoRepository;
-    private CargaDeHorasRepository cargaDeHorasRepository;
 
     @Autowired
-    public EmpleadoService(EmpleadoRepository empleadoRepository, CargaDeHorasRepository cargaDeHorasRepository) {
+    public EmpleadoService(EmpleadoRepository empleadoRepository) {
         this.empleadoRepository = empleadoRepository;
-        this.cargaDeHorasRepository = cargaDeHorasRepository;
     }
 
     public List<Empleado> consultarEmpleados() {
@@ -39,14 +31,14 @@ public class EmpleadoService {
 
     public Empleado consultarEmpleadoPorLegajo(String legajo) {
         return empleadoRepository.findByLegajoAndActivoIsTrue(legajo)
-                .orElseThrow( () ->
+                .orElseThrow(() ->
                         new EmpleadoException("El empleado con legajo " + legajo + " no existe.")
                 );
     }
 
     public Empleado actualizarEmpleado(Empleado empleado) {
         empleadoRepository.findByLegajo(empleado.getLegajo()).orElseThrow(() ->
-            new EmpleadoException("El empleado con legajo " + empleado.getLegajo() + " no existe.")
+                new EmpleadoException("El empleado con legajo " + empleado.getLegajo() + " no existe.")
         );
         return empleadoRepository.save(empleado);
     }
@@ -62,8 +54,8 @@ public class EmpleadoService {
         if (empleado.getAsignacionProyectos().size() > 0)
             throw new EmpleadoException(
                     "No se puede dar de baja al empleado con legajo: " +
-                    empleado.getLegajo() +
-                    " porque forma parte de algún proyecto."
+                            empleado.getLegajo() +
+                            " porque forma parte de algún proyecto."
             );
     }
 
@@ -91,5 +83,4 @@ public class EmpleadoService {
         empleadoRepository.save(empleado);
         return empleado;
     }
-
 }

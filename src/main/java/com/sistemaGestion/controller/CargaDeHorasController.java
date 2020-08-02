@@ -22,7 +22,11 @@ public class CargaDeHorasController {
     }
 
     @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
+<<<<<<< HEAD
     public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
+=======
+    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId,@RequestBody  HorasCargadas horasCargadas) {
+>>>>>>> 6de3b27a35b6959670995d23cd529d32e7ab8759
         try {
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
@@ -53,10 +57,10 @@ public class CargaDeHorasController {
     }
 
     @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity mostrarHorasEnUnaTarea(String legajo, String idTarea, String idProyecto, String fecha) {
+    public ResponseEntity mostrarHorasEnUnaTarea(@PathVariable("legajo")String legajo,@PathVariable("tareaId") String tareaId,@PathVariable("proyectoId") String proyectoId, String fecha) {
         try {
             return new ResponseEntity(
-                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, idTarea, Long.parseLong(idProyecto), fecha),
+                    cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, tareaId, Long.parseLong(proyectoId), fecha),
                     HttpStatus.OK
             );
         } catch (HorasCargadasException e) {
