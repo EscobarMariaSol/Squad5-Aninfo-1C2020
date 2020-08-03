@@ -73,6 +73,7 @@ public class ReporteDeHorasDTO {
                 ", Horas: " + cantidadHoras +
                 ", Activida: '" + actividad + '\'' +
                 ", Tarea: '" + tareaId + '\'' +
+                ", Proyecto: '" + proyectoId +'\'' +
                 '}';
     }
 }
