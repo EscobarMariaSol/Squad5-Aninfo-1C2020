@@ -38,9 +38,9 @@ public class CargarHorasDeUnEmpleadoStepDefinitions {
     }
 
     @Cuando("cargo {float} horas trabajadas en el dia {string} a una tarea cuyo id es {string} del proyecto con id {string}")
-    public void cargo_horas_a_una_tarea(Float horas, String fecha, Long idTarea, Long idProyecto) {
+    public void cargo_horas_a_una_tarea(Float horas, String fecha, String idTarea, String idProyecto) {
         ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(
-                Actividad.TAREA, idTarea, idProyecto, LocalDate.parse(fecha), horas);
+                Actividad.TAREA, Long.parseLong(idTarea), Long.parseLong(idProyecto), LocalDate.parse(fecha), horas);
         response = cargaDeHorasController.cargarHorasDeEmpleado(empleado.getLegajo(), reporte);
     }
 
