@@ -41,7 +41,7 @@ public class MostrarHorasPorTareaStepDefinitions {
     }
 
     @Dado("el empleado con legajo {string} cargo {float} horas en la tarea {string}, del proyecto {string}, el dia {string}")
-    public void el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String legajo, Float horas, String tareaId, String proyectoId, String fecha) {
+    public void el_empleado_con_legajo_cargo_horas_en_la_tarea_del_proyecto_el_dia(String legajo, Float horas, Long tareaId, Long proyectoId, String fecha) {
         // Write code here that turns the phrase above into concrete actions
         Empleado empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
         ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(
@@ -51,7 +51,7 @@ public class MostrarHorasPorTareaStepDefinitions {
     }
 
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string} del proyecto {string}")
-    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto(String legajo, String tareaId, String proyectoId) {
+    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto(String legajo, Long tareaId, String proyectoId) {
         // Write code here that turns the phrase above into concrete actions
         response = cargaDeHorasController.mostrarHorasEnUnaTarea(legajo, tareaId, proyectoId, null);
     }
@@ -87,7 +87,7 @@ public class MostrarHorasPorTareaStepDefinitions {
     }
 
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string},en la tarea {string}, del proyecto {string}, el dia {string}")
-    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto_el_dia(String legajo, String tareaId, String proyectoId, String fecha) {
+    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_en_la_tarea_del_proyecto_el_dia(String legajo, Long tareaId, String proyectoId, String fecha) {
         // Write code here that turns the phrase above into concrete actions
         response = cargaDeHorasController.mostrarHorasEnUnaTarea(legajo, tareaId, proyectoId, fecha);
     }

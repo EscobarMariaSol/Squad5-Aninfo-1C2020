@@ -3,6 +3,7 @@ package com.sistemaGestion.controller;
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.exceptions.HorasCargadasException;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.service.CargaDeHorasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,7 +54,7 @@ public class CargaDeHorasController {
     }
 
     @GetMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity mostrarHorasEnUnaTarea(@PathVariable("legajo")String legajo,@PathVariable("tareaId") String tareaId,@PathVariable("proyectoId") String proyectoId, String fecha) {
+    public ResponseEntity mostrarHorasEnUnaTarea(@PathVariable("legajo")String legajo, @PathVariable("tareaId") Long tareaId, @PathVariable("proyectoId") String proyectoId, String fecha) {
         try {
             return new ResponseEntity(
                     cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, tareaId, Long.parseLong(proyectoId), fecha),
@@ -75,13 +76,14 @@ public class CargaDeHorasController {
     @GetMapping(value = "/{legajo}/horas" )
     public ResponseEntity obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
             @PathVariable("legajo") String legajo,
-            @RequestParam(required = false) String tareaId,
-            @RequestParam(required = false) String proyectoId,
+            @RequestParam(required = true) Actividad actividad,
+            @RequestParam(required = false) Long tareaId,
+            @RequestParam(required = false) Long proyectoId,
             @RequestParam(required = false) String fechaInicio,
             @RequestParam(required = false) String fechaFin) {
         try {
             return new ResponseEntity(
-                    cargaDeHorasService.obtenerHorasDeUnEmpleadoConFiltros(legajo, tareaId, proyectoId, fechaInicio, fechaFin),
+                    cargaDeHorasService.obtenerHorasDeUnEmpleadoConFiltros(legajo, actividad, tareaId, proyectoId, fechaInicio, fechaFin),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {

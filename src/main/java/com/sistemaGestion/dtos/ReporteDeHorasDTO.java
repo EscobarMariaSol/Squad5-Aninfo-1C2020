@@ -10,15 +10,15 @@ import java.util.Map;
 public class ReporteDeHorasDTO {
 
     private Actividad actividad;
-    private String tareaId;
-    private String proyectoId;
+    private Long tareaId;
+    private Long proyectoId;
     private LocalDate fecha;
     private Float cantidadHoras;
 
     public ReporteDeHorasDTO() {
     }
 
-    public ReporteDeHorasDTO(Actividad actividad, String tareaId, String proyectoId, LocalDate fecha, Float cantidadHoras){
+    public ReporteDeHorasDTO(Actividad actividad, Long tareaId, Long proyectoId, LocalDate fecha, Float cantidadHoras){
         this.tareaId = tareaId;
         this.actividad = actividad;
         this.fecha = fecha;
@@ -50,19 +50,19 @@ public class ReporteDeHorasDTO {
         this.cantidadHoras = cantidadHoras;
     }
 
-    public void setTareaId(String tareaId) {
+    public void setTareaId(Long tareaId) {
         this.tareaId = tareaId;
     }
 
-    public String getTareaId() {
+    public Long getTareaId() {
         return tareaId;
     }
 
-    public String getProyectoId() {
+    public Long getProyectoId() {
         return proyectoId;
     }
 
-    public void setProyectoId(String proyectoId) {
+    public void setProyectoId(Long proyectoId) {
         this.proyectoId = proyectoId;
     }
 
@@ -75,5 +75,22 @@ public class ReporteDeHorasDTO {
                 ", Tarea: '" + tareaId + '\'' +
                 ", Proyecto: '" + proyectoId +'\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ReporteDeHorasDTO reporteDeHorasDTO = (ReporteDeHorasDTO) o;
+        return this.actividad.equals(reporteDeHorasDTO.actividad) &&
+                this.tareaId.equals(reporteDeHorasDTO.tareaId) &&
+                this.proyectoId.equals(reporteDeHorasDTO.proyectoId) &&
+                this.fecha.equals(reporteDeHorasDTO.fecha) &&
+                this.cantidadHoras.equals(reporteDeHorasDTO.cantidadHoras);
     }
 }

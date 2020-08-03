@@ -60,8 +60,8 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
         horasCargadas.stream().forEach(datosHora ->{
             ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(
                     Actividad.TAREA,
-                    datosHora.get("tareaId"),
-                    datosHora.get("proyectoId"),
+                    Long.parseLong(datosHora.get("tareaId")),
+                    Long.parseLong(datosHora.get("proyectoId")),
                     LocalDate.parse(datosHora.get("fechaCargaDeHoras")),
                     Float.valueOf(datosHora.get("horasTrabajadas"))
             );

@@ -18,13 +18,13 @@ public class CargaDeHoras {
     public Actividad actividad;
 
     @Column
-    public  String tareaId;
+    public String legajo;
+
+    @Column
+    public Long tareaId;
 
     @Column
     public Long proyectoId;
-
-    @Column
-    public String legajo;
 
     @Column
     public LocalDate fecha;
@@ -42,11 +42,11 @@ public class CargaDeHoras {
         this.id = id;
     }
 
-    public String getTareaId() {
+    public Long getTareaId() {
         return tareaId;
     }
 
-    public void setTareaId(String tareaId) {
+    public void setTareaId(Long tareaId) {
         this.tareaId = tareaId;
     }
 
@@ -93,7 +93,7 @@ public class CargaDeHoras {
     public CargaDeHoras() {
 
     }
-    public CargaDeHoras(Actividad actividad, String tareaId, Long proyectoId, LocalDate fecha, Float horas, String legajo) {
+    public CargaDeHoras(Actividad actividad, Long tareaId, Long proyectoId, LocalDate fecha, Float horas, String legajo) {
         this.actividad = actividad;
         this.tareaId = tareaId;
         this.proyectoId = proyectoId;
@@ -127,7 +127,8 @@ public class CargaDeHoras {
                 fecha.equals(cargaDeHoras.getFecha()) &&
                 horasTrabajadas.equals(cargaDeHoras.getHorasTrabajadas()) &&
                 tareaId.equals(cargaDeHoras.getTareaId()) &&
-                legajo.equals(cargaDeHoras.getLegajo());
+                legajo.equals(cargaDeHoras.getLegajo()) &&
+                actividad.equals(cargaDeHoras.getActividad());
     }
 
 
