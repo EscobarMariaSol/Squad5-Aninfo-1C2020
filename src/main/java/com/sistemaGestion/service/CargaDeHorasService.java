@@ -1,24 +1,22 @@
 package com.sistemaGestion.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.CargaDeHorasException;
-import com.sistemaGestion.model.*;
+import com.sistemaGestion.model.CargaDeHoras;
+import com.sistemaGestion.model.Empleado;
+import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class CargaDeHorasService {
@@ -41,16 +39,17 @@ public class CargaDeHorasService {
         this.empleadoRepository = empleadoRepository;
     }
 
-    public Empleado cargarHorasDeEmpleadoEnUnaTarea(String legajo, Long proyectoId, String tareaId, HorasCargadas horasCargadas) throws IOException {
-        Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
-        if (! proyectosRequester.empleadoTieneAsignadaLaTarea(legajo, tareaId)) {
-            throw new CargaDeHorasException("No se puede cargar horas a una tarea no asignada");
-        }
 
-        if (laCargaNoCorrespondeAlMesVigente(horasCargadas.getFecha())) {
+    public Empleado cargarHorasDeEmpleado(String legajo, ReporteDeHorasDTO reporte) throws IOException {
+        Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
+        if (laCargaNoCorrespondeAlMesVigente(reporte.getFecha())) {
             throw new CargaDeHorasException("Solo se puede cargar horas en el mes vigente.");
         }
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras(), legajo);
+        if(reporte.getActividad().equals(Actividad.TAREA) && ! proyectosRequester.empleadoTieneAsignadaLaTarea(legajo, reporte.getTareaId())) {
+            throw new CargaDeHorasException("Solo se puede cargar horas en una tarea que tiene asignada.");
+        }
+        Long proyectoId = reporte.getActividad().equals(Actividad.TAREA) ? Long.valueOf(reporte.getProyectoid()) : null;
+        CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), proyectoId, reporte.getFecha(), reporte.getCantidadHoras(), legajo);
         empleado.cargarHoras(cargaDeHoras);
         return empleadoRepository.save(empleado);
     }
@@ -119,7 +118,7 @@ public class CargaDeHorasService {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo,fecha1, fecha2);
         }
-        rellenarReporte(reporteDeHoras, generarListadoDeHorasCargadas(horasTrabajadas), tareaId, String.valueOf(proyectoId));
+        rellenarReporte(reporteDeHoras, generarListadoDeHorasCargadas(horasTrabajadas), tareaId, proyectoId);
         return reporteDeHoras;
     }
 

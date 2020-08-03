@@ -1,14 +1,15 @@
 package com.sistemaGestion.controller;
 
+import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.exceptions.CargaDeHorasException;
-import com.sistemaGestion.model.HorasCargadas;
 import com.sistemaGestion.service.CargaDeHorasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.IIOException;
 import java.io.IOException;
 
 @RestController
@@ -23,22 +24,23 @@ public class CargaDeHorasController {
         this.cargaDeHorasService = cargaDeHorasService;
     }
 
-    @PostMapping(value = "/{legajo}/proyectos/{proyectoId}/tareas/{tareaId}/horas")
-    public ResponseEntity cargarHorasDeEmpleadoEnUnaTarea(@PathVariable("legajo") String legajo, @PathVariable("proyectoId") Long proyectoId, @PathVariable("tareaId") String tareaId, @RequestBody HorasCargadas horasCargadas) {
+
+    @PostMapping(value = "/{legajo}/horas")
+    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @RequestBody(required = true)ReporteDeHorasDTO reporte) {
         try {
             return new ResponseEntity(
-                    cargaDeHorasService.cargarHorasDeEmpleadoEnUnaTarea(legajo, proyectoId, tareaId, horasCargadas),
+                    cargaDeHorasService.cargarHorasDeEmpleado(legajo, reporte),
                     HttpStatus.OK
             );
-        } catch (EmpleadoException | IOException e) {
-            return new ResponseEntity(
-                    e.getMessage(),
-                    HttpStatus.NOT_FOUND
-            );
-        } catch (CargaDeHorasException e) {
+        } catch (CargaDeHorasException | IOException e) {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST
+            );
+        } catch (EmpleadoException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.NOT_FOUND
             );
         }
     }
@@ -78,6 +80,7 @@ public class CargaDeHorasController {
             );
         }
     }
+
     @GetMapping(value = "/{legajo}/horas" )
     public ResponseEntity obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
             @PathVariable("legajo") String legajo,

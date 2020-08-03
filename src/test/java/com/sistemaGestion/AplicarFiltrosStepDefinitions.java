@@ -8,6 +8,7 @@ import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
+import com.sistemaGestion.model.enums.Actividad;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.java.After;
@@ -81,14 +82,15 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         List<Map<String, String>> horasCargadas = dataTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora -> {
-            cargaDeHorasController.cargarHorasDeEmpleadoEnUnaTarea(
+            ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
+            reporte.setActividad(Actividad.TAREA);
+            reporte.setProyectoid(datosHora.get("proyectoId"));
+            reporte.setTareaId(datosHora.get("tareaId"));
+            reporte.setFecha(LocalDate.parse(datosHora.get("fechaCargaDeHoras")));
+            reporte.setCantidadHoras(Float.valueOf(datosHora.get("horasTrabajadas")));
+            cargaDeHorasController.cargarHorasDeEmpleado(
                     legajo,
-                    Long.parseLong(datosHora.get("proyectoId")),
-                    datosHora.get("tareaId"),
-                    new HorasCargadas(
-                            datosHora.get("fechaCargaDeHoras"),
-                            Float.valueOf(datosHora.get("horasTrabajadas"))
-                    ));
+                    reporte);
         });
     }
 
@@ -129,7 +131,7 @@ public class AplicarFiltrosStepDefinitions {
         List<Map<String, String>> datosEsperados = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> datoEsperado : datosEsperados) {
             Assert.assertTrue(reporteDeHoras.getHoras().containsKey(LocalDate.parse(datoEsperado.get("fecha"))));
-            Assert.assertEquals(String.valueOf(datoEsperado.get("proyectoId")), reporteDeHoras.getProyectoid());
+            Assert.assertEquals(datoEsperado.get("proyectoId"), reporteDeHoras.getProyectoid());
             Assert.assertEquals(datoEsperado.get("tareaId"), reporteDeHoras.getTareaId());
             Integer horas = new Integer(datoEsperado.get("cantidadDeHorasTrabajadas"));
             Assert.assertEquals(
