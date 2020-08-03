@@ -1,10 +1,8 @@
 package com.sistemaGestion.controller;
 
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
-import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.Empleado;
-import com.sistemaGestion.model.HorasCargadas;
 import com.sistemaGestion.model.enums.Seniority;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.service.EmpleadoService;
