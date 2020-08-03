@@ -46,28 +46,13 @@ public class CargaDeHorasService {
         if (! proyectosRequester.empleadoTieneAsignadaLaTarea(legajo, tareaId)) {
             throw new CargaDeHorasException("No se puede cargar horas a una tarea no asignada");
         }
-        //if (!empleadoTieneAsignadaLaTarea(legajo, tareaId)) {
 
-          //  throw new CargaDeHorasException("No se puede cargar horas a una tarea no asignada");
-        //};
         if (laCargaNoCorrespondeAlMesVigente(horasCargadas.getFecha())) {
             throw new CargaDeHorasException("Solo se puede cargar horas en el mes vigente.");
         }
         CargaDeHoras cargaDeHoras = new CargaDeHoras(tareaId, proyectoId, horasCargadas.getFecha(), horasCargadas.getHoras(), legajo);
         empleado.cargarHoras(cargaDeHoras);
         return empleadoRepository.save(empleado);
-    }
-
-    public Boolean empleadoTieneAsignadaLaTarea(String legajo, String tareaId) throws IOException {
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<String> response = restTemplate.getForEntity(uri + "/responsables/" + legajo + "/tareas", String.class);
-        if (response.getStatusCode() != HttpStatus.OK) {
-           throw new CargaDeHorasException("Asegurese de haber ingresado bien los datos");
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        TareaAsignada[] tareaAsignadas = mapper.readValue(response.getBody(), TareaAsignada[].class);
-        return Stream.of(tareaAsignadas).anyMatch(tareaAsignada -> tareaAsignada.getId().equals(tareaId));
     }
 
     private boolean laCargaNoCorrespondeAlMesVigente(LocalDate fecha) {
