@@ -4,38 +4,26 @@ public class TareaAsignada {
 
     public String id;
 
-    public String responsable;
+    public String nombreTarea;
 
-    public String prioridad;
+    public String nombreProyecto;
+
+    public Float duracionEstimada;
 
     public String estado;
 
-    public Integer iteracion;
 
-    public String nombre;
-
-    public String descripcion;
-
-    public String fechaDeInicio;
-
-    public String fechaDeFinalizacion;
+    public TareaAsignada(String id, String nombreTarea, String nombreProyecto, Float duracionEstimada, String estado) {
+        this.id = id;
+        this.nombreTarea = nombreTarea;
+        this.nombreProyecto = nombreProyecto;
+        this.duracionEstimada = duracionEstimada;
+        this.estado = estado;
+    }
 
     public TareaAsignada() {
 
     }
-
-    public TareaAsignada(String id, String responsable, String prioridad, String estado, Integer iteracion, String nombre, String descripcion, String fechaDeInicio, String fechaDeFinalizacion) {
-        this.id = id;
-        this.responsable = responsable;
-        this.prioridad = prioridad;
-        this.estado = estado;
-        this.iteracion = iteracion;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.fechaDeInicio = fechaDeInicio;
-        this.fechaDeFinalizacion = fechaDeFinalizacion;
-    }
-
 
 
     public String getId() {
@@ -46,20 +34,28 @@ public class TareaAsignada {
         this.id = id;
     }
 
-    public String getResponsable() {
-        return responsable;
+    public String getNombreTarea() {
+        return nombreTarea;
     }
 
-    public void setResponsable(String responsable) {
-        this.responsable = responsable;
+    public void setNombreTarea(String nombreTarea) {
+        this.nombreTarea = nombreTarea;
     }
 
-    public String getPrioridad() {
-        return prioridad;
+    public String getNombreProyecto() {
+        return nombreProyecto;
     }
 
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
+    public void setNombreProyecto(String nombreProyecto) {
+        this.nombreProyecto = nombreProyecto;
+    }
+
+    public Float getDuracionEstimada() {
+        return duracionEstimada;
+    }
+
+    public void setDuracionEstimada(Float duracionEstimada) {
+        this.duracionEstimada = duracionEstimada;
     }
 
     public String getEstado() {
@@ -70,44 +66,5 @@ public class TareaAsignada {
         this.estado = estado;
     }
 
-    public Integer getIteracion() {
-        return iteracion;
-    }
-
-    public void setIteracion(Integer iteracion) {
-        this.iteracion = iteracion;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getFechaDeInicio() {
-        return fechaDeInicio;
-    }
-
-    public void setFechaDeInicio(String fechaDeInicio) {
-        this.fechaDeInicio = fechaDeInicio;
-    }
-
-    public String getFechaDeFinalizacion() {
-        return fechaDeFinalizacion;
-    }
-
-    public void setFechaDeFinalizacion(String fechaDeFinalizacion) {
-        this.fechaDeFinalizacion = fechaDeFinalizacion;
-    }
 
 }
