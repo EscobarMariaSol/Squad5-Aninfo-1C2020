@@ -40,22 +40,26 @@ public class CargaDeHorasService {
     }
 
 
-    public Empleado cargarHorasDeEmpleado(String legajo, ReporteDeHorasDTO reporte) throws IOException {
-        Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
+    public CargaDeHoras cargarHorasDeEmpleado(String legajo, ReporteDeHorasDTO reporte) throws IOException {
+        validarCargaDeHoras(legajo, reporte);
+        Long proyectoId = reporte.getActividad().equals(Actividad.TAREA) ? Long.valueOf(reporte.getProyectoid()) : null;
+        CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), proyectoId, reporte.getFecha(), reporte.getCantidadHoras(), legajo);
+        return cargaDeHorasRepository.save(cargaDeHoras);
+    }
+
+    private void validarCargaDeHoras(String legajo, ReporteDeHorasDTO reporte) throws IOException {
+        empleadoService.consultarEmpleadoPorLegajo(legajo);
+
         if (laCargaNoCorrespondeAlMesVigente(reporte.getFecha())) {
             throw new CargaDeHorasException("Solo se puede cargar horas en el mes vigente.");
         }
-        if(reporte.getActividad().equals(Actividad.TAREA) && ! proyectosRequester.empleadoTieneAsignadaLaTarea(legajo, reporte.getTareaId())) {
+        if(reporte.getActividad().equals(Actividad.TAREA) && ! proyectosRequester.empleadoTieneAsignadaLaTarea(reporte.getProyectoid(), reporte.getTareaId())) {
             throw new CargaDeHorasException("Solo se puede cargar horas en una tarea que tiene asignada.");
         }
-        Long proyectoId = reporte.getActividad().equals(Actividad.TAREA) ? Long.valueOf(reporte.getProyectoid()) : null;
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), proyectoId, reporte.getFecha(), reporte.getCantidadHoras(), legajo);
-        empleado.cargarHoras(cargaDeHoras);
-        return empleadoRepository.save(empleado);
     }
 
     private boolean laCargaNoCorrespondeAlMesVigente(LocalDate fecha) {
-        return ! fecha.getMonth().equals(LocalDate.now().getMonth());
+        return ! fecha.getMonth().equals(LocalDate.now().getMonth()) && (LocalDate.now().getYear() == fecha.getYear());
     }
 
     public CargaDeHorasDTO obtenerHorasDeUnEmpleadoEnUnProyecto(String legajo, String proyectoId) {

@@ -1,17 +1,14 @@
 package com.sistemaGestion.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sistemaGestion.exceptions.CargaDeHorasException;
-import com.sistemaGestion.model.TareaAsignada;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.stream.Stream;
 
 @Component
 @Profile({"prod", "local"})
@@ -21,14 +18,15 @@ public class ProyectosRequesterProd extends ProyectosRequester{
     private String uri;
 
     @Override
-    public Boolean empleadoTieneAsignadaLaTarea(String legajo, String tareaId) throws IOException {
+    public Boolean empleadoTieneAsignadaLaTarea(String proyectoId, String tareaId) {
         RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<String> response = restTemplate.getForEntity(uri + "/responsables/" + legajo + "/tareas", String.class);
-        if (response.getStatusCode() != HttpStatus.OK) {
-            throw new CargaDeHorasException("Asegurese de haber ingresado bien los datos");
+        ResponseEntity<String> response;
+        try {
+            response = restTemplate.getForEntity(uri + "/proyectos/" + proyectoId + "/tareas/" + tareaId, String.class);
+        } catch (HttpClientErrorException e) {
+            return false;
         }
-        ObjectMapper mapper = new ObjectMapper();
-        TareaAsignada[] tareaAsignadas = mapper.readValue(response.getBody(), TareaAsignada[].class);
-        return Stream.of(tareaAsignadas).anyMatch(tareaAsignada -> tareaAsignada.getId().equals(tareaId));    }
+        return response.getStatusCode().equals(HttpStatus.OK);
+
+    }
 }
