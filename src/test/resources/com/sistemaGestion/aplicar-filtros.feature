@@ -95,11 +95,29 @@ Característica: aplicar filtros para generar reportes
       | actividad | tareaId     | proyectoId   | fechaCargaDeHoras      | horasTrabajadas |
       | TAREA     | 123         | 456          | 2020-08-02             | 3               |
       | TAREA     | 345         | 456          | 2020-08-01             | 6               |
-    Cuando consulto las horas trabajadas por el empleado con legajo '5' sin filtros
+    Cuando consulto las horas trabajadas por el empleado con legajo '5' con filtro de actividad 'TAREA'
       Entonces se me devuelve la siguiente informacion
       |  fecha          | cantidadDeHorasTrabajadas | actividad | tareaId     | proyectoId   |
       | 2020-08-02      | 3                         | TAREA     | 123         | 456          |
       | 2020-08-01      | 6                         | TAREA     | 345         | 456          |
+
+  Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
+  para generar reportes de la información asociada a los filtros aplicados
+    Dado que soy lider de recursos humanos
+    Y existe un empleado con los siguientes datos
+      | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
+      | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
+    Y el empleado con legajo '5' cargo horas con los siguientes datos
+      | actividad      | fechaCargaDeHoras      | horasTrabajadas |
+      | VACACIONES     | 2020-08-02             | 8               |
+      | ENFERMEDAD     | 2020-08-01             | 8               |
+      | DIA_DE_ESTUDIO | 2020-08-03             | 8               |
+    Cuando consulto las horas trabajadas por el empleado con legajo '5' sin filtros
+    Entonces se me devuelve la siguiente informacion acerca de las horas cargadas
+      |  fecha          | cantidadDeHorasTrabajadas | actividad          |
+      | 2020-08-02      | 8                         | VACACIONES         |
+      | 2020-08-01      | 8                         | ENFERMEDAD         |
+      | 2020-08-03      | 8                         | DIA_DE_ESTUDIO     |
 
   Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
   para generar reportes de la información asociada a los filtros aplicados

@@ -76,7 +76,7 @@ public class CargaDeHorasController {
     @GetMapping(value = "/{legajo}/horas" )
     public ResponseEntity obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
             @PathVariable("legajo") String legajo,
-            @RequestParam(required = true) Actividad actividad,
+            @RequestParam(required = false) Actividad actividad,
             @RequestParam(required = false) Long tareaId,
             @RequestParam(required = false) Long proyectoId,
             @RequestParam(required = false) String fechaInicio,

@@ -83,9 +83,7 @@ public class AplicarFiltrosStepDefinitions {
                     LocalDate.parse(datosHora.get("fechaCargaDeHoras")),
                     Float.valueOf(datosHora.get("horasTrabajadas"))
             );
-            cargaDeHorasController.cargarHorasDeEmpleado(
-                    legajo,
-                    reporte);
+            cargaDeHorasController.cargarHorasDeEmpleado(legajo, reporte);
         });
     }
 
@@ -178,16 +176,11 @@ public class AplicarFiltrosStepDefinitions {
 
     }
 
-    @Cuando("consulto las horas trabajadas por el empleado con legajo {string} aplicando los siguientes filtros")
-    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_aplicando_los_siguientes_filtros(String string, io.cucumber.datatable.DataTable dataTable) {
+    @Cuando("consulto las horas trabajadas por el empleado con legajo {string} con filtro de actividad {string}")
+    public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_con_filtro_de_actividad(String legajo, String actividad) {
         // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-
+        response = cargaDeHorasController.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
+                legajo, Actividad.valueOf(actividad), null, null, null, null);
     }
 
     @Entonces("se me devuelve la siguiente informacion")
@@ -201,7 +194,6 @@ public class AplicarFiltrosStepDefinitions {
         // For other transformations you can register a DataTableType.
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
         List<ReporteDeHorasDTO> reportesObtenidos = (List<ReporteDeHorasDTO>) response.getBody();
-        System.out.println(reportesObtenidos);
         List<Map<String, String>> reportesEsperados = dataTable.asMaps(String.class, String.class);
         reportesEsperados.forEach(infoEsperada -> {
             ReporteDeHorasDTO reporteEsperado = new ReporteDeHorasDTO(
@@ -211,18 +203,66 @@ public class AplicarFiltrosStepDefinitions {
                     LocalDate.parse(infoEsperada.get("fecha")),
                     Float.valueOf(infoEsperada.get("cantidadDeHorasTrabajadas"))
             );
-            System.out.println(reporteEsperado);
             Assert.assertTrue(reportesObtenidos.contains(reporteEsperado));
         });
+    }
+
+    @Y("el empleado con legajo {string} cargo horas con los siguientes datos")
+    public void el_empleado_con_legajo_cargo_horas_con_los_siguientes_datos(String legajo, io.cucumber.datatable.DataTable dataTable) {
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        //
+        // For other transformations you can register a DataTableType.
+        List<Map<String, String>> horasCargadas = dataTable.asMaps(String.class, String.class);
+        horasCargadas.forEach(datosHora -> {
+            ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(
+                    Actividad.valueOf(datosHora.get("actividad")),
+                    null,
+                    null,
+                    LocalDate.parse(datosHora.get("fechaCargaDeHoras")),
+                    Float.valueOf(datosHora.get("horasTrabajadas"))
+            );
+            cargaDeHorasController.cargarHorasDeEmpleado(legajo, reporte);
+        });
+
     }
 
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string} sin filtros")
     public void consulto_las_horas_trabajadas_por_el_empleado_con_legajo_sin_filtros(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         response = cargaDeHorasController.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
-                    legajo, Actividad.TAREA, null, null, null, null);
+                legajo, null, null, null, null, null);
 
     }
+
+    @Entonces("se me devuelve la siguiente informacion acerca de las horas cargadas")
+    public void se_me_devuelve_la_siguiente_informacion_acerca_de_las_horas_cargadas(io.cucumber.datatable.DataTable dataTable) {
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        //
+        // For other transformations you can register a DataTableType.
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        List<ReporteDeHorasDTO> reportesObtenidos = (List<ReporteDeHorasDTO>) response.getBody();
+        List<Map<String, String>> reportesEsperados = dataTable.asMaps(String.class, String.class);
+        reportesEsperados.forEach(infoEsperada -> {
+            ReporteDeHorasDTO reporteEsperado = new ReporteDeHorasDTO(
+                    Actividad.valueOf(infoEsperada.get("actividad")),
+                    null,
+                    null,
+                    LocalDate.parse(infoEsperada.get("fecha")),
+                    Float.valueOf(infoEsperada.get("cantidadDeHorasTrabajadas"))
+            );
+            Assert.assertTrue(reportesObtenidos.contains(reporteEsperado));
+        });
+
+    }
+
 
     @Entonces("recibo un mensaje indicandome que no existe dicho empleado")
     public void recibo_un_mensaje_indicandome_que_no_existe_dicho_empleado() {

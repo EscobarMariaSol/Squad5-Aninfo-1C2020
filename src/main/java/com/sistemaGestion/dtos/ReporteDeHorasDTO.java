@@ -88,8 +88,10 @@ public class ReporteDeHorasDTO {
 
         ReporteDeHorasDTO reporteDeHorasDTO = (ReporteDeHorasDTO) o;
         return this.actividad.equals(reporteDeHorasDTO.actividad) &&
-                this.tareaId.equals(reporteDeHorasDTO.tareaId) &&
-                this.proyectoId.equals(reporteDeHorasDTO.proyectoId) &&
+                ((this.tareaId == null && reporteDeHorasDTO.tareaId == null)
+                        || this.tareaId.equals(reporteDeHorasDTO.tareaId)) &&
+                ((this.proyectoId == null && reporteDeHorasDTO.proyectoId == null)
+                        || this.proyectoId.equals(reporteDeHorasDTO.proyectoId)) &&
                 this.fecha.equals(reporteDeHorasDTO.fecha) &&
                 this.cantidadHoras.equals(reporteDeHorasDTO.cantidadHoras);
     }
