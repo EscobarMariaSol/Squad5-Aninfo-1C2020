@@ -1,6 +1,7 @@
 package com.sistemaGestion.repository;
 
 import com.sistemaGestion.model.CargaDeHoras;
+import com.sistemaGestion.model.enums.Actividad;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
@@ -35,5 +36,9 @@ public interface CargaDeHorasRepository extends JpaRepository<CargaDeHoras, Long
 
     List<CargaDeHoras> findByLegajoAndTareaIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
             String legajo, Long tareaId, LocalDate fecha1, LocalDate fecha2
+    );
+
+    List<CargaDeHoras> findByLegajoAndActividadAndFechaGreaterThanEqualAndFechaLessThanEqual(
+            String legajo, Actividad actividad, LocalDate fecha1, LocalDate fecha2
     );
 }

@@ -91,15 +91,18 @@ public class CargaDeHorasService {
         List<CargaDeHoras> horasTrabajadas;
         LocalDate fecha1 = (fechaInicio == null) ? LocalDate.parse("2000-01-01") : LocalDate.parse(fechaInicio);
         LocalDate fecha2 = (fechaFin == null) ? LocalDate.now() : LocalDate.parse(fechaFin);
-        if(tareaId == null && proyectoId != null && actividad.name().equals("TAREA")){
+        if (tareaId == null && proyectoId != null && actividad.name().equals("TAREA")) {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo, proyectoId, fecha1, fecha2);
-        } else if(tareaId != null && proyectoId == null && actividad.name().equals("TAREA")){
+        } else if (tareaId != null && proyectoId == null && actividad.name().equals("TAREA")) {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo, tareaId, fecha1, fecha2);
-        } else if(tareaId != null && actividad.name().equals("TAREA")){
+        } else if (tareaId != null && actividad.name().equals("TAREA")) {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo, tareaId, proyectoId, fecha1, fecha2);
+        } else if (actividad != null && tareaId == null && proyectoId == null) {
+            horasTrabajadas = cargaDeHorasRepository.findByLegajoAndActividadAndFechaGreaterThanEqualAndFechaLessThanEqual(
+                    legajo, actividad, fecha1, fecha2);
         } else {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo,fecha1, fecha2);

@@ -122,6 +122,24 @@ Característica: aplicar filtros para generar reportes
   Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
   para generar reportes de la información asociada a los filtros aplicados
     Dado que soy lider de recursos humanos
+    Y existe un empleado con los siguientes datos
+      | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
+      | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
+    Y el empleado con legajo '5' cargo horas con los siguientes datos
+      | actividad      | fechaCargaDeHoras      | horasTrabajadas |
+      | VACACIONES     | 2020-08-02             | 8               |
+      | ENFERMEDAD     | 2020-08-01             | 3               |
+      | DIA_DE_ESTUDIO | 2020-08-01             | 5               |
+      | DIA_DE_ESTUDIO | 2020-08-03             | 8               |
+    Cuando consulto las horas trabajadas por el empleado con legajo '5' con filtro de actividad 'DIA_DE_ESTUDIO'
+    Entonces se me devuelve la siguiente informacion acerca de las horas cargadas
+      |  fecha          | cantidadDeHorasTrabajadas | actividad          |
+      | 2020-08-01      | 5                         | DIA_DE_ESTUDIO     |
+      | 2020-08-03      | 8                         | DIA_DE_ESTUDIO     |
+
+  Escenario: como Lider de Recursos Humanos, quiero aplicar filtros,
+  para generar reportes de la información asociada a los filtros aplicados
+    Dado que soy lider de recursos humanos
     Y no existe el empleado con legajo '33'
     Cuando consulto las horas trabajadas por el empleado con legajo '5' sin filtros
     Entonces recibo un mensaje indicandome que no existe dicho empleado
