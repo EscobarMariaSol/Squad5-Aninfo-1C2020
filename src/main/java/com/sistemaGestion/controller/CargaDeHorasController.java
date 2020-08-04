@@ -2,14 +2,15 @@ package com.sistemaGestion.controller;
 
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
-import com.sistemaGestion.exceptions.HorasCargadasException;
-import com.sistemaGestion.model.HorasCargadas;
-import com.sistemaGestion.model.enums.Actividad;
+import com.sistemaGestion.exceptions.CargaDeHorasException;
 import com.sistemaGestion.service.CargaDeHorasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.imageio.IIOException;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/empleados")
@@ -23,12 +24,18 @@ public class CargaDeHorasController {
         this.cargaDeHorasService = cargaDeHorasService;
     }
 
+
     @PostMapping(value = "/{legajo}/horas")
     public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @RequestBody(required = true)ReporteDeHorasDTO reporte) {
-    try {
+        try {
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleado(legajo, reporte),
                     HttpStatus.OK
+            );
+        } catch (CargaDeHorasException | IOException e) {
+            return new ResponseEntity(
+                    e.getMessage(),
+                    HttpStatus.BAD_REQUEST
             );
         } catch (EmpleadoException e) {
             return new ResponseEntity(
@@ -46,7 +53,7 @@ public class CargaDeHorasController {
                     cargaDeHorasService.obtenerHorasDeUnEmpleadoEnUnProyecto(legajo, proyectoId),
                     HttpStatus.OK
             );
-        } catch (HorasCargadasException e) {
+        } catch (CargaDeHorasException e) {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST
@@ -61,7 +68,7 @@ public class CargaDeHorasController {
                     cargaDeHorasService.consultarHorasTrabajadasEnUnaTarea(legajo, tareaId, Long.parseLong(proyectoId), fecha),
                     HttpStatus.OK
             );
-        } catch (HorasCargadasException e) {
+        } catch (CargaDeHorasException e) {
             return new ResponseEntity(
                     e.getMessage(),
                     HttpStatus.BAD_REQUEST

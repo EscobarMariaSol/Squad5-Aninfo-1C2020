@@ -131,7 +131,7 @@ public class AplicarFiltrosStepDefinitions {
         List<Map<String, String>> datosEsperados = dataTable.asMaps(String.class, String.class);
         for (Map<String, String> datoEsperado : datosEsperados) {
             Assert.assertTrue(reporteDeHoras.getHoras().containsKey(LocalDate.parse(datoEsperado.get("fecha"))));
-            Assert.assertEquals(String.valueOf(datoEsperado.get("proyectoId")), reporteDeHoras.getProyectoid());
+            Assert.assertEquals(datoEsperado.get("proyectoId"), reporteDeHoras.getProyectoid());
             Assert.assertEquals(datoEsperado.get("tareaId"), reporteDeHoras.getTareaId());
             Integer horas = new Integer(datoEsperado.get("cantidadDeHorasTrabajadas"));
             Assert.assertEquals(

@@ -37,11 +37,11 @@ public class CargarHorasDeUnEmpleadoStepDefinitions {
         empleadoRepository.save(empleado);
     }
 
-    @Cuando("cargo {float} horas trabajadas en el dia {string} a una tarea cuyo id es {string} del proyecto con id {string}")
-    public void cargo_horas_a_una_tarea(Float horas, String fecha, String idTarea, String idProyecto) {
+    @Cuando("cargo {float} horas trabajadas a una tarea cuyo id es {string} del proyecto con id {string}")
+    public void cargo_horas_a_una_tarea(Float horas, String idTarea, String idProyecto) {
         ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
         reporte.setActividad(Actividad.TAREA);
-        reporte.setFecha(LocalDate.parse(fecha));
+        reporte.setFecha(LocalDate.now());
         reporte.setTareaId(idTarea);
         reporte.setProyectoid(idProyecto);
         reporte.setCantidadHoras(horas);
@@ -53,4 +53,27 @@ public class CargarHorasDeUnEmpleadoStepDefinitions {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
     }
 
+    @Cuando("cargo {float} horas trabajadas en un mes no vigente a una tarea cuyo id es {string} del proyecto con id {string}")
+    public void cargo_horas_a_una_tarea_en_un_mes_no_vigente(Float horas, String idTarea, String idProyecto) {
+        ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
+        reporte.setActividad(Actividad.TAREA);
+        reporte.setFecha(LocalDate.parse("2020-02-03"));
+        reporte.setTareaId(idTarea);
+        reporte.setProyectoid(idProyecto);
+        reporte.setCantidadHoras(horas);
+        response = cargaDeHorasController.cargarHorasDeEmpleado(empleado.getLegajo(), reporte);
+    }
+    @Entonces("se me indica que no puedo cargar horas")
+    public void se_me_indica_que_no_puedo_cargar_horas() {
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+    }
+
+    @Cuando("cargo {float} horas correspondientes a vacaciones")
+    public void cargo_horas_correspondientes_a_vacaciones(Float horas) {
+        ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
+        reporte.setActividad(Actividad.VACACIONES);
+        reporte.setFecha(LocalDate.now());
+        reporte.setCantidadHoras(horas);
+        response = cargaDeHorasController.cargarHorasDeEmpleado(empleado.getLegajo(), reporte);
+    }
 }

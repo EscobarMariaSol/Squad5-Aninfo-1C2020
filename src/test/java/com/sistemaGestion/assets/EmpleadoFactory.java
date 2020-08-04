@@ -4,7 +4,6 @@ import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.enums.EmpleadoContrato;
 import com.sistemaGestion.model.enums.EmpleadoRol;
-
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -34,6 +33,7 @@ public class EmpleadoFactory {
             }).build();
         } else {
             return new Empleado.Builder().con(empleadoData -> {
+                empleadoData.conActivo(true);
                 empleadoData.conNombre(Constants.EMPLEADO_NOMBRE_3);
                 empleadoData.conApellido(Constants.EMPLEADO_APELLIDO_3);
                 empleadoData.conDni(Constants.EMPLEADO_DNI_3);
