@@ -58,12 +58,13 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     public void este_empleado_ha_cargado_las_horas_trabajadas_en_las_siguientes_tareas(DataTable horasTable) {
         List<Map<String, String>> horasCargadas = horasTable.asMaps(String.class, String.class);
         horasCargadas.stream().forEach(datosHora ->{
-            ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(empleado.getContrato());
-            reporte.setActividad(Actividad.TAREA);
-            reporte.setProyectoid(datosHora.get("proyectoId"));
-            reporte.setTareaId(datosHora.get("tareaId"));
-            reporte.setFecha(LocalDate.parse(datosHora.get("fechaCargaDeHoras")));
-            reporte.setCantidadHoras(Float.valueOf(datosHora.get("horasTrabajadas")));
+            ReporteDeHorasDTO reporte = new ReporteDeHorasDTO(
+                    Actividad.TAREA,
+                    Long.parseLong(datosHora.get("tareaId")),
+                    Long.parseLong(datosHora.get("proyectoId")),
+                    LocalDate.parse(datosHora.get("fechaCargaDeHoras")),
+                    Float.valueOf(datosHora.get("horasTrabajadas"))
+            );
             cargaDeHorasController.cargarHorasDeEmpleado(
                     empleado.getLegajo(), reporte);
         });

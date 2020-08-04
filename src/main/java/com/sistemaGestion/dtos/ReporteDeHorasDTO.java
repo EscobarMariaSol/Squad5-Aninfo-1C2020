@@ -9,39 +9,21 @@ import java.util.Map;
 
 public class ReporteDeHorasDTO {
 
-    private Map<LocalDate, Float> horas;
-    private Float horasTotales;
-    private EmpleadoContrato contrato;
-    private String tareaId;
-    private String proyectoid;
     private Actividad actividad;
+    private Long tareaId;
+    private Long proyectoId;
     private LocalDate fecha;
     private Float cantidadHoras;
 
-    public ReporteDeHorasDTO(){
-
+    public ReporteDeHorasDTO() {
     }
 
-    public ReporteDeHorasDTO(EmpleadoContrato contrato){
-        this.horas = new HashMap<LocalDate, Float>();
-        this.horasTotales = 0F;
-        this.contrato = contrato;
-    }
-
-    public void setHorasTotales(Float horasTotales) {
-        this.horasTotales = horasTotales;
-    }
-
-    public EmpleadoContrato getContrato() {
-        return contrato;
-    }
-
-    public void setContrato(EmpleadoContrato contrato) {
-        this.contrato = contrato;
-    }
-
-    public String getProyectoid() {
-        return  proyectoid;
+    public ReporteDeHorasDTO(Actividad actividad, Long tareaId, Long proyectoId, LocalDate fecha, Float cantidadHoras) {
+        this.tareaId = tareaId;
+        this.actividad = actividad;
+        this.fecha = fecha;
+        this.cantidadHoras = cantidadHoras;
+        this.proyectoId = proyectoId;
     }
 
     public void setActividad(Actividad actividad) {
@@ -50,10 +32,6 @@ public class ReporteDeHorasDTO {
 
     public Actividad getActividad() {
         return actividad;
-    }
-
-    public void setProyectoid(String proyectoid) {
-        this.proyectoid = proyectoid;
     }
 
     public LocalDate getFecha() {
@@ -72,44 +50,49 @@ public class ReporteDeHorasDTO {
         this.cantidadHoras = cantidadHoras;
     }
 
-    public void setTareaId(String tareaId) {
+    public void setTareaId(Long tareaId) {
         this.tareaId = tareaId;
     }
 
-    public String getTareaId() {
+    public Long getTareaId() {
         return tareaId;
     }
 
-    public Float getHorasTotales() {
-        return horasTotales;
+    public Long getProyectoId() {
+        return proyectoId;
     }
 
-    public Map<LocalDate, Float> getHoras() {
-        return horas;
-    }
-
-    public void setHoras(Map<LocalDate, Float> horas) {
-        this.horas = horas;
-    }
-
-    public void addHoras(LocalDate fecha, Float horas) {
-        if (this.horas.containsKey(fecha)) {
-            Float horasIniciales = this.horas.get(fecha);
-            this.horas.replace(fecha, (horasIniciales + horas));
-        } else {
-            this.horas.put(fecha, horas);
-        }
-        this.horasTotales += horas;
+    public void setProyectoId(Long proyectoId) {
+        this.proyectoId = proyectoId;
     }
 
     @Override
     public String toString() {
         return "ReporteDeHorasDTO{" +
-                "Horas: " + horas.toString() +
-                ", Horas Totales: " + horasTotales +
-                ", Contrato: " + contrato +
+                "Fecha: " + fecha +
+                ", Horas: " + cantidadHoras +
+                ", Activida: '" + actividad + '\'' +
                 ", Tarea: '" + tareaId + '\'' +
-                ", Proyecto: '" + proyectoid + '\'' +
+                ", Proyecto: '" + proyectoId +'\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ReporteDeHorasDTO reporteDeHorasDTO = (ReporteDeHorasDTO) o;
+        return this.actividad.equals(reporteDeHorasDTO.actividad) &&
+                ((this.tareaId == null && reporteDeHorasDTO.tareaId == null)
+                        || this.tareaId.equals(reporteDeHorasDTO.tareaId)) &&
+                ((this.proyectoId == null && reporteDeHorasDTO.proyectoId == null)
+                        || this.proyectoId.equals(reporteDeHorasDTO.proyectoId)) &&
+                this.fecha.equals(reporteDeHorasDTO.fecha) &&
+                this.cantidadHoras.equals(reporteDeHorasDTO.cantidadHoras);
     }
 }
