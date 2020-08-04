@@ -2,12 +2,8 @@ package com.sistemaGestion.controller;
 
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
-<<<<<<< HEAD
-import com.sistemaGestion.exceptions.HorasCargadasException;
 import com.sistemaGestion.model.enums.Actividad;
-=======
 import com.sistemaGestion.exceptions.CargaDeHorasException;
->>>>>>> 6693386a8fc494e6eaa8e9f941180aad35428e1a
 import com.sistemaGestion.service.CargaDeHorasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,13 +27,8 @@ public class CargaDeHorasController {
 
 
     @PostMapping(value = "/{legajo}/horas")
-<<<<<<< HEAD
-    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @RequestBody ReporteDeHorasDTO reporte) {
-    try {
-=======
     public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @RequestBody(required = true)ReporteDeHorasDTO reporte) {
         try {
->>>>>>> 6693386a8fc494e6eaa8e9f941180aad35428e1a
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleado(legajo, reporte),
                     HttpStatus.OK

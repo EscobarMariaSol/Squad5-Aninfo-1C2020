@@ -119,7 +119,6 @@ public class AplicarFiltrosStepDefinitions {
         // Double, Byte, Short, Long, BigInteger or BigDecimal.
         //
         // For other transformations you can register a DataTableType.
-<<<<<<< HEAD
         List<Map<String, String>> filtros = dataTable.asMaps(String.class, String.class);
         filtros.forEach(filtro -> {
             response = cargaDeHorasController.obtenerHorasTrabajadasDeUnEmpleadoConFiltros(
@@ -130,23 +129,6 @@ public class AplicarFiltrosStepDefinitions {
                     filtro.get("fechaInicio"),
                     filtro.get("fechaFin"));
         });
-=======
-        reporteDeHoras = (ReporteDeHorasDTO) response.getBody();
-        Assert.assertEquals(response.getStatusCode(), HttpStatus.OK);
-        List<Map<String, String>> datosEsperados = dataTable.asMaps(String.class, String.class);
-        for (Map<String, String> datoEsperado : datosEsperados) {
-            Assert.assertTrue(reporteDeHoras.getHoras().containsKey(LocalDate.parse(datoEsperado.get("fecha"))));
-            Assert.assertEquals(datoEsperado.get("proyectoId"), reporteDeHoras.getProyectoid());
-            Assert.assertEquals(datoEsperado.get("tareaId"), reporteDeHoras.getTareaId());
-            Integer horas = new Integer(datoEsperado.get("cantidadDeHorasTrabajadas"));
-            Assert.assertEquals(
-                    horas.intValue(),
-                    reporteDeHoras.getHoras().get(LocalDate.parse(datoEsperado.get("fecha"))).intValue()
-            );
-        }
-    }
->>>>>>> 6693386a8fc494e6eaa8e9f941180aad35428e1a
-
     }
 
     @Cuando("consulto las horas trabajadas por el empleado con legajo {string} filtrando por tarea y fechas")

@@ -15,42 +15,15 @@ public class ReporteDeHorasDTO {
     private LocalDate fecha;
     private Float cantidadHoras;
 
-<<<<<<< HEAD
     public ReporteDeHorasDTO() {
     }
 
-    public ReporteDeHorasDTO(Actividad actividad, Long tareaId, Long proyectoId, LocalDate fecha, Float cantidadHoras){
+    public ReporteDeHorasDTO(Actividad actividad, Long tareaId, Long proyectoId, LocalDate fecha, Float cantidadHoras) {
         this.tareaId = tareaId;
         this.actividad = actividad;
         this.fecha = fecha;
         this.cantidadHoras = cantidadHoras;
         this.proyectoId = proyectoId;
-=======
-    public ReporteDeHorasDTO(){
-
-    }
-
-    public ReporteDeHorasDTO(EmpleadoContrato contrato){
-        this.horas = new HashMap<LocalDate, Float>();
-        this.horasTotales = 0F;
-        this.contrato = contrato;
-    }
-
-    public void setHorasTotales(Float horasTotales) {
-        this.horasTotales = horasTotales;
-    }
-
-    public EmpleadoContrato getContrato() {
-        return contrato;
-    }
-
-    public void setContrato(EmpleadoContrato contrato) {
-        this.contrato = contrato;
-    }
-
-    public String getProyectoid() {
-        return  proyectoid;
->>>>>>> 6693386a8fc494e6eaa8e9f941180aad35428e1a
     }
 
     public void setActividad(Actividad actividad) {

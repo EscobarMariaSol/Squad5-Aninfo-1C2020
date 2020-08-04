@@ -42,7 +42,7 @@ public class CargaDeHorasService {
 
     public CargaDeHoras cargarHorasDeEmpleado(String legajo, ReporteDeHorasDTO reporte) throws IOException {
         validarCargaDeHoras(legajo, reporte);
-        Long proyectoId = reporte.getActividad().equals(Actividad.TAREA) ? Long.valueOf(reporte.getProyectoid()) : null;
+        Long proyectoId = reporte.getActividad().equals(Actividad.TAREA) ? reporte.getProyectoId() : null;
         CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), proyectoId, reporte.getFecha(), reporte.getCantidadHoras(), legajo);
         return cargaDeHorasRepository.save(cargaDeHoras);
     }
@@ -53,15 +53,10 @@ public class CargaDeHorasService {
         if (laCargaNoCorrespondeAlMesVigente(reporte.getFecha())) {
             throw new CargaDeHorasException("Solo se puede cargar horas en el mes vigente.");
         }
-        if(reporte.getActividad().equals(Actividad.TAREA) && ! proyectosRequester.empleadoTieneAsignadaLaTarea(reporte.getProyectoid(), reporte.getTareaId())) {
+        if(reporte.getActividad().equals(Actividad.TAREA) && ! proyectosRequester.empleadoTieneAsignadaLaTarea(
+                String.valueOf(reporte.getProyectoId()), String.valueOf(reporte.getTareaId()))) {
             throw new CargaDeHorasException("Solo se puede cargar horas en una tarea que tiene asignada.");
         }
-<<<<<<< HEAD
-        CargaDeHoras cargaDeHoras = new CargaDeHoras(reporte.getActividad(), reporte.getTareaId(), reporte.getProyectoId(), reporte.getFecha(), reporte.getCantidadHoras(), legajo);
-        empleado.cargarHoras(cargaDeHoras);
-        return empleadoRepository.save(empleado);
-=======
->>>>>>> 6693386a8fc494e6eaa8e9f941180aad35428e1a
     }
 
     private boolean laCargaNoCorrespondeAlMesVigente(LocalDate fecha) {
@@ -123,23 +118,15 @@ public class CargaDeHorasService {
                     legajo, tareaId, fecha1, fecha2);
         } else if (tareaId != null && actividad.name().equals("TAREA")) {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndTareaIdAndProyectoIdAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
-<<<<<<< HEAD
                     legajo, tareaId, proyectoId, fecha1, fecha2);
         } else if (actividad != null && tareaId == null && proyectoId == null) {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndActividadAndFechaGreaterThanEqualAndFechaLessThanEqual(
                     legajo, actividad, fecha1, fecha2);
-=======
-                    legajo, tareaId , Long.parseLong(proyectoId), fecha1, fecha2);
->>>>>>> 6693386a8fc494e6eaa8e9f941180aad35428e1a
         } else {
             horasTrabajadas = cargaDeHorasRepository.findByLegajoAndFechaIsGreaterThanEqualAndFechaIsLessThanEqual(
                     legajo,fecha1, fecha2);
         }
-<<<<<<< HEAD
         rellenarReporte(reporteDeHoras, horasTrabajadas, tareaId, proyectoId);
-=======
-        rellenarReporte(reporteDeHoras, generarListadoDeHorasCargadas(horasTrabajadas), tareaId, proyectoId);
->>>>>>> 6693386a8fc494e6eaa8e9f941180aad35428e1a
         return reporteDeHoras;
     }
 
