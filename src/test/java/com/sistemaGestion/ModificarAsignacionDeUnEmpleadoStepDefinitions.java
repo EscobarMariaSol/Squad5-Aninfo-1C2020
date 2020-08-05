@@ -79,7 +79,7 @@ public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
             String legajo, String codigoProyecto, String fechaFin) {
         // Write code here that turns the phrase above into concrete actions
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-        AsignacionProyecto asignacionProyecto = (AsignacionProyecto) response.getBody();
+        asignacionProyecto = (AsignacionProyecto) response.getBody();
         Assert.assertEquals(asignacionProyecto.getFechaFin(), LocalDate.parse(fechaFin));
 
     }
@@ -93,13 +93,14 @@ public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
     @Entonces("se me informa que no puedo realizar dicha acción porque el emplado no fue asignado a ese proyecto.")
     public void se_me_informa_que_no_puedo_realizar_dicha_acción_porque_el_emplado_no_fue_asignado_a_ese_proyecto() {
         // Write code here that turns the phrase above into concrete actions
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 
     }
 
     @Entonces("se me informa que no puedo realizar dicha acción porque el empladono existe.")
     public void se_me_informa_que_no_puedo_realizar_dicha_acción_porque_el_empladono_existe() {
         // Write code here that turns the phrase above into concrete actions
-
+        Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @After
