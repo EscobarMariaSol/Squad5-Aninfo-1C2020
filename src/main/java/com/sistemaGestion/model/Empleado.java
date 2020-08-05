@@ -7,7 +7,7 @@ import com.sistemaGestion.model.enums.Seniority;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -45,7 +45,7 @@ public class Empleado {
     private Boolean activo;
 
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<AsignacionProyecto> asignacionProyectos;
+    private Set<AsignacionProyecto> proyectosAsignados;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<CargaDeHoras> horasCargadas;
@@ -59,7 +59,7 @@ public class Empleado {
     }
 
     public Empleado(){
-        this.asignacionProyectos = new HashSet<>();
+        this.proyectosAsignados = new HashSet<>();
     }
 
     public Empleado(String nombre) {
@@ -130,12 +130,12 @@ public class Empleado {
         this.activo = activo;
     }
 
-    public Set<AsignacionProyecto> getAsignacionProyectos() {
-        return asignacionProyectos;
+    public Set<AsignacionProyecto> getProyectosAsignados() {
+        return proyectosAsignados;
     }
 
-    public void setAsignacionProyectos(Set<AsignacionProyecto> asignacionProyectos) {
-        this.asignacionProyectos = asignacionProyectos;
+    public void setProyectosAsignados(Set<AsignacionProyecto> asignacionProyectos) {
+        this.proyectosAsignados = asignacionProyectos;
     }
 
     public void setSeniority(Seniority seniority) {
@@ -147,15 +147,7 @@ public class Empleado {
     }
 
     public void addProyecto(AsignacionProyecto asignacionProyecto) {
-        this.asignacionProyectos.add(asignacionProyecto);
-    }
-
-    public boolean perteneceAProyecto(AsignacionProyecto asignacionProyecto) {
-        for (AsignacionProyecto p: this.asignacionProyectos) {
-            if (p.equals(asignacionProyecto))
-                return true;
-        }
-        return false;
+        this.proyectosAsignados.add(asignacionProyecto);
     }
 
     public void cargarHoras(CargaDeHoras cargaDeHoras) {
@@ -170,6 +162,14 @@ public class Empleado {
         this.fechaIngreso = fechaIngreso;
     }
 
+    public Optional<AsignacionProyecto>  getAsignacionProyecto(Long proyectoId) {
+        AsignacionProyecto asignacion = null;
+        for (AsignacionProyecto p: this.proyectosAsignados) {
+            if (p.getCodigoProyecto().equals(proyectoId)) asignacion = p;
+        }
+        return Optional.ofNullable(asignacion);
+    }
+
     public Empleado(Builder builder) {
         this.nombre = builder.nombre;
         this.apellido = builder.apellido;
@@ -182,7 +182,7 @@ public class Empleado {
         this.contrato = builder.contrato;
         this.activo = builder.activo;
         this.horasCargadas = builder.horasCargadas;
-        this.asignacionProyectos = builder.asignacionProyectos;
+        this.proyectosAsignados = builder.asignacionProyectos;
     }
 
     public static class Builder {

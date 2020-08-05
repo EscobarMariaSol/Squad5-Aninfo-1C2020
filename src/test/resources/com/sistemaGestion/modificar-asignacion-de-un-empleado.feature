@@ -5,7 +5,7 @@ Característica: Agregar un empleado a un proyecto
   Escenario: Como Lider de proyecto, quiero modificar la asignacion de un empleado en un proyecto,
   para informar que el empleado ya no puede realizar tareas dentro de ese proyecto.
     Dado que soy lider del proyecto '1' y quiero modificar la asignacion de un empleado en el proyecto
-    Y existe un empleado con los siguientes datos
+    Y existe un empleado con la siguiente informacion
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
       | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Y el empleado con legajo '5' fue asignado al proyecto '1' en la fecha '2020-07-19'
@@ -15,7 +15,7 @@ Característica: Agregar un empleado a un proyecto
   Escenario: Como Lider de proyecto, quiero modificar la asignacion de un empleado en un proyecto,
   para informar que el empleado ya no puede realizar tareas dentro de ese proyecto.
     Dado  que soy lider del proyecto '1' y quiero modificar la asignacion de un empleado en el proyecto
-    Y existe un empleado con los siguientes datos
+    Y existe un empleado con la siguiente informacion
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
       | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Y el empleado con legajo '5' no ha sido asignado al proyecto '1'

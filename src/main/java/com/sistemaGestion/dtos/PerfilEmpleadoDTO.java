@@ -220,7 +220,7 @@ public class PerfilEmpleadoDTO {
             empleadoData.conContrato(this.contrato);
             empleadoData.conSeniority(this.seniority);
             empleadoData.conActivo(this.activo);
-            empleadoData.conProyectos(empleado.getAsignacionProyectos());
+            empleadoData.conProyectos(empleado.getProyectosAsignados());
             empleadoData.conHorasCargadas(empleado.getHorasCargadas());
         }).build();
     }

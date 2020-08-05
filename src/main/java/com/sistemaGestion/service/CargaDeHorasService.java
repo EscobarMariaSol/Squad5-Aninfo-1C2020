@@ -3,10 +3,12 @@ package com.sistemaGestion.service;
 import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.CargaDeHorasException;
+import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;
 import com.sistemaGestion.model.enums.Actividad;
+import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import java.util.List;
 public class CargaDeHorasService {
 
     private CargaDeHorasRepository cargaDeHorasRepository;
+    private AsignacionProyectoRepository asignacionProyectoRepository;
     private EmpleadoService empleadoService;
     private EmpleadoRepository empleadoRepository;
 
@@ -33,10 +36,15 @@ public class CargaDeHorasService {
 
 
     @Autowired
-    private void CargaDeHorasService(CargaDeHorasRepository cargaDeHorasRepository, EmpleadoService empleadoService, EmpleadoRepository empleadoRepository) {
+    private void CargaDeHorasService(
+            CargaDeHorasRepository cargaDeHorasRepository,
+            EmpleadoService empleadoService,
+            EmpleadoRepository empleadoRepository,
+            AsignacionProyectoRepository asignacionProyectoRepository) {
         this.empleadoService = new EmpleadoService(empleadoRepository);
         this.cargaDeHorasRepository = cargaDeHorasRepository;
         this.empleadoRepository = empleadoRepository;
+        this.asignacionProyectoRepository = asignacionProyectoRepository;
     }
 
 
@@ -77,9 +85,10 @@ public class CargaDeHorasService {
     }
 
     private boolean empleadoPerteneceAlProyecto(Empleado empleado, String proyectoId) {
-        return empleado.getAsignacionProyectos().stream()
-                .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigoProyecto().equals(Long.parseLong(proyectoId)));
-    }
+        AsignacionProyecto asignacionProyecto = asignacionProyectoRepository.findByCodigoProyectoAndLegajoEmpleado(
+                Long.parseLong(proyectoId), empleado.getLegajo()).orElse(null);
+        return (asignacionProyecto!=null);
+        }
 
     public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, Long tareaId, Long proyectoId, String fecha) {
         List<CargaDeHoras> horasTrabajadas =  new ArrayList<CargaDeHoras>();

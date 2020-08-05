@@ -1,31 +1,32 @@
 package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
-import com.sistemaGestion.controller.AsignacionProyectoController;
-import com.sistemaGestion.controller.CargaDeHorasController;
-import com.sistemaGestion.dtos.ReporteDeHorasDTO;
+import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.AsignacionProyecto;
-import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
-import com.sistemaGestion.model.HorasCargadas;
-import com.sistemaGestion.model.enums.Actividad;
+import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import io.cucumber.java.After;
 import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
-import org.junit.Assert;
+import io.cucumber.java.es.Y;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
+
+    @Autowired
+    private EmpleadoController empleadoController;
 
     @Autowired
     private AsignacionProyectoRepository asignacionProyectoRepository;
@@ -40,19 +41,34 @@ public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
     @Dado("que soy lider del proyecto {string} y quiero modificar la asignacion de un empleado en el proyecto")
     public void que_soy_lider_del_proyecto_y_quiero_modificar_la_asignacion_de_un_empleado_en_el_proyecto(String string) {
         // Write code here that turns the phrase above into concrete actions
-
+        liderDeProyecto = EmpleadoFactory.crearLiderDeProyecto();
     }
 
-    @Dado("el empleado con legajo {string} fue asignado al proyecto {string} en la fecha {string}")
-    public void el_empleado_con_legajo_fue_asignado_al_proyecto_en_la_fecha(String string, String string2, String string3) {
+    @Y("existe un empleado con la siguiente informacion")
+    public void existe_un_empleado_con_la_siguiente_informacion(io.cucumber.datatable.DataTable dataTable) {
         // Write code here that turns the phrase above into concrete actions
+       List<Map<String, String>> empleados = dataTable.asMaps(String.class, String.class);
+        PerfilEmpleadoDTO perfilEmpleadoDTO = EmpleadoFactory.crearPerfilEmpleadoDTO(empleados.get(0));
+        empleadoController.ingresarEmpleado(perfilEmpleadoDTO);
+    }
 
+    @Y("el empleado con legajo {string} fue asignado al proyecto {string} en la fecha {string}")
+    public void el_empleado_con_legajo_fue_asignado_al_proyecto_en_la_fecha(String legajo, String proyectoId, String fechaInicio) {
+        // Write code here that turns the phrase above into concrete actions
+        response = AsignacionProyectoController.asignarEmpleadoAProyecto(
+                legajo, new AsignacionProyecto(
+                        Long.parseLong(proyectoId),
+                        LocalDate.parse(fechaInicio),
+                        null,
+                        EmpleadoRol.DESARROLLADOR)
+        );
     }
 
     @Cuando("modifico la asignación del empleado con legajo {string} en el proyecto {string}, indicando que finalizo en la fecha {string}")
-    public void modifico_la_asignación_del_empleado_con_legajo_en_el_proyecto_indicando_que_finalizo_en_la_fecha(String string, String string2, String string3) {
+    public void modifico_la_asignación_del_empleado_con_legajo_en_el_proyecto_indicando_que_finalizo_en_la_fecha(String legajo, String proyectoId, String fechaFin) {
         // Write code here that turns the phrase above into concrete actions
-
+        response = AsignacionProyectoController.modificarAsignacionDeEmpleadoAProyecto(
+                legajo, Long.parseLong(proyectoId), LocalDate.parse(fechaFin));
     }
 
     @Entonces("la asignacion del empleado con legajo {string} en el proyecto {string} indica que su fecha de finalizacion es el {string}.")

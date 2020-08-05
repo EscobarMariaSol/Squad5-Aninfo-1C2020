@@ -1,5 +1,6 @@
 package com.sistemaGestion.model;
 
+import com.sistemaGestion.exceptions.FechaInvalidaException;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 
 import javax.persistence.*;
@@ -14,6 +15,9 @@ public class AsignacionProyecto {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long idAsignacion;
+
+    @Column
+    private String legajoEmpleado;
 
     @Column
     private Long codigoProyecto;
@@ -54,7 +58,11 @@ public class AsignacionProyecto {
     }
 
     public void setFechaFin(LocalDate fechaFin) {
-        this.fechaFin = fechaFin;
+        if(fechaFin.isAfter(fechaInicio) || fechaFin.equals(fechaInicio)) {
+            this.fechaFin = fechaFin;
+        } else {
+            throw new FechaInvalidaException("La fecha de fin no puede ser menor que la fecha de inicio");
+        }
     }
 
     public LocalDate getFechaFin(){
@@ -69,6 +77,22 @@ public class AsignacionProyecto {
         return this.rolEmpleado;
     }
 
+    public Long getIdAsignacion() {
+        return idAsignacion;
+    }
+
+    public void setIdAsignacion(Long idAsignacion) {
+        this.idAsignacion = idAsignacion;
+    }
+
+    public void setLegajoEmpleado(String legajoEmpleado) {
+        this.legajoEmpleado = legajoEmpleado;
+    }
+
+    public String getLegajoEmpleado() {
+        return legajoEmpleado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -78,6 +102,7 @@ public class AsignacionProyecto {
             return false;
         }
         AsignacionProyecto asignacionProyecto = (AsignacionProyecto) o;
-        return codigoProyecto.equals(asignacionProyecto.codigoProyecto);
+        return codigoProyecto.equals(asignacionProyecto.codigoProyecto) &&
+                legajoEmpleado.equals(asignacionProyecto.legajoEmpleado);
     }
 }

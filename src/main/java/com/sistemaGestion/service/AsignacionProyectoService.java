@@ -1,12 +1,13 @@
 package com.sistemaGestion.service;
 
+import com.sistemaGestion.exceptions.EmpleadoNoAsignadoException;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.AsignacionProyectoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Service
@@ -22,13 +23,26 @@ public class AsignacionProyectoService {
     }
 
 
-    public void asignarEmpleadoAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
+    public AsignacionProyecto asignarEmpleadoAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
+        Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
+        asignacionProyecto.setLegajoEmpleado(legajo);
         asignacionProyectoRepository.save(asignacionProyecto);
-        empleadoService.asignarAProyecto(legajo, asignacionProyecto);
+        empleado.addProyecto(asignacionProyecto);
+        return asignacionProyecto;
     }
 
     public Set<AsignacionProyecto> obtenerProyectosDeEmpleado(String legajo) {
-        Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
-        return empleado.getAsignacionProyectos();
+        empleadoService.consultarEmpleadoPorLegajo(legajo);
+        return asignacionProyectoRepository.findByLegajoEmpleado(legajo);
+    }
+
+    public AsignacionProyecto modificarAsignacionDeEmpleado(String legajo, Long proyectoId, LocalDate fechaFin) {
+       empleadoService.consultarEmpleadoPorLegajo(legajo);
+        AsignacionProyecto asignacion = asignacionProyectoRepository.findByCodigoProyectoAndLegajoEmpleado(proyectoId, legajo).orElseThrow(() ->
+                new EmpleadoNoAsignadoException("El empleado con legajo " + legajo + " no fue asignado al proyecto" + proyectoId + ".")
+        );
+        asignacion.setFechaFin(fechaFin);
+        asignacionProyectoRepository.save(asignacion);
+        return asignacion;
     }
 }

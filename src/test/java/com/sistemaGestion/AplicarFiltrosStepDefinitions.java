@@ -60,8 +60,7 @@ public class AplicarFiltrosStepDefinitions {
                         Long.parseLong(proyectoId),
                         LocalDate.parse("2020-07-30"),
                         LocalDate.parse("2020-09-10"),
-                        EmpleadoRol.DESARROLLADOR
-                )
+                        EmpleadoRol.DESARROLLADOR)
         );
     }
 
