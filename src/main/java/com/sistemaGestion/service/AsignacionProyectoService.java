@@ -25,9 +25,12 @@ public class AsignacionProyectoService {
 
     public AsignacionProyecto asignarEmpleadoAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
-        asignacionProyecto.setLegajoEmpleado(legajo);
-        asignacionProyectoRepository.save(asignacionProyecto);
-        empleado.addProyecto(asignacionProyecto);
+        if(!asignacionProyectoRepository.findByCodigoProyectoAndLegajoEmpleado(
+                asignacionProyecto.getCodigoProyecto(), legajo).isPresent()) {
+            asignacionProyecto.setLegajoEmpleado(legajo);
+            asignacionProyectoRepository.save(asignacionProyecto);
+            empleado.addProyecto(asignacionProyecto);
+        }
         return asignacionProyecto;
     }
 
@@ -42,6 +45,7 @@ public class AsignacionProyectoService {
                 new EmpleadoNoAsignadoException("El empleado con legajo " + legajo + " no fue asignado al proyecto" + proyectoId + ".")
         );
         asignacion.setFechaFin(fechaFin);
+        asignacionProyectoRepository.delete(asignacion.getIdAsignacion());
         asignacionProyectoRepository.save(asignacion);
         return asignacion;
     }

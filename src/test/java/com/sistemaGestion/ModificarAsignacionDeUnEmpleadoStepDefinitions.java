@@ -71,7 +71,7 @@ public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
     public void modifico_la_asignación_del_empleado_con_legajo_en_el_proyecto_indicando_que_finalizo_en_la_fecha(String legajo, String proyectoId, String fechaFin) {
         // Write code here that turns the phrase above into concrete actions
         response = AsignacionProyectoController.modificarAsignacionDeEmpleadoAProyecto(
-                legajo, Long.parseLong(proyectoId), LocalDate.parse(fechaFin));
+                legajo, Long.parseLong(proyectoId), fechaFin);
     }
 
     @Entonces("la asignacion del empleado con legajo {string} en el proyecto {string} indica que su fecha de finalizacion es el {string}.")

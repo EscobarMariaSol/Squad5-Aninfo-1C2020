@@ -35,7 +35,7 @@ public class AsignacionProyectoController {
         } catch (EmpleadoException e) {
             return new ResponseEntity(
                     e.getMessage(),
-                    HttpStatus.BAD_REQUEST
+                    HttpStatus.NOT_FOUND
             );
         } catch (Exception e) {
             return new ResponseEntity(
@@ -64,10 +64,10 @@ public class AsignacionProyectoController {
     public ResponseEntity modificarAsignacionDeEmpleadoAProyecto(
             @PathVariable("legajo") String legajo,
             @RequestParam(required = true) Long proyectoId,
-            @RequestParam(required = true) LocalDate fechaFin) {
+            @RequestParam(required = true) String fechaFin) {
         try{
             return new ResponseEntity(
-                    asignacionProyectoService.modificarAsignacionDeEmpleado(legajo, proyectoId, fechaFin),
+                    asignacionProyectoService.modificarAsignacionDeEmpleado(legajo, proyectoId, LocalDate.parse(fechaFin)),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {
@@ -77,7 +77,7 @@ public class AsignacionProyectoController {
             );
         } catch (FechaInvalidaException | EmpleadoNoAsignadoException e) {
             return new ResponseEntity(
-                    e.getMessage(),
+                        e.getMessage(),
                     HttpStatus.BAD_REQUEST
             );
         }
