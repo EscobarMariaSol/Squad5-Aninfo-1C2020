@@ -13,7 +13,10 @@ import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
+import org.json.HTTP;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
@@ -72,8 +75,12 @@ public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
     }
 
     @Entonces("la asignacion del empleado con legajo {string} en el proyecto {string} indica que su fecha de finalizacion es el {string}.")
-    public void la_asignacion_del_empleado_con_legajo_en_el_proyecto_indica_que_su_fecha_de_finalizacion_es_el(String string, String string2, String string3) {
+    public void la_asignacion_del_empleado_con_legajo_en_el_proyecto_indica_que_su_fecha_de_finalizacion_es_el(
+            String legajo, String codigoProyecto, String fechaFin) {
         // Write code here that turns the phrase above into concrete actions
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+        AsignacionProyecto asignacionProyecto = (AsignacionProyecto) response.getBody();
+        Assert.assertEquals(asignacionProyecto.getFechaFin(), LocalDate.parse(fechaFin));
 
     }
 
