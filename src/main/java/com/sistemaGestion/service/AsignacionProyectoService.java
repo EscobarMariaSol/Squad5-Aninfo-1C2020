@@ -1,6 +1,6 @@
 package com.sistemaGestion.service;
 
-import com.sistemaGestion.exceptions.EmpleadoNoAsignadoException;
+import com.sistemaGestion.exceptions.AsignacionProyectoException;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.repository.AsignacionProyectoRepository;
@@ -25,28 +25,27 @@ public class AsignacionProyectoService {
 
     public AsignacionProyecto asignarEmpleadoAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
-        if(!asignacionProyectoRepository.findByCodigoProyectoAndLegajoEmpleado(
-                asignacionProyecto.getCodigoProyecto(), legajo).isPresent()) {
-            asignacionProyecto.setLegajoEmpleado(legajo);
-            asignacionProyectoRepository.save(asignacionProyecto);
-            empleado.addProyecto(asignacionProyecto);
-        }
+        asignacionProyectoRepository.save(asignacionProyecto);
+        empleado.addProyecto(asignacionProyecto);
+        empleadoService.actualizarEmpleado(empleado);
         return asignacionProyecto;
     }
 
     public Set<AsignacionProyecto> obtenerProyectosDeEmpleado(String legajo) {
-        empleadoService.consultarEmpleadoPorLegajo(legajo);
-        return asignacionProyectoRepository.findByLegajoEmpleado(legajo);
+        Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
+        return empleado.getProyectosAsignados();
     }
 
-    public AsignacionProyecto modificarAsignacionDeEmpleado(String legajo, Long proyectoId, LocalDate fechaFin) {
-       empleadoService.consultarEmpleadoPorLegajo(legajo);
-        AsignacionProyecto asignacion = asignacionProyectoRepository.findByCodigoProyectoAndLegajoEmpleado(proyectoId, legajo).orElseThrow(() ->
-                new EmpleadoNoAsignadoException("El empleado con legajo " + legajo + " no fue asignado al proyecto" + proyectoId + ".")
-        );
-        asignacion.setFechaFin(fechaFin);
-        asignacionProyectoRepository.delete(asignacion.getIdAsignacion());
-        asignacionProyectoRepository.save(asignacion);
-        return asignacion;
+    public AsignacionProyecto modificarAsignacionDeEmpleado(String legajo, Long idAsignacion, LocalDate fechaFin) {
+        Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
+        AsignacionProyecto asignacionProyecto = asignacionProyectoRepository.findOne(idAsignacion);
+        if (asignacionProyecto == null) {
+            throw new AsignacionProyectoException(
+                    "La asignación con id: " + idAsignacion + " no existe."
+            );
+        }
+        asignacionProyecto.setFechaFin(fechaFin);
+        asignacionProyectoRepository.save(asignacionProyecto);
+        return asignacionProyecto;
     }
 }

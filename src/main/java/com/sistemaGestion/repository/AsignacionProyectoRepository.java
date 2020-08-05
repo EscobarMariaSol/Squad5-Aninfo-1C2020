@@ -9,9 +9,5 @@ import java.util.Set;
 
 @Repository
 public interface AsignacionProyectoRepository extends JpaRepository<AsignacionProyecto, Long> {
-    Optional<AsignacionProyecto> findByCodigoProyecto(Long codigoProyecto);
 
-    Set<AsignacionProyecto> findByLegajoEmpleado(String legajoEmpleado);
-
-    Optional<AsignacionProyecto> findByCodigoProyectoAndLegajoEmpleado(Long codigoProyecto, String legajoEmpleado);
 }

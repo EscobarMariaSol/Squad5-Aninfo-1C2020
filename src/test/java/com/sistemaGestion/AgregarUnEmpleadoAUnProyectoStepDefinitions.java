@@ -62,14 +62,18 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
         EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
         asignacionProyecto = new AsignacionProyecto(Long.parseLong(codigo), fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
+        Empleado empleado1 = empleadoRepository.findByLegajo(legajo).orElse(null);
     }
 
     @Entonces("el empleado {string} queda asignado al proyecto {string}.")
     public void el_empleado_queda_asignado_al_proyecto(String legajo, String codigo) {
         // Write code here that turns the phrase above into concrete actions
-        asignacionProyecto = asignacionProyectoRepository.findByCodigoProyectoAndLegajoEmpleado(
-                Long.parseLong(codigo), legajo).orElse(null);
-        Assert.assertNotNull(asignacionProyecto);
+        empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
+        Assert.assertTrue(empleado.getProyectosAsignados().stream()
+                .anyMatch(asignacionProyecto ->
+                        asignacionProyecto.getCodigoProyecto().equals(Long.parseLong(codigo))
+                )
+        );
     }
 
     @Dado("no hay un empleado cuyo legajo es {string}")

@@ -1,7 +1,7 @@
 package com.sistemaGestion.controller;
 
 import com.sistemaGestion.exceptions.EmpleadoException;
-import com.sistemaGestion.exceptions.EmpleadoNoAsignadoException;
+import com.sistemaGestion.exceptions.AsignacionProyectoException;
 import com.sistemaGestion.exceptions.FechaInvalidaException;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.service.AsignacionProyectoService;
@@ -63,11 +63,11 @@ public class AsignacionProyectoController {
     @PutMapping(value = "/{legajo}/proyectos")
     public ResponseEntity modificarAsignacionDeEmpleadoAProyecto(
             @PathVariable("legajo") String legajo,
-            @RequestParam(required = true) Long proyectoId,
+            @RequestParam(required = true) Long idAsignacion,
             @RequestParam(required = true) String fechaFin) {
         try{
             return new ResponseEntity(
-                    asignacionProyectoService.modificarAsignacionDeEmpleado(legajo, proyectoId, LocalDate.parse(fechaFin)),
+                    asignacionProyectoService.modificarAsignacionDeEmpleado(legajo, idAsignacion, LocalDate.parse(fechaFin)),
                     HttpStatus.OK
             );
         } catch (EmpleadoException e) {
@@ -75,7 +75,7 @@ public class AsignacionProyectoController {
                     e.getMessage(),
                     HttpStatus.NOT_FOUND
             );
-        } catch (FechaInvalidaException | EmpleadoNoAsignadoException e) {
+        } catch (FechaInvalidaException | AsignacionProyectoException e) {
             return new ResponseEntity(
                         e.getMessage(),
                     HttpStatus.BAD_REQUEST

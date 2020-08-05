@@ -13,7 +13,6 @@ import io.cucumber.java.es.Cuando;
 import io.cucumber.java.es.Dado;
 import io.cucumber.java.es.Entonces;
 import io.cucumber.java.es.Y;
-import org.json.HTTP;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,20 +57,21 @@ public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
     @Y("el empleado con legajo {string} fue asignado al proyecto {string} en la fecha {string}")
     public void el_empleado_con_legajo_fue_asignado_al_proyecto_en_la_fecha(String legajo, String proyectoId, String fechaInicio) {
         // Write code here that turns the phrase above into concrete actions
-        response = AsignacionProyectoController.asignarEmpleadoAProyecto(
-                legajo, new AsignacionProyecto(
-                        Long.parseLong(proyectoId),
-                        LocalDate.parse(fechaInicio),
-                        null,
-                        EmpleadoRol.DESARROLLADOR)
+        asignacionProyecto = new AsignacionProyecto(
+                Long.parseLong(proyectoId),
+                LocalDate.parse(fechaInicio),
+                null,
+                EmpleadoRol.DESARROLLADOR
         );
+        response = AsignacionProyectoController.asignarEmpleadoAProyecto(
+                legajo, asignacionProyecto);
     }
 
     @Cuando("modifico la asignación del empleado con legajo {string} en el proyecto {string}, indicando que finalizo en la fecha {string}")
     public void modifico_la_asignación_del_empleado_con_legajo_en_el_proyecto_indicando_que_finalizo_en_la_fecha(String legajo, String proyectoId, String fechaFin) {
         // Write code here that turns the phrase above into concrete actions
         response = AsignacionProyectoController.modificarAsignacionDeEmpleadoAProyecto(
-                legajo, Long.parseLong(proyectoId), fechaFin);
+                legajo, asignacionProyecto.getIdAsignacion(), fechaFin);
     }
 
     @Entonces("la asignacion del empleado con legajo {string} en el proyecto {string} indica que su fecha de finalizacion es el {string}.")
@@ -89,6 +89,15 @@ public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
         // Write code here that turns the phrase above into concrete actions
 
     }
+
+    @Cuando("intento modificar la asignación del empleado con legajo {string} en el proyecto {string}, indicando que finalizo en la fecha {string}")
+    public void intento_modificar_la_asignación_del_empleado_con_legajo_en_el_proyecto_indicando_que_finalizo_en_la_fecha(
+            String legajo, String proyectoId, String fechaFin) {
+        // Write code here that turns the phrase above into concrete actions
+        response = AsignacionProyectoController.modificarAsignacionDeEmpleadoAProyecto(
+                legajo, Long.MAX_VALUE, fechaFin);
+    }
+
 
     @Entonces("se me informa que no puedo realizar dicha acción porque el emplado no fue asignado a ese proyecto.")
     public void se_me_informa_que_no_puedo_realizar_dicha_acción_porque_el_emplado_no_fue_asignado_a_ese_proyecto() {

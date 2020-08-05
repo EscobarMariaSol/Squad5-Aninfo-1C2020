@@ -19,12 +19,12 @@ Característica: Agregar un empleado a un proyecto
       | nombre      | apellido   | dni      | fechaDeNacimiento | legajo | contrato      | rol           | activo |
       | Hermione    | Granger    | W3508429 |1979-09-19         | 5      |  full_time    | DESARROLLADOR | true   |
     Y el empleado con legajo '5' no ha sido asignado al proyecto '1'
-    Cuando modifico la asignación del empleado con legajo '5' en el proyecto '1', indicando que finalizo en la fecha '2020-08-02'
+    Cuando intento modificar la asignación del empleado con legajo '5' en el proyecto '1', indicando que finalizo en la fecha '2020-08-02'
     Entonces se me informa que no puedo realizar dicha acción porque el emplado no fue asignado a ese proyecto.
 
   Escenario: Como Lider de proyecto, quiero modificar la asignacion de un empleado en un proyecto,
   para informar que el empleado ya no puede realizar tareas dentro de ese proyecto.
     Dado  que soy lider del proyecto '1' y quiero modificar la asignacion de un empleado en el proyecto
     Y no existe el empleado con legajo '5'
-    Cuando modifico la asignación del empleado con legajo '5' en el proyecto '1', indicando que finalizo en la fecha '2020-08-02'
+    Cuando intento modificar la asignación del empleado con legajo '5' en el proyecto '1', indicando que finalizo en la fecha '2020-08-02'
     Entonces se me informa que no puedo realizar dicha acción porque el empladono existe.

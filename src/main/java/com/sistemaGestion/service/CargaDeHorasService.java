@@ -85,10 +85,9 @@ public class CargaDeHorasService {
     }
 
     private boolean empleadoPerteneceAlProyecto(Empleado empleado, String proyectoId) {
-        AsignacionProyecto asignacionProyecto = asignacionProyectoRepository.findByCodigoProyectoAndLegajoEmpleado(
-                Long.parseLong(proyectoId), empleado.getLegajo()).orElse(null);
-        return (asignacionProyecto!=null);
-        }
+        return empleado.getProyectosAsignados().stream()
+                .anyMatch(asignacionProyecto -> asignacionProyecto.getCodigoProyecto().equals(Long.parseLong(proyectoId)));
+    }
 
     public List<HorasCargadas> consultarHorasTrabajadasEnUnaTarea(String legajo, Long tareaId, Long proyectoId, String fecha) {
         List<CargaDeHoras> horasTrabajadas =  new ArrayList<CargaDeHoras>();

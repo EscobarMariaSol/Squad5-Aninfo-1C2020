@@ -2,6 +2,7 @@ package com.sistemaGestion.model;
 
 import com.sistemaGestion.exceptions.FechaInvalidaException;
 import com.sistemaGestion.model.enums.EmpleadoRol;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,15 +10,10 @@ import java.time.LocalDate;
 @Entity
 public class AsignacionProyecto {
 
-    /**
-     * Código identificador del proyecto que viene del Módulo de Proyectos.
-     * */
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
     private Long idAsignacion;
-
-    @Column
-    private String legajoEmpleado;
 
     @Column
     private Long codigoProyecto;
@@ -85,14 +81,6 @@ public class AsignacionProyecto {
         this.idAsignacion = idAsignacion;
     }
 
-    public void setLegajoEmpleado(String legajoEmpleado) {
-        this.legajoEmpleado = legajoEmpleado;
-    }
-
-    public String getLegajoEmpleado() {
-        return legajoEmpleado;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -102,7 +90,6 @@ public class AsignacionProyecto {
             return false;
         }
         AsignacionProyecto asignacionProyecto = (AsignacionProyecto) o;
-        return codigoProyecto.equals(asignacionProyecto.codigoProyecto) &&
-                legajoEmpleado.equals(asignacionProyecto.legajoEmpleado);
+        return this.idAsignacion.equals(asignacionProyecto.idAsignacion);
     }
 }
