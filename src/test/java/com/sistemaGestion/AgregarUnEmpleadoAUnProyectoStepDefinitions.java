@@ -16,7 +16,6 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import sun.awt.X11.XSystemTrayPeer;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -50,7 +49,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     public void hay_un_empleado_cuyo_legajo_es(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         empleado = EmpleadoFactory.crearEmpleado(legajo);
-        empleado.setAsignacionProyectos(new HashSet<AsignacionProyecto>());
+        empleado.setProyectosAsignados(new HashSet<AsignacionProyecto>());
         empleado.setActivo(true);
         empleadoRepository.save(empleado);
     }
@@ -63,14 +62,18 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
         EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
         asignacionProyecto = new AsignacionProyecto(Long.parseLong(codigo), fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
+        Empleado empleado1 = empleadoRepository.findByLegajo(legajo).orElse(null);
     }
 
     @Entonces("el empleado {string} queda asignado al proyecto {string}.")
     public void el_empleado_queda_asignado_al_proyecto(String legajo, String codigo) {
         // Write code here that turns the phrase above into concrete actions
         empleado = empleadoRepository.findByLegajo(legajo).orElse(null);
-        asignacionProyecto = asignacionProyectoRepository.findByCodigoProyecto(Long.parseLong(codigo)).orElse(null);
-        Assert.assertTrue(empleado.perteneceAProyecto(asignacionProyecto));
+        Assert.assertTrue(empleado.getProyectosAsignados().stream()
+                .anyMatch(asignacionProyecto ->
+                        asignacionProyecto.getCodigoProyecto().equals(Long.parseLong(codigo))
+                )
+        );
     }
 
     @Dado("no hay un empleado cuyo legajo es {string}")
@@ -82,7 +85,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     @Entonces("se me informa que no puedo agregar al empleado con legajo {string}, porque no existe.")
     public void se_me_informa_que_no_puedo_agregar_al_empleado_con_legajo_porque_no_existe(String legajo) {
         // Write code here that turns the phrase above into concrete actions
-        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         Assert.assertEquals(
                 "El empleado con legajo " + legajo + " no existe.",
                 response.getBody()

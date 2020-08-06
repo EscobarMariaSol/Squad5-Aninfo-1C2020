@@ -4,8 +4,6 @@ import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.model.*;
 import com.sistemaGestion.model.enums.EmpleadoRol;
 import com.sistemaGestion.model.enums.Seniority;
-import com.sistemaGestion.repository.AsignacionProyectoRepository;
-import com.sistemaGestion.repository.CargaDeHorasRepository;
 import com.sistemaGestion.repository.EmpleadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +49,7 @@ public class EmpleadoService {
     }
 
     private void validarDarDeBaja(Empleado empleado) {
-        if (empleado.getAsignacionProyectos().size() > 0)
+        if (empleado.getProyectosAsignados().size() > 0)
             throw new EmpleadoException(
                     "No se puede dar de baja al empleado con legajo: " +
                             empleado.getLegajo() +
@@ -76,11 +74,4 @@ public class EmpleadoService {
         return empleado;
     }
 
-
-    public Empleado asignarAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
-        Empleado empleado = consultarEmpleadoPorLegajo(legajo);
-        empleado.addProyecto(asignacionProyecto);
-        empleadoRepository.save(empleado);
-        return empleado;
-    }
 }
