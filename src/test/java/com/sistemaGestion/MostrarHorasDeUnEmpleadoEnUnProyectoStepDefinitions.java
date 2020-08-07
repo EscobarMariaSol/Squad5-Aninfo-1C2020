@@ -3,6 +3,7 @@ package com.sistemaGestion;
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.dtos.AsignacionProyectoDTO;
 import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
@@ -38,7 +39,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
     private Empleado empleado;
     private PerfilEmpleadoDTO perfilEmpleadoDTO;
     private ResponseEntity response;
-    private AsignacionProyecto asignacionProyecto;
+    private AsignacionProyectoDTO asignacionProyecto;
 
 
     @Dado("que soy jefe de RRHH")
@@ -75,7 +76,7 @@ public class MostrarHorasDeUnEmpleadoEnUnProyectoStepDefinitions {
         LocalDate fechaInicio = LocalDate.parse("2020-06-07");
         LocalDate fechaFin = LocalDate.parse("2020-06-16");
         EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
-        asignacionProyecto = new AsignacionProyecto(Long.parseLong(idProyecto), fechaInicio, fechaFin, rol);
+        asignacionProyecto = new AsignacionProyectoDTO(Long.parseLong(idProyecto), fechaInicio, fechaFin, rol);
         response = asignacionProyectoController.asignarEmpleadoAProyecto(empleado.getLegajo(), asignacionProyecto);
     }
 

@@ -1,5 +1,6 @@
 package com.sistemaGestion.service;
 
+import com.sistemaGestion.dtos.AsignacionProyectoDTO;
 import com.sistemaGestion.exceptions.AsignacionProyectoException;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.Empleado;
@@ -23,12 +24,18 @@ public class AsignacionProyectoService {
     }
 
 
-    public AsignacionProyecto asignarEmpleadoAProyecto(String legajo, AsignacionProyecto asignacionProyecto) {
+    public AsignacionProyecto asignarEmpleadoAProyecto(String legajo, AsignacionProyectoDTO asignacionProyecto) {
         Empleado empleado = empleadoService.consultarEmpleadoPorLegajo(legajo);
-        asignacionProyectoRepository.save(asignacionProyecto);
-        empleado.addProyecto(asignacionProyecto);
+        AsignacionProyecto nuevaAsignacion = new AsignacionProyecto(
+                asignacionProyecto.getCodigoProyecto(),
+                asignacionProyecto.getFechaInicio(),
+                asignacionProyecto.getFechaFin(),
+                asignacionProyecto.getRolEmpleado()
+        );
+        asignacionProyectoRepository.save(nuevaAsignacion);
+        empleado.addProyecto(nuevaAsignacion);
         empleadoService.actualizarEmpleado(empleado);
-        return asignacionProyecto;
+        return nuevaAsignacion;
     }
 
     public Set<AsignacionProyecto> obtenerProyectosDeEmpleado(String legajo) {

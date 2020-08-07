@@ -1,5 +1,6 @@
 package com.sistemaGestion.controller;
 
+import com.sistemaGestion.dtos.AsignacionProyectoDTO;
 import com.sistemaGestion.exceptions.EmpleadoException;
 import com.sistemaGestion.exceptions.AsignacionProyectoException;
 import com.sistemaGestion.exceptions.FechaInvalidaException;
@@ -26,7 +27,7 @@ public class AsignacionProyectoController {
     @PostMapping(value = "/{legajo}/proyectos")
     public ResponseEntity asignarEmpleadoAProyecto(
             @PathVariable("legajo") String legajo,
-            @RequestBody AsignacionProyecto asignacionProyecto) {
+            @RequestBody(required = true) AsignacionProyectoDTO asignacionProyecto) {
         try {
             return new ResponseEntity(
                     asignacionProyectoService.asignarEmpleadoAProyecto(legajo, asignacionProyecto),
