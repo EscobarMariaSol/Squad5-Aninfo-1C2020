@@ -3,7 +3,6 @@ package com.sistemaGestion.service;
 import com.sistemaGestion.dtos.CargaDeHorasDTO;
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.exceptions.CargaDeHorasException;
-import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.CargaDeHoras;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.HorasCargadas;

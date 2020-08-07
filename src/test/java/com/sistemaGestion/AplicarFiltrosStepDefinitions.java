@@ -3,6 +3,7 @@ package com.sistemaGestion;
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.CargaDeHorasController;
 import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.dtos.AsignacionProyectoDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.dtos.ReporteDeHorasDTO;
 import com.sistemaGestion.model.AsignacionProyecto;
@@ -56,7 +57,7 @@ public class AplicarFiltrosStepDefinitions {
     public void el_empleado_con_legajo_es_asignado_al_proyecto(String legajo, String proyectoId) {
         // Write code here that turns the phrase above into concrete actions
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(
-                legajo, new AsignacionProyecto(
+                legajo, new AsignacionProyectoDTO(
                         Long.parseLong(proyectoId),
                         LocalDate.parse("2020-07-30"),
                         LocalDate.parse("2020-09-10"),

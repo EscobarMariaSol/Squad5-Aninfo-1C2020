@@ -2,6 +2,7 @@ package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.EmpleadoController;
+import com.sistemaGestion.dtos.AsignacionProyectoDTO;
 import com.sistemaGestion.dtos.PerfilEmpleadoDTO;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.Empleado;
@@ -57,14 +58,14 @@ public class ModificarAsignacionDeUnEmpleadoStepDefinitions {
     @Y("el empleado con legajo {string} fue asignado al proyecto {string} en la fecha {string}")
     public void el_empleado_con_legajo_fue_asignado_al_proyecto_en_la_fecha(String legajo, String proyectoId, String fechaInicio) {
         // Write code here that turns the phrase above into concrete actions
-        asignacionProyecto = new AsignacionProyecto(
-                Long.parseLong(proyectoId),
-                LocalDate.parse(fechaInicio),
-                null,
-                EmpleadoRol.DESARROLLADOR
-        );
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(
-                legajo, asignacionProyecto);
+                legajo, new AsignacionProyectoDTO(
+                        Long.parseLong(proyectoId),
+                        LocalDate.parse(fechaInicio),
+                        null,
+                        EmpleadoRol.DESARROLLADOR
+                ));
+        asignacionProyecto = (AsignacionProyecto) response.getBody();
     }
 
     @Cuando("modifico la asignación del empleado con legajo {string} en el proyecto {string}, indicando que finalizo en la fecha {string}")

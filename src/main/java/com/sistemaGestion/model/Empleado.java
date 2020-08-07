@@ -59,7 +59,7 @@ public class Empleado {
     }
 
     public Empleado(){
-        this.proyectosAsignados = new HashSet<>();
+        this.proyectosAsignados = new HashSet<AsignacionProyecto>();
     }
 
     public Empleado(String nombre) {
@@ -162,7 +162,7 @@ public class Empleado {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public Optional<AsignacionProyecto>  getAsignacionProyecto(Long proyectoId) {
+    public Optional<AsignacionProyecto> getAsignacionProyecto(Long proyectoId) {
         AsignacionProyecto asignacion = null;
         for (AsignacionProyecto p: this.proyectosAsignados) {
             if (p.getCodigoProyecto().equals(proyectoId)) asignacion = p;

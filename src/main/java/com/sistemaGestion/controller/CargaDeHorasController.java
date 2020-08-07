@@ -27,7 +27,9 @@ public class CargaDeHorasController {
 
 
     @PostMapping(value = "/{legajo}/horas")
-    public ResponseEntity cargarHorasDeEmpleado(@PathVariable("legajo") String legajo, @RequestBody(required = true)ReporteDeHorasDTO reporte) {
+    public ResponseEntity cargarHorasDeEmpleado(
+            @PathVariable("legajo") String legajo,
+            @RequestBody(required = true)ReporteDeHorasDTO reporte) {
         try {
             return new ResponseEntity(
                     cargaDeHorasService.cargarHorasDeEmpleado(legajo, reporte),

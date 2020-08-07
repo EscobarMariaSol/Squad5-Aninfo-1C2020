@@ -2,6 +2,7 @@ package com.sistemaGestion;
 
 import com.sistemaGestion.assets.EmpleadoFactory;
 import com.sistemaGestion.controller.AsignacionProyectoController;
+import com.sistemaGestion.dtos.AsignacionProyectoDTO;
 import com.sistemaGestion.model.Empleado;
 import com.sistemaGestion.model.AsignacionProyecto;
 import com.sistemaGestion.model.enums.EmpleadoRol;
@@ -33,7 +34,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
 
     private Empleado empleado, liderDeProyecto;
     private ResponseEntity response;
-    private AsignacionProyecto asignacionProyecto;
+    private AsignacionProyectoDTO asignacionProyecto;
 
     public AgregarUnEmpleadoAUnProyectoStepDefinitions(AsignacionProyectoRepository asignacionProyectoRepository) {
         this.asignacionProyectoRepository = asignacionProyectoRepository;
@@ -49,7 +50,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
     public void hay_un_empleado_cuyo_legajo_es(String legajo) {
         // Write code here that turns the phrase above into concrete actions
         empleado = EmpleadoFactory.crearEmpleado(legajo);
-        empleado.setProyectosAsignados(new HashSet<AsignacionProyecto>());
+        empleado.setProyectosAsignados(new HashSet<>());
         empleado.setActivo(true);
         empleadoRepository.save(empleado);
     }
@@ -60,7 +61,7 @@ public class AgregarUnEmpleadoAUnProyectoStepDefinitions {
         LocalDate fechaInicio = LocalDate.parse("2020-06-07");
         LocalDate fechaFin = LocalDate.parse("2020-06-16");
         EmpleadoRol rol = EmpleadoRol.DESARROLLADOR;
-        asignacionProyecto = new AsignacionProyecto(Long.parseLong(codigo), fechaInicio, fechaFin, rol);
+        asignacionProyecto = new AsignacionProyectoDTO(Long.parseLong(codigo), fechaInicio, fechaFin, rol);
         response = AsignacionProyectoController.asignarEmpleadoAProyecto(legajo, asignacionProyecto);
         Empleado empleado1 = empleadoRepository.findByLegajo(legajo).orElse(null);
     }
