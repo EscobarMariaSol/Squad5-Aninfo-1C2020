@@ -20,7 +20,7 @@ public class GestionRecursosRestApplication {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://mapache-web.herokuapp.com", "https://mapache-web-backup.herokuapp.com", "http://localhost:3000")
+                        .allowedOrigins("https://mapache-web.herokuapp.com", "https://mapache-web-backup.herokuapp.com", "http://localhost:3000", "https://sistema-integral-de-gestion.herokuapp.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };
